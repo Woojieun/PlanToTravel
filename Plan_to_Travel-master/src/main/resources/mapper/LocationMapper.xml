@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ 
+<mapper namespace="com.ptt.mapper.LocationMapper">
+    <insert id="insertMember">
+        insert into location values (#{location_UUID},#{uID},#{location_ID},#{location_TITLE},#{location_DATE},#{location_TIME}
+        ,#{location_NAME},#{location_LAT},#{location_LNG},#{location_MEMO},#{location_REVIEW})
+    </insert>
+    
+        <insert id="insertSchedule">
+        insert into schedule values 
+        (#{schedule_UUID},#{uID},#{schedule_ID1},#{schedule_TITLE1},#{schedule_ID2},#{schedule_TITLE2},#{schedule_ID3},#{schedule_TITLE3}
+        ,#{schedule_ID4},#{schedule_TITLE4},#{schedule_ID5},#{schedule_TITLE5},#{schedule_ID6},#{schedule_TITLE6}
+        ,#{schedule_ID7},#{schedule_TITLE7},#{schedule_ID8},#{schedule_TITLE8},#{schedule_ID9},#{schedule_TITLE9}
+        ,#{schedule_ID10},#{schedule_TITLE10},#{schedule_ID11},#{schedule_TITLE11},#{schedule_ID12},#{schedule_TITLE12})
+    </insert>
+    
+      	<!-- uuid와 location_id 둘 다 있다면(count=1↑) 수정하기 && 둘 다 없다면(count=0) 데이터 삽입 -->
+  	<select id="idCheck" parameterType="map" resultType="int">
+  		select count(*) from location where location_UUID = #{location_UUID} and location_ID = #{location_ID}
+  	</select>
+    
+</mapper>
