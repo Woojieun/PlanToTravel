@@ -42,7 +42,10 @@
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
                 aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">OOO님</h5>
+                <!-- 로그인한 상태 -->
+                <c:if test="${ user != null }">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">${user.u_name}님</h5>
+                    </c:if>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
