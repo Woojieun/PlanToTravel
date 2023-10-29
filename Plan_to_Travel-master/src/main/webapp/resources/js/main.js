@@ -20,12 +20,24 @@ $('#Favorites').click(function() {
    $('#Offcanvas_Favorites').offcanvas('show');
 });
 
-$(document).ready(function () {
-    // "스케줄 History" 버튼 클릭 이벤트 처리
-    $("#History").click(function () {
-            $("#Offcanvas_History").offcanvas('show'); // offcanvas를 보이게 합니다.
-    });
+$('#History').click(function() {
+	console.log("1");
+	// 이 부분에서 "/getHistory" 엔드 포인트로 GET 요청을 보내도록 설정
+	$.ajax({
+		type : 'GET',
+		url : '/getHistory',
+		success:function(data) {
+			console.log(data + '데이터');
+			$('#Offcanvas_History').offcanvas('show');
+			},
+			error : function () {
+			//요청이 실패하면 실행되는 코드
+			console.error('요청 실패');
+		}
+	});
+	console.log("2");
 });
+		
 
 $(document).ready(function () {
     // "스케줄 History" 버튼 클릭 이벤트 처리
