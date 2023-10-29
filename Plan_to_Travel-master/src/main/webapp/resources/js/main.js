@@ -5,8 +5,9 @@ var date1 = document.getElementsByClassName('date1');
 var travel_array = [];
 var travel_array2 = [];
 var travel_memo_array = [];
+var itemList_copy, itemList_copy2;
 
-
+ 
 // 마이페이지 오프캔버스
 // 이벤트 리스너 추가
 $(document).ready(function() {
@@ -19,9 +20,28 @@ $('#Favorites').click(function() {
    $('#Offcanvas_Favorites').offcanvas('show');
 });
 
-$('#History').click(function() {
-   $('#Offcanvas_History').offcanvas('show');
+$(document).ready(function () {
+    // "스케줄 History" 버튼 클릭 이벤트 처리
+    $("#History").click(function () {
+            $("#Offcanvas_History").offcanvas('show'); // offcanvas를 보이게 합니다.
+    });
 });
+
+$(document).ready(function () {
+    // "스케줄 History" 버튼 클릭 이벤트 처리
+    $("#History").click(function () {
+        // AJAX를 사용하여 스케줄 히스토리 데이터를 가져옵니다.
+        $.get("/scheduleHistory", function (data) {
+            // 콘솔에 데이터 출력
+            console.log(data);
+
+            // 받은 데이터로 offcanvas에 스케줄 히스토리를 표시합니다.
+            $("#Offcanvas_History .offcanvas-body").html(data);
+            $("#Offcanvas_History").offcanvas('show'); // offcanvas를 보이게 합니다.
+                });
+    });
+});
+
 
 $('#Journal').click(function() {
    $('#Offcanvas_Journal').offcanvas('show');
@@ -235,11 +255,48 @@ $(document).on('click', "[id^=title1_]", function () {
 	
 	// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
 	document.querySelector('#memo_text_id').setAttribute("value",$(this).attr('id'));
+	
+	
+	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
+	$.ajax({
+	    url: "/location_print",
+	    type: "post",
+	    dataType: "json", // 이 부분을 수정하지 마십시오
+	    traditional: true,
+	    data: {
+	        "location_UUID": $('#location_uuid').val(),
+	        "location_ID": $(this).attr('id')
+	    },success: function (data2) {
+	        // 여기서 data2를 사용하여 원하는 작업을 수행
+	        console.log("GET tlqkf 성공", data2);
+	        
+	        // data2 객체 내의 배열에서 첫 번째 요소 추출
+	        var firstItem = data2.data2[0];
 
-	
-	console.log("출력",itemList); // 배열 업데이트 확인을 위해 콘솔에 출력
-	
-	travel_array.push("title"+a);
+	        // 필요한 데이터 추출
+	        var location_TITLE = firstItem.location_TITLE; // 메모명
+	        var location_TIME = firstItem.location_TIME;
+	        var location_NAME = firstItem.location_NAME; // 장소명
+	        var location_LAT = firstItem.location_LAT;
+	        var location_LNG = firstItem.location_LNG;
+	        var location_MEMO = firstItem.location_MEMO;
+	        var location_REVIEW = firstItem.location_REVIEW;
+
+	        // HTML 요소에 데이터 출력
+	        $('#memo_text').val(location_TITLE);
+	        $('#memo_time').val(location_TIME);
+	        $('#memo_place').val(location_NAME);
+	        $('#memo_place_lat').val(location_LAT);
+	        $('#memo_place_lng').val(location_LNG);
+	        $('#memo_content').val(location_MEMO);
+	        $('#review_content').val(location_REVIEW);
+	        // 다른 필드에 대한 데이터도 출력하십시오.
+	    },
+	    error: function (xhr, status, error) {
+	        console.error("GET 요청 오류: " + error);
+	    }
+	});
+
 });
 
 // 둘째 날 일정 클릭
@@ -258,6 +315,7 @@ $(document).on('click', "[id^=title2_]", function () {
 	
 	travel_array2.push("title"+a);
 });
+
 
 // 메모에 장소명 추가
 $(document).on('click', ".place_add", function () { 
@@ -279,8 +337,10 @@ function uuidv4() {
 
 // 일정표 DB 저장
 $(document).on('click', "#travel_save", function () { 
-	
-	
+	document.getElementById("modal").style.display="block";
+});
+
+	$(document).on('click', "#save_btn", function () { 
 	// 메모장과 일정표를 이어주는 기능
 	// 원하는 위치의 일정을 클릭 후 메모장의 제목을 입력한다 -> 일정 저장 버튼을 클릭하면 선택한 일정표의 이름이 바뀐다.
 	var memo_text = document.getElementById("memo_text").value;
@@ -293,8 +353,6 @@ $(document).on('click', "#travel_save", function () {
 	var memo_content = document.getElementById("memo_content").value;
 	var review_content = document.getElementById("review_content").value;
 
-                            
-    $("#"+memo_text_id).text(memo_text);
 	
 	// id가 "memo_text_id"인 요소의 값을 가져옴
     var memo_text_id = $("#memo_text_id").val();
@@ -325,17 +383,25 @@ $(document).on('click', "#travel_save", function () {
         	// 일정표 배열 출력 (forEach)
         	const items = $(".table-box1 [id^=title]");
       	  const itemList = [];
-      	  var fixedSize = 24;
+      	  var fixedSize = 26;
 
       	  // 일정의 아이디와 텍스트를 배열 저장
       	  // 일정의 아이디는 메모장 배열과 연관이 있기때문이다.
+      	itemList.push("table-box1");
+      	  
+      	itemList.push($("#travel_title").val());
+      	
+      	// 메모장에 쓴 제목 일정표에 삽입
+      	$("#"+memo_text_id).text(memo_text);
+      	
       	  items.each(function() {
       		itemList.push($(this).attr('id'));
       	    itemList.push($(this).text());
       	  });
       	  
+
         	// 동적 배열을 복사하여 새로운 배열 생성
-          var itemList_copy = itemList.slice();
+          itemList_copy = itemList.slice();
           
        // 필요한 경우 null 값으로 채우기
           while (itemList_copy.length < fixedSize) {
@@ -343,57 +409,11 @@ $(document).on('click', "#travel_save", function () {
           }
 
       	console.log("출력 첫째날 배열",itemList_copy); // 배열 업데이트 확인을 위해 콘솔에 출력
-            	
-
-      //아이디 중복검사
-        // #location_uuid에 입력되는 값
-        var location_uuid = $('#location_uuid').val();
-
-        if (location_uuid != "") {
-
-            $('.final_id_ck').css('display', 'none');
-
-            var data = {
-                location_UUID: location_uuid,
-                location_ID : travel_memo_array[0]
-            }
-
-            $.ajax({
-                type: "post",
-                //url : "/member/memberIdChk", 이건 경로를 설정하는 거니까 뒤에있는 IdChk 메소드가 어느 위치에 있는 어떤 파일인지를 보고 작성할 것
-                url: "/IdChk",
-                data: data,
-                success: function (result) {
-                    //result = 0이면 , success, 아이디 사용 가능, 새로저장
-                    if (result != 'fail') {
-                        // uuid 중복이 없는 경우
-                    	
-                    	// 중복 데이터가 없으면 저장
-                        $.ajax({
-                    		url: "/Plan_to_travel",
-                    		type: "post",
-                    		traditional: true,	// ajax 배열 넘기기 옵션!
-                    		data: {"arrStr" : travel_memo_array,
-                    			location_uuid : $('#location_uuid').val(),
-                    			schedule_uuid : $('#location_uuid').val(),
-                    			"schdule_itemList" : itemList_copy}, // 일정표를 추가하면 배열에 저장됨
-                    		dataType: "json"
-                    	});
-
-                    }
-                    //result = 0이 아니면 , fail, 중복 아이디 존재, 덮어쓰기
-                    else {        
-                        
-                    }
-                } // success 종료
-
-            }); // ajax 종료
-
-        }
+      
         }
     });
     
-    
+
     
     // id가 특정 패턴 [id^=title2_]를 가지는 엘리먼트에 대해 조건문 실행
     $('.table-box2 [id^=title]').each(function() {
@@ -421,35 +441,284 @@ $(document).on('click', "#travel_save", function () {
         	// 일정표 배열 출력 (forEach)
         	const items2 = $(".table-box2 [id^=title]");
       	  const itemList2 = [];
-      	  var fixedSize2 = 24;
+      	  var fixedSize2 = 26;
 
       	  // 일정의 아이디와 텍스트를 배열 저장
       	  // 일정의 아이디는 메모장 배열과 연관이 있기때문이다.
+      	itemList2.push($("#travel_title").val());
+      	
       	  items2.each(function() {
       		itemList2.push($(this).attr('id'));
       	    itemList2.push($(this).text());
       	  });
-      	  
+
         	// 동적 배열을 복사하여 새로운 배열 생성
-          var itemList_copy2 = itemList2.slice();
+          itemList_copy2 = itemList2.slice();
           
        // 필요한 경우 null 값으로 채우기
           while (itemList_copy2.length < fixedSize2) {
         	  itemList_copy2.push(null);
           }
-
-        	
-        	$.ajax({
-        		url: "/Plan_to_travel",
-        		type: "post",
-        		traditional: true,	// ajax 배열 넘기기 옵션!
-        		data: {"arrStr" : travel_memo_array,
-        			location_uuid : $('#location_uuid').val(),
-        			schedule_uuid : $('#location_uuid').val(),
-        			"schdule_itemList2" : itemList_copy2}, // 일정표를 추가하면 배열에 저장됨
-        		dataType: "json"
-        	});
+          
+          console.log("출력 둘째날 배열",itemList_copy2); // 배열 업데이트 확인을 위해 콘솔에 출력
 
 			}
         });
-});
+    
+    
+    
+  //아이디 중복검사
+    // #location_uuid에 입력되는 값
+    var location_uuid = $('#location_uuid').val();
+
+    if (location_uuid != "") {
+
+        $('.final_id_ck').css('display', 'none');
+
+        var data = {
+            location_UUID: location_uuid,
+            location_ID : travel_memo_array[0],
+            schedule_UUID: location_uuid,
+            schedule_ID: itemList_copy[0]
+        }
+
+        $.ajax({
+            type: "post",
+            //url : "/member/memberIdChk", 이건 경로를 설정하는 거니까 뒤에있는 IdChk 메소드가 어느 위치에 있는 어떤 파일인지를 보고 작성할 것
+            url: "/IdChk",
+            data: data,
+            success: function (result) {
+            	console.log("true냐 false냐 시발" + result);
+                //result = 0이면 , success, 새로저장
+                if (result != 'fail' && result != 'successfail') {
+                    // uuid 중복이 없는 경우
+                	if(travel_memo_array[0].includes('title1')){
+                	// 중복 데이터가 없으면 저장
+                		// POST 요청으로 데이터를 전송
+                		$.ajax({
+                		    url: "/Plan_to_travel",
+                		    type: "post",
+                		    dataType: "json", // 이 부분을 수정하지 마십시오
+                		    traditional: true,
+                		    data: {
+                		        "arrStr": travel_memo_array,
+                		        "location_UUID": $('#location_uuid').val(),
+                		        "schedule_UUID": $('#location_uuid').val(),
+                		        "schedule_ID": itemList_copy[0],
+                		        "location_ID": travel_memo_array[0],
+                		        "schdule_itemList": itemList_copy,
+                		    },success: function (data2) {
+                		    	
+                		    	
+        		    	        
+        		    	    },
+        		    	    error: function (xhr, status, error) {
+        		    	        console.error("GET 요청 오류: " + error);
+        		    	    },
+                		});
+                    
+                	} else if (travel_memo_array[0].includes('title2')) {
+                		$.ajax({
+                      		url: "/Plan_to_travel",
+                      		type: "post",
+                      		traditional: true,	// ajax 배열 넘기기 옵션!
+                      		data: {
+                      			"arrStr" : travel_memo_array,
+                      			location_UUID : $('#location_uuid').val(),
+                      			schedule_UUID : $('#location_uuid').val(),
+                      			"location_ID": travel_memo_array[0],
+                      			"schdule_itemList2" : itemList_copy2}, // 일정표를 추가하면 배열에 저장됨
+                      		dataType: "json"
+                      	});
+                	} else {
+                		console.log("안되잖아..");
+                	}
+
+                }
+                if (result == 'fail') {
+                	console.log("수정했어..");
+                	
+                	$.ajax({
+                        type: "post",
+                        //url : "/member/memberIdChk", 이건 경로를 설정하는 거니까 뒤에있는 IdChk 메소드가 어느 위치에 있는 어떤 파일인지를 보고 작성할 것
+                        url: "/modifyChk",
+                        data: data,
+                        success: function (result) {
+                            //result = 0이면 , fail, 데이터 수정
+                            if (result != 'fail_modify') {
+                    // 수정하기
+                	if(travel_memo_array[0].includes('title1')){
+                    	$.ajax({
+                      		url: "/change",
+                      		type: "post",
+                      		dataType: "json", // 이 부분을 수정하지 마십시오
+                      		traditional: true,	// ajax 배열 넘기기 옵션!
+                      		data: {"arrStr" : travel_memo_array,
+                      			location_UUID : $('#location_uuid').val(),
+                      			location_ID : travel_memo_array[0],
+                      			schedule_UUID: location_uuid,
+                                schedule_ID: itemList_copy[0],
+                      			"schdule_itemList" : itemList_copy}, // 일정표를 추가하면 배열에 저장됨
+                      			success: function (data2) {
+                    		    	// DB에 정상적으로 수정되었다면, DB에 location_UUID와 location_ID 확인된다면 출력!
+                            		$.ajax({
+                            		    url: "/location_print",
+                            		    type: "post",
+                            		    dataType: "json", // 이 부분을 수정하지 마십시오
+                            		    traditional: true,
+                            		    data: {
+                            		    	"arrStr" : travel_memo_array,
+                                  			location_UUID : $('#location_uuid').val(),
+                                  			location_ID : travel_memo_array[0],
+                                  			schedule_UUID: location_uuid,
+                                            schedule_ID: itemList_copy[0],
+                                  			"schdule_itemList" : itemList_copy
+                            		    },success: function (data2) {
+                    		    	        // 여기서 data2를 사용하여 원하는 작업을 수행
+                    		    	        console.log("GET 수정 성공 확인", data2);
+                    		    	        
+                    		    	        // data2 객체 내의 배열에서 첫 번째 요소 추출
+                    		    	        var firstItem = data2.data2[0];
+
+                    		    	        // 필요한 데이터 추출
+                    		    	        var location_TITLE = firstItem.location_TITLE;
+                    		    	        var location_DATE = firstItem.location_DATE;
+                    		    	        var location_ID = firstItem.location_ID;
+                    		    	        // 이하 필요한 데이터 추가
+                    		    	        
+                    		    	        // HTML 요소에 데이터 출력
+                    		    	        $('#Title').text(location_TITLE);
+                    		    	        // 다른 필드에 대한 데이터도 출력하십시오.
+                    		    	    },
+                    		    	    error: function (xhr, status, error) {
+                    		    	        console.error("GET 요청 오류: " + error);
+                    		    	    }
+                            		});
+            		    	        
+            		    	    },
+            		    	    error: function (xhr, status, error) {
+            		    	        console.error("GET 요청 오류: " + error);
+            		    	    },
+                      		dataType: "json"
+                      	});
+                    	} else if (travel_memo_array[0].includes('title2')) {
+                    		$.ajax({
+                          		url: "/change",
+                          		type: "post",
+                          		traditional: true,	// ajax 배열 넘기기 옵션!
+                          		data: {"arrStr" : travel_memo_array,
+                          			location_UUID : $('#location_uuid').val(),
+                          			location_ID : travel_memo_array[0],
+                          			"schdule_itemList2" : itemList_copy2}, // 일정표를 추가하면 배열에 저장됨
+                          		dataType: "json"
+                          	});
+                    	} else {
+                    		console.log("title2 수정 안되잖아..");
+                    	}
+                            }
+                            else {
+                            	console.log("수정 안되잖아..");
+                            }
+                            
+                        } // success 종료
+
+                    }); // ajax 종료
+                }
+                
+
+                
+                else {
+                	console.log("schedule 수정 location 삽입을 같이 해야된다고");
+                	
+                	$.ajax({
+                        type: "post",
+                        //url : "/member/memberIdChk", 이건 경로를 설정하는 거니까 뒤에있는 IdChk 메소드가 어느 위치에 있는 어떤 파일인지를 보고 작성할 것
+                        url: "/modifyChk",
+                        data: data,
+                        success: function (result) {
+                            //result = 0이면 , fail, 데이터 수정
+                            if (result == 'successfail_modify') {
+                	
+                	// location 삽입, 수정
+                	$.ajax({
+            		    url: "/schedule_change",
+            		    type: "post",
+            		    dataType: "json", // 이 부분을 수정하지 마십시오
+            		    traditional: true,
+            		    data: {
+            		    	"arrStr": travel_memo_array,
+            		        "location_UUID": $('#location_uuid').val(),
+            		        "schedule_UUID": $('#location_uuid').val(),
+            		        "schedule_ID": itemList_copy[0],
+            		        "location_ID": travel_memo_array[0],
+            		        "schdule_itemList": itemList_copy
+            		    },success: function (data2) {
+            		    	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
+                    		$.ajax({
+                    		    url: "/location_print",
+                    		    type: "post",
+                    		    dataType: "json", // 이 부분을 수정하지 마십시오
+                    		    traditional: true,
+                    		    data: {
+                    		        "location_UUID": $('#location_uuid').val(),
+                    		        "location_ID": travel_memo_array[0]
+                    		    },success: function (data2) {
+            		    	        // 여기서 data2를 사용하여 원하는 작업을 수행
+            		    	        console.log("GET tlqkf 성공", data2);
+            		    	        
+            		    	        // data2 객체 내의 배열에서 첫 번째 요소 추출
+            		    	        var firstItem = data2.data2[0];
+
+            		    	        // 필요한 데이터 추출
+            		    	        var location_TITLE = firstItem.location_TITLE;
+            		    	        var location_DATE = firstItem.location_DATE;
+            		    	        var location_ID = firstItem.location_ID;
+            		    	        // 이하 필요한 데이터 추가
+            		    	        
+            		    	        // HTML 요소에 데이터 출력
+            		    	        $('#Title').text(location_TITLE);
+            		    	        // 다른 필드에 대한 데이터도 출력하십시오.
+            		    	    },
+            		    	    error: function (xhr, status, error) {
+            		    	        console.error("GET 요청 오류: " + error);
+            		    	    }
+                    		});
+    		    	        
+    		    	    },
+    		    	    error: function (xhr, status, error) {
+    		    	        console.error("GET 요청 오류: " + error);
+    		    	    },
+            		});
+                	
+                            }
+                            else {
+                            	console.log("수정 안되잖아..");
+                            }
+                            
+                        } // success 종료
+
+                    }); // ajax 종료
+                	
+              }
+                
+                
+                
+            } // success 종료
+        
+        
+
+        }); // ajax 종료
+
+        
+        
+        
+        
+    }    
+    document.getElementById("modal").style.display="none";
+    $('#memo_text').val("");
+	});
+
+
+document.getElementById("modal_close_btn").onclick = function() {
+    document.getElementById("modal").style.display="none";
+} 

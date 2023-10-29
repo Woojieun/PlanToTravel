@@ -1,6 +1,7 @@
 package com.ptt.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -43,5 +44,28 @@ public class LocationDAOImp implements LocationDAO {
         params.put("location_ID", location_ID);
         return sqlSession.selectOne(namespace+".idCheck", params);
     }
+    
+    public int scheduleCheck(String schedule_UUID, String schedule_ID) {
+    	Map<String, Object> params = new HashMap<>();
+        params.put("schedule_UUID", schedule_UUID);
+        params.put("schedule_ID", schedule_ID);
+        return sqlSession.selectOne(namespace+".scheduleCheck", params);
+    }
    
+    @Override
+    public void change(LocationVO vo) {
+        sqlSession.update(namespace+".change", vo);
+    }
+    
+    // 데이터 출력
+    @Override
+    public List<LocationVO> Location_print(Map<String, Object> map) throws Exception {
+    	return sqlSession.selectList(namespace + ".Location_print", map);
+    }
+    
+    // 데이터 출력2
+    @Override
+    public List<LocationVO> Location_print2() throws Exception {
+    	return sqlSession.selectList(namespace + ".Location_print2");
+    }
 }

@@ -22,4 +22,10 @@ public class ScheduleDAOImp implements ScheduleDAO{
 		// TODO Auto-generated method stub
 		sqlSession.insert(namespace+".insertSchedule", vo);
 	}
+
+	@Override
+	public void changeSchedule(ScheduleVO schedulevo) {
+		// TODO Auto-generated method stub
+		sqlSession.update(namespace+".changeSchedule", schedulevo);
+	}
 }

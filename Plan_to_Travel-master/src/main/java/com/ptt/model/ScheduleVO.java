@@ -3,6 +3,8 @@ package com.ptt.model;
 public class ScheduleVO {
 	private String schedule_UUID;
 	private String uID;
+	private String schedule_ID;
+	private String travel_TITLE;
 	private String schedule_ID1,schedule_ID2,schedule_ID3,schedule_ID4,schedule_ID5,
 	schedule_ID6,schedule_ID7,schedule_ID8,schedule_ID9,schedule_ID10,schedule_ID11,schedule_ID12;
 	
@@ -24,6 +26,22 @@ public class ScheduleVO {
 
 	public void setuID(String uID) {
 		this.uID = uID;
+	}
+	
+	public String getSchedule_ID() {
+		return schedule_ID;
+	}
+
+	public void setSchedule_ID(String schedule_ID) {
+		this.schedule_ID = schedule_ID;
+	}
+
+	public String getTravel_TITLE() {
+		return travel_TITLE;
+	}
+
+	public void setTravel_TITLE(String travel_TITLE) {
+		this.travel_TITLE = travel_TITLE;
 	}
 
 	public String getSchedule_ID1() {

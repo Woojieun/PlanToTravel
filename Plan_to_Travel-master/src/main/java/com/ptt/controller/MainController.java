@@ -23,10 +23,11 @@ public class MainController {
 	
 	//메인 페이지 이동
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public void mainPageGET() {
+	public String mainPageGET() {
 			
 		logger.info("main 페이지 진입");
 		
+		return "main";
 	}
 
 }

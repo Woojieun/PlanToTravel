@@ -1,6 +1,11 @@
 package com.ptt.dao;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.ptt.model.LocationVO;
+import com.ptt.model.ScheduleVO;
 
 public interface LocationDAO {
 	
@@ -10,5 +15,12 @@ public interface LocationDAO {
 
 	public int checkId(String location_UUID, String location_ID);
 
+	public void change(LocationVO vo);
 	
+	// 출력
+	public List<LocationVO> Location_print(Map<String, Object> map) throws Exception;
+	
+	
+	// 출력 연습
+		public List<LocationVO> Location_print2() throws Exception;
 }

@@ -63,7 +63,7 @@ public class ServeController {
         String uID_session = request.getParameter("uID");
         session.setAttribute("uID_session", uID_session);
         
-        return "redirect:/Plan_to_travel";
+        return "redirect:/main";
     }
     
 	
@@ -159,7 +159,7 @@ public class ServeController {
 		
 		log.info("join Service 성공");
 		
-		return "redirect:/main";
+		return "redirect:/Login";
 		
 	}
 	
