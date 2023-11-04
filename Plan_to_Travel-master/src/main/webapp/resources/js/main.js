@@ -27,7 +27,25 @@ $('#History').click(function() {
 		type : 'GET',
 		url : '/getHistory',
 		success:function(data) {
-			console.log(data + '데이터');
+			console.log(data + ' 데이터');
+			
+			// 'data' 값을 사용하여 텍스트를 추가
+			//$('#Offcanvas_History .offcanvas-body ul').html('<li>' + data + '</li>');
+			
+			// 'data' 값을 사용하여 텍스트를 엘리먼트에 추가
+			var ulElement = $('#Offcanvas_History .offcanvas-body ul');
+			ulElement.empty(); // 기존 내용 삭제
+
+			// 'data'의 결과를 반복하여 목록으로 표시
+			data.forEach(function(result) {
+				var liElement = '<li class="nav-item">';
+				liElement += '<button class="nav-link active" type="button" aria-current="page" id="History">' + result + '</button>';
+				liElement += '<button type="button" id="History_cancel"><i class="bi bi-x"></i></button>';
+				liElement += '</li>';
+				ulElement.append(liElement);
+			});
+
+            
 			$('#Offcanvas_History').offcanvas('show');
 			},
 			error : function () {
@@ -36,22 +54,6 @@ $('#History').click(function() {
 		}
 	});
 	console.log("2");
-});
-		
-
-$(document).ready(function () {
-    // "스케줄 History" 버튼 클릭 이벤트 처리
-    $("#History").click(function () {
-        // AJAX를 사용하여 스케줄 히스토리 데이터를 가져옵니다.
-        $.get("/scheduleHistory", function (data) {
-            // 콘솔에 데이터 출력
-            console.log(data);
-
-            // 받은 데이터로 offcanvas에 스케줄 히스토리를 표시합니다.
-            $("#Offcanvas_History .offcanvas-body").html(data);
-            $("#Offcanvas_History").offcanvas('show'); // offcanvas를 보이게 합니다.
-                });
-    });
 });
 
 

@@ -1,9 +1,11 @@
 package com.ptt.service;
 
+import java.util.List;
+
 import com.ptt.model.HistoryVO;
 
 public interface HistoryService {
 	
-	public HistoryVO selectHistory(HistoryVO history) throws Exception;
-
+	public List<HistoryVO> selectHistory(HistoryVO history) throws Exception;
+	
 }

@@ -16,7 +16,10 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!--TMAP 호출-->
 
+    <!-- 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=5A53DsGwddaFFyXqIjgmU8VGi3Vsx3Yb8DYy3kT7">
     </script>
 
@@ -73,7 +76,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </nav>
 
@@ -104,29 +106,26 @@
     </div>
 
 
-            <!-- 스케줄 History -->
-              <div class="offcanvas offcanvas-end" tabindex="-1" id="Offcanvas_History" aria-labelledby="offcanvasNavbarLabel">
-              <div class="offcanvas-header">
-<button type="button" class="btn btn-outline-primary" data-bs-dismiss="offcanvas" type="button"><i class="bi bi-arrow-left"></i></button> <!-- 뒤로가기 -->
-<button type="button" class="btn btn-outline-primary" title="스케줄 추가하기"><i class="bi bi-plus-lg"></i></button> <!-- 스케줄 History 추가 -->
-</div>
-        <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-            <li class="nav-item">
-              <button class="nav-link active" type="button" aria-current="page" id="History">부산 여행</button>
-              <button type="button" id="History_cancel"><i class="bi bi-x"></i></button> <!-- 스케줄 History 삭제 -->
-            </li>
-            <li class="nav-item">
-              <button class="nav-link active" type="button" aria-current="page" id="History">일본 후쿠오카</button>
-                            <button type="button" id="History_cancel"><i class="bi bi-x"></i></button> <!-- 스케줄 History 삭제 -->
-            </li>
-            <li class="nav-item">
-              <button class="nav-link active" type="button" aria-current="page" id="History">제주도 여행</button>
-                            <button type="button" id="History_cancel"><i class="bi bi-x"></i></button> <!-- 스케줄 History 삭제 -->
-            </li>
-          </ul>
+    <!-- 스케줄 History -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="Offcanvas_History" aria-labelledby="offcanvasNavbarLabel" styles="color: black;">
+        <div class="offcanvas-header">
+            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="offcanvas" type="button"><i
+                    class="bi bi-arrow-left"></i></button> <!-- 뒤로가기 -->
+            <button type="button" class="btn btn-outline-primary" title="스케줄 추가하기"><i
+                    class="bi bi-plus-lg"></i></button> <!-- 스케줄 History 추가 -->
         </div>
-      </div>
+        <div class="offcanvas-body" styles="color: black;">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <!--  
+                <li class="nav-item">
+                    <button class="nav-link active" type="button" aria-current="page" id="History">부산 여행</button>
+                    <button type="button" id="History_cancel"><i class="bi bi-x"></i></button> //삭제 버튼
+                </li>
+               
+                -->
+            </ul>
+        </div>
+    </div>
 
 
     <!-- 여행 일지 -->
