@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ptt.mapper.HistoryMapper;
 import com.ptt.model.HistoryVO;
+import com.ptt.model.ScheduleVO;
 
 @Service
 public class HistoryServicelmp implements HistoryService {
@@ -16,15 +17,15 @@ public class HistoryServicelmp implements HistoryService {
 	
 	/*히스토리 목록 불러오기 기능*/
 	@Override
-	/*
-	public HistoryVO selectHistory(HistoryVO history) throws Exception {
-
-		return historymapper.selectHistory(history);
-	}
-	*/
-	
     public List<HistoryVO> selectHistory(HistoryVO history) throws Exception {
         return historymapper.selectHistory(history);
+    }
+	
+
+    
+    @Override
+    public List<ScheduleVO> getSchedule(String schedule_UUID) {
+        return historymapper.getSchedule(schedule_UUID);
     }
 
 }

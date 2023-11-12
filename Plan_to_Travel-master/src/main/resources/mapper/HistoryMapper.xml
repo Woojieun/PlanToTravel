@@ -12,4 +12,11 @@
       
 </select>
 
+<!-- History 클릭 후 스케줄 표 불러오기?.? -->
+<select id="getSchedule" parameterType="String" resultType="com.ptt.model.ScheduleVO">
+	SELECT uID, schedule_ID1, schedule_ID2, schedule_ID3, schedule_ID4, schedule_ID5, schedule_ID6, schedule_ID7, schedule_ID8, schedule_ID9, schedule_ID10, schedule_ID11, schedule_ID12
+	FROM schedule
+    WHERE schedule_UUID = #{schedule_UUID}
+</select>
+
 </mapper>
