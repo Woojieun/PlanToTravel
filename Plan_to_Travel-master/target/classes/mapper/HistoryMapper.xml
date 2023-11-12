@@ -8,7 +8,7 @@
 <!-- History 목록 불러오기 기능 -->
 <select id="selectHistory" resultType="com.ptt.model.HistoryVO">
 
-	select travel_TITLE from schedule where uID = #{uID}
+	select travel_TITLE, schedule_UUID from schedule where uID = #{uID}
       
 </select>
 
