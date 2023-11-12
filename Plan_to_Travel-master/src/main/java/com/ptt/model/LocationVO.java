@@ -86,7 +86,7 @@ public void setLocation_REVIEW(String location_REVIEW) {
 public String toString() {
     return "LocationVo "
     		+ "[location_UUID=" + location_UUID + ", uID=" + uID + ", location_ID=" + location_ID + ", location_TITLE=" + location_TITLE + ", location_DATE=" + location_DATE + 
-    		", location_TIME=" + location_TIME + ", location_NAME=" + location_NAME + 
+    		", location_TIME=" + location_TIME + ", location_NAME=" + location_NAME + ", location_LAT=" + location_LAT + ", location_LNG=" + location_LNG + 
     		", location_MEMO=" + location_MEMO + ", location_REVIEW=" + location_REVIEW + "]";
 }
 }

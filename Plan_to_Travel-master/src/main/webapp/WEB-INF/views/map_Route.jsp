@@ -1294,11 +1294,11 @@ lat
             });
         });
     }
-    // (경로API공통) API 결과값 기록
+ // (경로API공통) API 결과값 기록
     function writeApiResultHtml(type, string) {
-        if($("#apiResult div#results").length == 0) {
+        if ($("#apiResult div#results").length == 0) {
             $("#apiResult").empty();
-            $("#apiResult").html('
+            $("#apiResult").html(`
                 <div class="_result_panel_bg">
                     <div class="_result_panel_scroll">
                         <div class="__space_10_h"></div>
@@ -1308,67 +1308,71 @@ lat
                         <div id="apiRoutesMulti"></div>
                     </div>
                 </div>
-            ');
+            `);
         }
-        if(type.startsWith("apiRoutesCar_")) {
-            if($("#apiResult #apiRoutesCar").find("#"+type).length == 0 ) {
-                $("#apiResult #apiRoutesCar").append('<div id="${type}">${string}</div>');
+        if (type.startsWith("apiRoutesCar_")) {
+            if ($("#apiResult #apiRoutesCar").find("#" + type).length == 0) {
+                $("#apiResult #apiRoutesCar").append(`<div id="${type}">${string}</div>`);
             }
-        } else if(type.startsWith("apiRouteSequential_") || type.startsWith("routesOptimization")) {
-            if($("#apiResult #apiRoutesMulti").find("#"+type).length == 0 ) {
-                $("#apiResult #apiRoutesMulti").append('<div id="${type}">${string}</div>');
+        } else if (type.startsWith("apiRouteSequential_") || type.startsWith("routesOptimization")) {
+            if ($("#apiResult #apiRoutesMulti").find("#" + type).length == 0) {
+                $("#apiResult #apiRoutesMulti").append(`<div id="${type}">${string}</div>`);
             }
         } else {
-            $("#apiResult").find("#"+type).html(string);
+            $("#apiResult").find("#" + type).html(string);
         }
-    }   
+    }
     // (API 공통) 맵에 그려져있는 라인, 마커, 팝업을 지우는 함수
     function reset() {
         // 기존 라인 지우기
-        if(lineArr.length > 0){
-            for(var i in lineArr) {
+        if (lineArr.length > 0) {
+            for (var i in lineArr) {
                 lineArr[i].setMap(null);
             }
             //지운뒤 배열 초기화
             lineArr = [];
         }
-    
+
         // 기존 마커 지우기
-        if(markerStart) {
+        if (markerStart) {
             markerStart.setMap(null);
         }
-        if(markerEnd) {
+        if (markerEnd) {
             markerEnd.setMap(null);
         }
-        if(markerArr.length > 0){
-            for(var i in markerArr){
+        if (markerArr.length > 0) {
+            for (var i in markerArr) {
                 markerArr[i].setMap(null);
             }
             markerArr = [];
         }
         // poi 마커 지우기
-        if(markerPoi.length > 0){
-            for(var i in markerPoi){
+        if (markerPoi.length > 0) {
+            for (var i in markerPoi) {
                 markerPoi[i].setMap(null);
             }
             markerPoi = [];
         }
         // 경로찾기 point 마커 지우기
-        if(markerPoint.length > 0){
-            for(var i in markerPoint){
+        if (markerPoint.length > 0) {
+            for (var i in markerPoint) {
                 markerPoint[i].setMap(null);
             }
             markerPoint = [];
         }
-        
+
         // 기존 팝업 지우기
-        if(labelArr.length > 0){
-            for(var i in labelArr){
+        if (labelArr.length > 0) {
+            for (var i in labelArr) {
                 labelArr[i].setMap(null);
             }
             labelArr = [];
         }
     }
+
+
+    
+    
 </script>
 </body>
 </html>

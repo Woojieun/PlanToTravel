@@ -1,9 +1,13 @@
 package com.ptt.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ptt.mapper.UserMapper;
+import com.ptt.model.LocationVO;
 import com.ptt.model.UserVO;
 
 @Service
@@ -30,4 +34,9 @@ public class UserServiceImpl implements UserService {
         
         return usermapper.userLogin(user);
     }
+    
+	public UserVO user_data(String uID_session) throws Exception {
+
+		return usermapper.user_data(uID_session);
+	}
 }

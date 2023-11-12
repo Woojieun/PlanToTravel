@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.ptt.mapper.LocationMapper;
 import com.ptt.model.LocationVO;
+import com.ptt.model.ScheduleVO;
 
 @Service
 public class LocationServiceImpl implements LocationService {
@@ -64,7 +65,7 @@ public class LocationServiceImpl implements LocationService {
 	
 	
 	@Override
-	public boolean schedulemodifyCheck(String schedule_UUID, String schedule_ID) throws Exception {
+	public int schedulemodifyCheck(String schedule_UUID, String schedule_ID) throws Exception {
 		Map<String, Object> params = new HashMap<>();
         params.put("schedule_UUID", schedule_UUID);
         params.put("schedule_ID", schedule_ID);
@@ -72,16 +73,21 @@ public class LocationServiceImpl implements LocationService {
         int count = locationMapper.schedulemodifyCheck(params);
 
         // count가 1 이상이면 데이터가 이미 존재하므로 사용할 수 없음을 의미
-        return (int) count <= 0;
+        return count;
 		/* return locationMapper.idCheck(location_UUID, location_ID); */
 	}
+	
+	
 	public List<LocationVO> Location_print(Map<String, Object> map) throws Exception {
 
 		return locationMapper.Location_print(map);
 	}
 	
-	public List<LocationVO> Location_print2() throws Exception {
-
-		return locationMapper.Location_print2();
+	@Override
+	public List<LocationVO> Location_latlng(Map<String, Object> response) {
+		return locationMapper.Location_latlng(response);
 	}
+
+
+	
 }

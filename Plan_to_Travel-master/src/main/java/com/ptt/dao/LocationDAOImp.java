@@ -65,7 +65,7 @@ public class LocationDAOImp implements LocationDAO {
     
     // 데이터 출력2
     @Override
-    public List<LocationVO> Location_print2() throws Exception {
-    	return sqlSession.selectList(namespace + ".Location_print2");
+    public List<LocationVO> Location_latlng(Map<String, Object> response) throws Exception {
+    	return sqlSession.selectList(namespace + ".Location_latlng", response);
     }
 }

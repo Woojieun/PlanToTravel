@@ -235,5 +235,17 @@ public class ScheduleVO {
 	public void setSchedule_TITLE12(String schedule_TITLE12) {
 		this.schedule_TITLE12 = schedule_TITLE12;
 	}
+
 	
+	@Override
+	public String toString() {
+	    return "ScheduleVo "
+	    		+ "[schedule_UUID=" + schedule_UUID + ", uID=" + uID + "\n" + ", schedule_ID=" + schedule_ID + ", travel_TITLE=" + travel_TITLE + "\n" + ", schedule_ID1=" + schedule_ID1 + 
+	    		", schedule_TITLE1=" + schedule_TITLE1 + "\n" + ", schedule_ID2=" + schedule_ID2 + ", schedule_TITLE2=" + schedule_TITLE2 + "\n" + ", schedule_ID3=" + schedule_ID3 + 
+	    		", schedule_TITLE3=" + schedule_TITLE3 + "\n" + ", schedule_ID4=" + schedule_ID4 + ", schedule_TITLE4=" + schedule_TITLE4 + "\n" + ", schedule_ID5=" + schedule_ID5 + 
+	    		", schedule_TITLE5=" + schedule_TITLE5 + "\n" + ", schedule_ID6=" + schedule_ID6 + ", schedule_TITLE6=" + schedule_TITLE6 + "\n" + ", schedule_ID7=" + schedule_ID7 +
+	    		", schedule_TITLE7=" + schedule_TITLE7 + "\n" + ", schedule_ID8=" + schedule_ID8 + ", schedule_TITLE8=" + schedule_TITLE8 + "\n" + ", schedule_ID9=" + schedule_ID9 +
+	    		", schedule_TITLE9=" + schedule_TITLE9 + "\n" + ", schedule_ID10=" + schedule_ID10 + ", schedule_TITLE10=" + schedule_TITLE10 + "\n" + ", schedule_ID11=" + schedule_ID11 +
+	    		", schedule_TITLE11=" + schedule_TITLE11 + "\n" + ", schedule_ID12=" + schedule_ID12 + ", schedule_TITLE12=" + schedule_TITLE12 + "]";
+	}
 }

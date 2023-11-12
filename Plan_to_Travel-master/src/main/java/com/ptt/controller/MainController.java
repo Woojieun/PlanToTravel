@@ -27,7 +27,7 @@ public class MainController {
 			
 		logger.info("main 페이지 진입");
 		
-		return "main";
+		return "Plan_to_travel";
 	}
 
 }

@@ -21,4 +21,9 @@
         select uID, uPW, uEMAIL from user where uID = #{uID} and uPW = #{uPW}
       
     </select>
+    
+    
+      	  	<select id="user_data" resultType="com.ptt.model.UserVO">
+  	select * from user where uID = #{uID_session}
+  	</select>
   </mapper>

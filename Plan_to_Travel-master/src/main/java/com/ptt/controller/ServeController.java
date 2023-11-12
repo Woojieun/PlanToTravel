@@ -24,7 +24,6 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Controller
-@RequestMapping(value = "/")
 public class ServeController {
 	private static final Logger log = LoggerFactory.getLogger(ServeController.class);
 	
@@ -35,15 +34,15 @@ public class ServeController {
     private JavaMailSender mailSender;
 	
 	//로그인 페이지로 이동
-	@RequestMapping(value = "/Login", method = RequestMethod.GET)
-	public void loginPageGET() {
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String loginPageGET() {
 			
 		log.info("Login 페이지 진입");
-		
+		return "Login";
 	}
 	
     /* 로그인 */
-    @RequestMapping(value="login", method=RequestMethod.POST)
+    @RequestMapping(value="/login", method=RequestMethod.POST)
     public String loginPOST(HttpServletRequest request, UserVO user, RedirectAttributes rttr) throws Exception{
         
     	HttpSession session = request.getSession();
@@ -63,7 +62,7 @@ public class ServeController {
         String uID_session = request.getParameter("uID");
         session.setAttribute("uID_session", uID_session);
         
-        return "redirect:/main";
+        return "redirect:/Plan_to_travel";
     }
     
 	
@@ -159,7 +158,7 @@ public class ServeController {
 		
 		log.info("join Service 성공");
 		
-		return "redirect:/Login";
+		return "redirect:/main";
 		
 	}
 	

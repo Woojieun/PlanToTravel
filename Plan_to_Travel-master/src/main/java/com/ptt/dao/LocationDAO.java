@@ -20,7 +20,5 @@ public interface LocationDAO {
 	// 출력
 	public List<LocationVO> Location_print(Map<String, Object> map) throws Exception;
 	
-	
-	// 출력 연습
-		public List<LocationVO> Location_print2() throws Exception;
+	public List<LocationVO> Location_latlng(Map<String, Object> response) throws Exception;
 }

@@ -1,5 +1,8 @@
 package com.ptt.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -28,4 +31,10 @@ public class ScheduleDAOImp implements ScheduleDAO{
 		// TODO Auto-generated method stub
 		sqlSession.update(namespace+".changeSchedule", schedulevo);
 	}
+	
+	// 데이터 출력
+    @Override
+    public List<ScheduleVO> Schedule_print(Map<String, Object> response) throws Exception {
+    	return sqlSession.selectList(namespace + ".Schedule_print", response);
+    }
 }

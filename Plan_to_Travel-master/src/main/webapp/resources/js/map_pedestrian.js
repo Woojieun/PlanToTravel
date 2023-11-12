@@ -1072,13 +1072,13 @@ lat
     
     //(경로API공통) 엔터키 통합검색 함수
     function onKeyupSearchPoi(inputText) {
-        /*
-        if(($("#searchStartAddress").val() == "") || ($("#searchEndAddress").val() == "")) {
+        
+/*        if(($("#searchStartAddress").val() == "") || ($("#searchEndAddress").val() == "")) {
             $("._btn_action").addClass('__color_grey');
         } else {
             $("._btn_action").removeClass('__color_grey');
-        }
-        */
+        }*/
+        
         $("._btn_action").addClass('__color_grey');
         if($(inputText).next('button').hasClass('_delete_address_btn')) {
             $(inputText).val('');
@@ -1213,7 +1213,7 @@ lat
             }
             redrawRouteMarker();
         }
-        /* 검색버튼 활성화/비활성화 체크  */
+        // 검색버튼 활성화/비활성화 체크  */
         var startx = $("#startx").val();
         var starty = $("#starty").val();
         var endx = $("#endx").val();
@@ -1246,7 +1246,7 @@ lat
         }
         redrawRouteMarker();
     }
-    /* 경로검색시 경유지 마커 다시 그림 */
+    // 경로검색시 경유지 마커 다시 그림 
     function redrawRouteMarker() {
         if(markerWp.length > 0){
             for(var i in markerWp) {
@@ -1308,6 +1308,7 @@ lat
             $("#apiResult").find("#"+type).html(string);
         }
     }   
+    
     // (API 공통) 맵에 그려져있는 라인, 마커, 팝업을 지우는 함수
     function reset() {
         // 기존 라인 지우기
@@ -1355,3 +1356,4 @@ lat
             labelArr = [];
         }
     }
+    

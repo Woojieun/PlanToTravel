@@ -1,77 +1,90 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isELIgnored="false"%>
 <!-- 선언부 -->
 
-<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!doctype html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <link href="resources/css/map_pedestrian.css" rel="stylesheet" />
-    <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=5A53DsGwddaFFyXqIjgmU8VGi3Vsx3Yb8DYy3kT7 autoload=false"></script><!--  autoload=false -->
-    
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+<meta charset="utf-8">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<link href="resources/css/map_pedestrian.css" rel="stylesheet" />
+<script type="text/javascript"
+	src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=5A53DsGwddaFFyXqIjgmU8VGi3Vsx3Yb8DYy3kT7 autoload=false"></script>
+<!--  autoload=false -->
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 <title>보행자 경로 + 경유지</title>
 
 </head>
 
 
 <!--MAIN HOME UI-->
-
 <body>
-<div id="map_div_ped">
-    <input type="hidden" id="searchAddress_ped" />
-    <input type="hidden" id="startx_ped" />
-    <input type="hidden" id="starty_ped" />
-    <input type="hidden" id="endx_ped" />
-    <input type="hidden" id="endy_ped" />
-    <div class="_map_layer_overlay">
-        <div class="__space_15_h"></div>
-        <div class="_map_overlay_row">
-            <input type="text" id="searchStartAddress_ped" class="_search_entry _search_entry_short" placeholder="출발지를 입력하세요" onkeyup="onKeyupSearchPoi_ped(this);">
-            <button onclick="clickSearchPois_ped(this);" class="_search_address_btn_ped btn btn-primary btn-sm" style="margin-bottom: 14px; pointer-events: all; cursor: pointer;">
-            출발
-            </button>
-            <div class="__space_13_w"></div>
-            <input type="text" id="searchEndAddress_ped" class="_search_entry _search_entry_short" placeholder="목적지를 입력하세요" onkeyup="onKeyupSearchPoi_ped(this);">
-            <button onclick="clickSearchPois_ped(this);" class="_search_address_btn_ped btn btn-primary btn-sm" style="margin-top: 53px; margin-bottom: 14px; pointer-events: all; cursor: pointer;">
-            도착
-            </button>
-            <div class="__space_10_w"></div>
-            <button class="_btn_action_ped _btn_action-search __color_grey btn btn-primary btn-sm" onclick="apiSearchRoutes_ped();">검색</button>
-        </div>
-        <div id="wpList">
-            <div class="__space_10_h"></div>
-            <div class="waypoint_input _map_overlay_row" data-idx_ped="0">
-                <input type="hidden" name="multipos" />
-                <input type="text" class="_search_entry_text _search_entry_short" style="margin-top: 10px;" onkeyup="onKeyupSearchPoi_ped(this);" placeholder="경유지를 입력하세요.">
-                <button onclick="clickSearchPois_ped(this);" class="_search_address_btn_ped btn btn-primary btn-sm" style="width: 60px; margin-top: 10px; margin-left: 5px; margin-bottom: 14px; pointer-events: all; cursor: pointer;">경유지</button>
-                <div style="width: 90px;"></div>
-                <!-- <button onclick="onMultiButton_ped(this);" class="_search_address_btn_ped" style="margin-top: 14px; margin-bottom: 14px; pointer-events: all; cursor: pointer;"></button> -->
-            </div>
-        </div>
-        
-        <div class="scroll_box_pedestrian">
-        <div class="__flex_expand"></div>
-        <div id="apiResult_ped" class="_map_overlay_row">
-            <div class="_result_panel_bg_ped ">
-                <div class="_result_panel">
-                        
-                    <div class="__disable_text">경유지 경로 안내</div>
-                                        </div>
-            </div>
-        </div>
-        </div>
-    </div>
-</div>
+	<div id="map_div_ped">
+		<input type="hidden" id="searchAddress_ped" /> <input type="hidden"
+			id="startx_ped" /> <input type="hidden" id="starty_ped" /> <input
+			type="hidden" id="endx_ped" /> <input type="hidden" id="endy_ped" />
+		<div class="_map_layer_overlay">
+			<div class="__space_15_h"></div>
+			<div class="_map_overlay_row">
+				<input type="text" id="searchStartAddress_ped"
+					class="_search_entry _search_entry_short" placeholder="출발지를 입력하세요"
+					onkeyup="onKeyupSearchPoi_ped(this);">
+				<button onclick="clickSearchPois_ped(this);"
+					class="_search_address_btn_ped btn btn-primary btn-sm"
+					style="margin-bottom: 14px; pointer-events: all; cursor: pointer;">
+					출발</button>
+				<div class="__space_13_w"></div>
+				<input type="text" id="searchEndAddress_ped"
+					class="_search_entry _search_entry_short" placeholder="목적지를 입력하세요"
+					onkeyup="onKeyupSearchPoi_ped(this);">
+				<button onclick="clickSearchPois_ped(this);"
+					class="_search_address_btn_ped btn btn-primary btn-sm"
+					style="margin-top: 53px; margin-bottom: 14px; pointer-events: all; cursor: pointer;">
+					도착</button>
+				<div class="__space_10_w"></div>
+				<button
+					class="_btn_action_ped _btn_action-search __color_grey btn btn-primary btn-sm"
+					onclick="apiSearchRoutes_ped();">검색</button>
+			</div>
+			<div id="wpList">
+				<div class="__space_10_h"></div>
+				<div class="waypoint_input _map_overlay_row" data-idx_ped="0">
+					<input type="hidden" name="multipos" /> <input type="text"
+						class="_search_entry_text _search_entry_short"
+						style="margin-top: 10px;" onkeyup="onKeyupSearchPoi_ped(this);"
+						placeholder="경유지를 입력하세요.">
+					<button onclick="clickSearchPois_ped(this);"
+						class="_search_address_btn_ped btn btn-primary btn-sm"
+						style="width: 60px; margin-top: 10px; margin-left: 5px; margin-bottom: 14px; pointer-events: all; cursor: pointer;">경유지</button>
+					<div style="width: 90px;"></div>
+					<!-- <button onclick="onMultiButton_ped(this);" class="_search_address_btn_ped" style="margin-top: 14px; margin-bottom: 14px; pointer-events: all; cursor: pointer;"></button> -->
+				</div>
+			</div>
 
-<script>
+			<div class="scroll_box_pedestrian">
+				<div class="__flex_expand"></div>
+				<div id="apiResult_ped" class="_map_overlay_row">
+					<div class="_result_panel_bg_ped ">
+						<div class="_result_panel">
+							<div id="result"></div>
+							<div class="__disable_text">경유지 경로 안내</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+
+	var map_ped;
 function map_div_pedestrian_show(){	 
 	$('#map_div_car').hide();
   	$('#map_div_home').hide();
@@ -79,7 +92,7 @@ function map_div_pedestrian_show(){
   	$('.place_add').hide();
   	};
   	
-    var map_ped = new Tmapv2.Map("map_div_ped", { // 지도가 생성될 div
+    map_ped = new Tmapv2.Map("map_div_ped", { // 지도가 생성될 div
         center: new Tmapv2.LatLng(37.570028, 126.986072),    // 지도의 중심좌표
         width : "500px", // 지도의 넓이
         height : "740px", // 지도의 높이
@@ -243,7 +256,10 @@ lat
         });
         // tData.getAddressFromGeoJson(lat, lon, optionObj, params_ped);
     });
-    map_ped.addListener("click", function onClick(evt) {
+    map_ped.addListener("click", function onClick(evt) {    
+    	
+    	
+    	
         var mapLatLng_ped = evt.latLng;
         //기존 마커 삭제
         marker1_ped.setMap(null);
@@ -1308,13 +1324,6 @@ lat
         // reset();
     }
     
-    
-    
-    
-    
-    
-    
-    
     function clearWaypoint_ped(destObj_ped) {
         const currentSize_ped = $(".waypoint_input._wp_not_empty").length;
         console.log("clearWaypoint_ped: ", currentSize_ped);
@@ -1447,6 +1456,192 @@ lat
             labelArr_ped = [];
         }
     }
+ 
+    $(document).on('click', "#date1", function () {
+        $.ajax({
+            url: '/Schedule_print',
+            type: 'post',
+            data: {
+                schedule_UUID: $('#location_uuid').val(),
+                schedule_ID: itemList_copy[0]
+            },
+            success: function (response) {
+            	var map;
+            	var marker_s, marker_e, marker_p1, marker_p2;
+            	var totalMarkerArr = [];
+            	var drawInfoArr = [];
+            	var resultdrawArr = [];
+
+            		// 2. 시작, 도착 심볼찍기
+            		// 시작
+            		marker_s = new Tmapv2.Marker(
+            				{
+            					position : new Tmapv2.LatLng(37.564991,126.983937),
+            					icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
+            					iconSize : new Tmapv2.Size(24, 38),
+            					map : map_ped
+            				});
+
+            		// 도착
+            		marker_e = new Tmapv2.Marker(
+            				{
+            					position : new Tmapv2.LatLng(37.566158,126.988940),
+            					icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
+            					iconSize : new Tmapv2.Size(24, 38),
+            					map : map_ped
+            				});
+            		
+            		// 경유지 마커 추가
+            		var passListMarker = new Tmapv2.Marker({
+            		    position: new Tmapv2.LatLng(37.56520450, 126.98702028),
+            		    icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png", // adjust the icon URL as needed
+            		    iconSize: new Tmapv2.Size(24, 38),
+            		    map: map_ped
+            		});
+
+            		// 3. 경로탐색 API 사용요청
+            		var headers = {}; 
+            			headers["appKey"]="5A53DsGwddaFFyXqIjgmU8VGi3Vsx3Yb8DYy3kT7";
+
+            		$.ajax({
+            				method : "POST",
+            				headers : headers,
+            				url : "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result",
+            				async : false,
+            				data : {
+            					"startX" : "126.983937",
+            					"startY" : "37.564991",
+            					"endX" : "126.988940",
+            					"endY" : "37.566158",
+            					"reqCoordType" : "WGS84GEO",
+            					"resCoordType" : "EPSG3857",
+            					"startName" : "출발지",
+            					"endName" : "도착지",
+            						"passList": "126.98702028,37.56520450" // 임의의 경유지 추가
+            				},
+            				success : function(response) {
+            					var resultData = response.features;
+
+            					//결과 출력
+            					var tDistance = "총 거리 : "
+            							+ ((resultData[0].properties.totalDistance) / 1000)
+            									.toFixed(1) + "km,";
+            					var tTime = " 총 시간 : "
+            							+ ((resultData[0].properties.totalTime) / 60)
+            									.toFixed(0) + "분";
+
+            					$("#result").text(tDistance + tTime);
+            					
+            					//기존 그려진 라인 & 마커가 있다면 초기화
+            					if (resultdrawArr.length > 0) {
+            						for ( var i in resultdrawArr) {
+            							resultdrawArr[i]
+            									.setMap(null);
+            						}
+            						resultdrawArr = [];
+            					}
+            					
+            					drawInfoArr = [];
+
+            					for ( var i in resultData) { //for문 [S]
+            						var geometry = resultData[i].geometry;
+            						var properties = resultData[i].properties;
+            						var polyline_;
+
+
+            						if (geometry.type == "LineString") {
+            							for ( var j in geometry.coordinates) {
+            								// 경로들의 결과값(구간)들을 포인트 객체로 변환 
+            								var latlng = new Tmapv2.Point(
+            										geometry.coordinates[j][0],
+            										geometry.coordinates[j][1]);
+            								// 포인트 객체를 받아 좌표값으로 변환
+            								var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
+            										latlng);
+            								// 포인트객체의 정보로 좌표값 변환 객체로 저장
+            								var convertChange = new Tmapv2.LatLng(
+            										convertPoint._lat,
+            										convertPoint._lng);
+            								// 배열에 담기
+            								drawInfoArr.push(convertChange);
+            							}
+            						} else {
+            							var markerImg = "";
+            							var pType = "";
+            							var size;
+
+            							if (properties.pointType == "S") { //출발지 마커
+            								markerImg = "/upload/tmap/marker/pin_r_m_s.png";
+            								pType = "S";
+            								size = new Tmapv2.Size(24, 38);
+            							} else if (properties.pointType == "E") { //도착지 마커
+            								markerImg = "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png";
+            								pType = "E";
+            								size = new Tmapv2.Size(24, 38);
+            							} else { //각 포인트 마커
+            								markerImg = "http://topopen.tmap.co.kr/imgs/point.png";
+            								pType = "P";
+            								size = new Tmapv2.Size(8, 8);
+            							}
+            							
+            							// 경로들의 결과값들을 포인트 객체로 변환 
+            							var latlon = new Tmapv2.Point(
+            									geometry.coordinates[0],
+            									geometry.coordinates[1]);
+
+            							// 포인트 객체를 받아 좌표값으로 다시 변환
+            							var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
+            									latlon);
+
+            							var routeInfoObj = {
+            								markerImage : markerImg,
+            								lng : convertPoint._lng,
+            								lat : convertPoint._lat,
+            								pointType : pType
+            							};
+
+            							// Marker 추가
+            							marker_p = new Tmapv2.Marker(
+            									{
+            										position : new Tmapv2.LatLng(
+            												routeInfoObj.lat,
+            												routeInfoObj.lng),
+            										icon : routeInfoObj.markerImage,
+            										iconSize : size,
+            										map : map_ped
+            									});
+            						}
+            					}//for문 [E]
+            					drawLine(drawInfoArr);
+            				},
+            				error : function(request, status, error) {
+            					console.log("code:" + request.status + "\n"
+            							+ "message:" + request.responseText + "\n"
+            							+ "error:" + error);
+            				}
+            			});
+
+
+            	function addComma(num) {
+            		var regexp = /\B(?=(\d{3})+(?!\d))/g;
+            		return num.toString().replace(regexp, ',');
+            	}
+            	
+            	function drawLine(arrPoint) {
+            		var polyline_;
+
+            		polyline_ = new Tmapv2.Polyline({
+            			path : arrPoint,
+            			strokeColor : "#DD0000",
+            			strokeWeight : 6,
+            			map : map_ped
+            		});
+            		resultdrawArr.push(polyline_);
+            	}
+            }
+        });
+    });
+
 </script>
 </body>
 </html>

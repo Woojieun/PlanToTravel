@@ -9,6 +9,8 @@ public class HistoryVO {
 		private String uID;
 		//schedule 테이블의 uID
 		private String travel_TITLE;
+		//schedule 테이블의 schedule_UUID
+		private String schedule_UUID;
 
 		//getter, setter 메소드 생성 : 데이터를 불러오고 적용할 때 사용한다. 
 		
@@ -36,9 +38,18 @@ public class HistoryVO {
 			this.travel_TITLE = travel_TITLE;
 		}
 		
+		public String getSchedule_UUID() {
+			return schedule_UUID;
+		}
+		public void setSchedule_UUID(String schedule_UUID) {
+			this.schedule_UUID = schedule_UUID;
+		}
+		
+		
+		
 		@Override
 		public String toString() {
-			return "HistoryVO [travel_TITLE=" + travel_TITLE + "]";
+			return "HistoryVO [travel_TITLE=" + travel_TITLE + ", schedule_UUID=" + schedule_UUID + "]";
 		}
-
+		
 }

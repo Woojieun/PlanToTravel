@@ -1,44 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>map_search2</title>
 <link href="resources/css/map_search.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=5A53DsGwddaFFyXqIjgmU8VGi3Vsx3Yb8DYy3kT7 autoload=false" ></script>
-  
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script
+	src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=5A53DsGwddaFFyXqIjgmU8VGi3Vsx3Yb8DYy3kT7 autoload=true"></script>
 </head>
 <body>
-<div id="map_div_home">
-    <div class="_map_layer_overlay_home">
-        <div class="__space_10_h_home"></div>
-        <div class="_map_overlay_row_home">
-            <input type="text" class="_search_entry" id="searchAddress_home" placeholder="목적지를 입력하세요" onkeyup="onKeyupSearchLocation_home(this);">
-            <button class="btn btn-primary btn-sm" onclick="apiSearchLocation_home();" style="margin-top: 14px; margin-bottom: 14px;    pointer-events: all;" >
-                	검색<img src="/lib/img/_icon/search.svg" alt="">
-            </button>
-        </div>
-    </div>
-    
-            
-    <div class="scroll_box_home">
-<div class="__flex_expand_home"></div>
-        <div id="apiResult_home" class="_map_overlay_row_home">
-            <div class="_result_panel_bg_home ">
-                <div class="_result_panel_home">
-                    <div class="__disable_text_home">검색할 주소를 입력하세요.</div>
-                    <div class="__disable_text_home">마우스 왼쪽버튼으로 "주소찾기" 장소를 선택하세요.</div>
-                    <div class="__disable_text_home">카테고리를 선택하세요.</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
+	<div id="map_div_home">
+		<div class="_map_layer_overlay_home">
+			<div class="__space_10_h_home"></div>
+			<div class="_map_overlay_row_home">
+				<input type="text" class="_search_entry" id="searchAddress_home"
+					placeholder="목적지를 입력하세요"
+					onkeyup="onKeyupSearchLocation_home(this);">
+				<button class="btn btn-primary btn-sm"
+					onclick="apiSearchLocation_home();"
+					style="margin-top: 14px; margin-bottom: 14px; pointer-events: all;">
+					검색<img src="/lib/img/_icon/search.svg" alt="">
+				</button>
+			</div>
+		</div>
 
 
-  <script>
+		<div class="scroll_box_home">
+			<div class="__flex_expand_home"></div>
+			<div id="apiResult_home" class="_map_overlay_row_home">
+				<div class="_result_panel_bg_home ">
+					<div class="_result_panel_home">
+						<div class="__disable_text_home">검색할 주소를 입력하세요.</div>
+						<div class="__disable_text_home">마우스 왼쪽버튼으로 "주소찾기" 장소를
+							선택하세요.</div>
+						<div class="__disable_text_home">카테고리를 선택하세요.</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+  var markerLayer; // 전역 변수로 선언
+  var map_div_home;
+  var marker1_home;
 
   function map_div_home_show(){	 
 		$('#map_div_home').show();
@@ -46,7 +54,7 @@
 	  	$('#map_div_ped').hide();
 	  	};
   	
-  var map_div_home = new Tmapv2.Map("map_div_home", { // 지도가 생성될 div
+  map_div_home = new Tmapv2.Map("map_div_home", { // 지도가 생성될 div
       center: new Tmapv2.LatLng(37.57376650837833, 126.98504447937053),    // 지도의 중심좌표
       width : "500px", // 지도의 넓이
       height : "740px", // 지도의 높이
@@ -65,7 +73,7 @@
   var markerPoint_home = [];
   var markerArr_home = [], lineArr_home = [], labelArr_home = [];
   var marker1_home = new Tmapv2.Marker({
-      icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_a.png",
+      icon : "src/main/webapp/resources/img/start.png",
       iconSize : new Tmapv2.Size(24, 38),
       map : map_div_home
   });
@@ -99,10 +107,10 @@
       //마커 올리기
       marker1_home = new Tmapv2.Marker({
           position : markerPosition_home,
-          // icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png",
+          icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png",
           iconHTML: `
           <div class='_t_marker' style="position:relative;" >
-              <img src="/lib/img/_icon/marker_blue.svg" style="width:48px;height:48px;position:absolute;"/>
+              <img src="http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png" style="width:48px;height:48px;position:absolute;"/>
               <div style="position:absolute; width:48px;height:42px; display:flex; align-items:center; justify-content: center; color:#FAFBFF; font-family: 'SUIT';font-style: normal;font-weight: 700;font-size: 15px;line-height: 19px;">
               P</div>
           </div>
@@ -254,7 +262,7 @@
                       const thisId_home = labelInfo_home.split("_")[1];
                       marker3_home.setIconHTML(`
                           <div class='_t_marker' style="position:relative;" >
-                          <img src="/lib/img/_icon/marker_blue.svg" style="width:48px;height:48px;position:absolute;"/>
+                          <img src="http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png" style="width:48px;height:48px;position:absolute;"/>
                           <div style="position:absolute; width:48px;height:42px; display:flex; align-items:center; justify-content: center; color:#FAFBFF; font-family: 'SUIT';font-style: normal;font-weight: 700;font-size: 15px;line-height: 19px;">
                           \${Number(thisK_home)+1}</div>
                           </div>
@@ -319,7 +327,7 @@
       }
       markerPoi_home[thisK_home].setIconHTML(`
           <div class='_t_marker' style="position:relative;" >
-          <img src="/lib/img/_icon/marker_blue.svg" style="width:48px;height:48px;position:absolute;"/>
+          <img src="http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png" style="width:48px;height:48px;position:absolute;"/>
           <div style="position:absolute; width:48px;height:42px; display:flex; align-items:center; justify-content: center; color:#FAFBFF; font-family: 'SUIT';font-style: normal;font-weight: 700;font-size: 15px;line-height: 19px;">
           \${Number(thisK_home)+1}</div>
           </div>
@@ -450,6 +458,10 @@
           }
           markerArr_home = [];
       }
+      // 기존 markerLayer 지우기
+      if (markerLayer) {
+          markerLayer.clearMarkers(); // Clearing the existing markers from the markerLayer
+      }
       // poi 마커 지우기
       if(markerPoi_home.length > 0){
           for(var i_home in markerPoi_home){
@@ -474,7 +486,848 @@
       }
   }
   
+  
+  $(document).ready(function() {
 
+	  function initMap(latitude, longitude) {
+		    var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		    if (!map_div_home) {
+		        map_div_home = new Tmapv2.Map("map_div_home", {
+		            center: lonlat,
+		            width: "500px",
+		            height: "740px",
+		            zoom: 14
+		        });
+		        markerLayer = new Tmapv2.Layer.Markers(); // 마커 레이어 초기화
+		        map_div_home.addLayer(markerLayer); // 맵에 마커 레이어 추가
+		    } else {
+		        map_div_home.setCenter(lonlat); // 기존 맵의 중심 좌표 변경
+		    }
+		    return { map: map_div_home, markerLayer: markerLayer };
+		}
+
+	  function addMarker(map, markerLayer, latitude, longitude) {
+		    if (marker1_home) {
+		        // Move the existing marker to the new position
+		        var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		        marker1_home.setPosition(lonlat); // Use the setPosition method to update the marker's position
+		        map_div_home.setCenter(lonlat); // Center the map on the new marker position
+		    } else {
+		        var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		        var size = new Tmapv2.Size(24, 38);
+		        var offset = new Tmapv2.Point(-(size.w / 2), -size.h);
+		        var icon = new Tmapv2.MarkerImage("http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png", new Tmapv2.Size(24, 38), new Tmapv2.Point(-(24 / 2), -38));
+
+		        var marker = new Tmapv2.Marker(lonlat, { icon: icon });
+		        markerLayer.addMarker(marker);
+		        marker1_home = marker; // Update the global marker variable
+		    }
+		    return marker1_home;
+		}
+
+
+
+	  $(document).on('click', ".table-box1 [id^=title]", function () { 
+
+	  	$(".card-title1").focus();
+	  	
+	  	// 일정표를 클릭하면 메모장 날짜 텍스트 출력
+	  	$('#datepicker').val($("#date1").text());
+	  	
+	  	// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
+	  	document.querySelector('#memo_text_id').setAttribute("value",$(this).attr('id'));
+	  	
+	  	
+	  	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
+	  	$.ajax({
+	  	    url: "/location_print",
+	  	    type: "post",
+	  	    dataType: "json", // 이 부분을 수정하지 마십시오
+	  	    traditional: true,
+	  	    data: {
+	  	        "location_UUID": $('#location_uuid').val(),
+	  	        "location_ID": $(this).attr('id')
+	  	    },success: function (data2) {
+	  	        // 여기서 data2를 사용하여 원하는 작업을 수행
+	  	        // data2 객체 내의 배열에서 첫 번째 요소 추출
+	  	        var firstItem = data2.data2[0];
+
+	  	        // 필요한 데이터 추출
+	  	        var location_TITLE = firstItem.location_TITLE; // 메모명
+	  	        var location_TIME = firstItem.location_TIME;
+	  	        var location_NAME = firstItem.location_NAME; // 장소명
+	  	        var location_LAT = firstItem.location_LAT;
+	  	        var location_LNG = firstItem.location_LNG;
+	  	        var location_MEMO = firstItem.location_MEMO;
+	  	        var location_REVIEW = firstItem.location_REVIEW;
+
+	  	    $.ajax({
+	  	      url: '/handleMapData',
+	  	      type: 'post',
+	  	      data: {
+	  	        latitude: location_LAT,
+	  	        longitude: location_LNG
+	  	      },
+	  	      success: function(response) {
+	  	        console.log('여기는 서치 데이터가 성공적으로 전송되었습니다.');
+	  	        console.log('서버 응답:', response);
+	  	      if (map_div_home && markerLayer) {
+	  	        if (marker1_home) {
+	  	            markerLayer.removeMarker(marker1_home);
+	  	        }
+	  	        addMarker(map_div_home, markerLayer, response.latitude, response.longitude);
+	  	    } else {
+	  	        console.error('Map or markerLayer is not initialized');
+	  	    }
+
+	  	      var { map, markerLayer } = initMap(response.latitude, response.longitude);
+	  	      addMarker(map, markerLayer, response.latitude, response.longitude);
+	  	      },
+	  	      error: function(error) {
+	  	        console.error('데이터 전송 중 오류가 발생했습니다:', error);
+	  	      }
+	  	    });
+	  	        
+	  	        // HTML 요소에 데이터 출력
+	  	        $('#memo_text').val(location_TITLE);
+	  	        $('#memo_time').val(location_TIME);
+	  	        $('#memo_place').val(location_NAME);
+	  	        $('#memo_place_lat').val(location_LAT);
+	  	        $('#memo_place_lng').val(location_LNG);
+	  	        $('#memo_content').val(location_MEMO);
+	  	        $('#review_content').val(location_REVIEW);
+
+	  	    },
+	  	    error: function (xhr, status, error) {
+	  	        console.error("GET 요청 오류: " + error);
+	  	    }
+	  	});
+
+	  });
+	  });
+  
+  
+  $(document).ready(function() {
+
+	  function initMap(latitude, longitude) {
+		    var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		    if (!map_div_home) {
+		        map_div_home = new Tmapv2.Map("map_div_home", {
+		            center: lonlat,
+		            width: "500px",
+		            height: "740px",
+		            zoom: 14
+		        });
+		        markerLayer = new Tmapv2.Layer.Markers(); // 마커 레이어 초기화
+		        map_div_home.addLayer(markerLayer); // 맵에 마커 레이어 추가
+		    } else {
+		        map_div_home.setCenter(lonlat); // 기존 맵의 중심 좌표 변경
+		    }
+		    return { map: map_div_home, markerLayer: markerLayer };
+		}
+
+	  function addMarker(map, markerLayer, latitude, longitude) {
+		    if (marker1_home) {
+		        // Move the existing marker to the new position
+		        var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		        marker1_home.setPosition(lonlat); // Use the setPosition method to update the marker's position
+		        map_div_home.setCenter(lonlat); // Center the map on the new marker position
+		    } else {
+		        var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		        var size = new Tmapv2.Size(24, 38);
+		        var offset = new Tmapv2.Point(-(size.w / 2), -size.h);
+		        var icon = new Tmapv2.MarkerImage("http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png", new Tmapv2.Size(24, 38), new Tmapv2.Point(-(24 / 2), -38));
+
+		        var marker = new Tmapv2.Marker(lonlat, { icon: icon });
+		        markerLayer.addMarker(marker);
+		        marker1_home = marker; // Update the global marker variable
+		    }
+		    return marker1_home;
+		}
+  
+//둘째 날 일정 클릭
+  $(document).on('click', ".table-box2 [id^=title]", function () { 
+
+  	$(".card-title2").focus();
+  	
+  	// 일정표를 클릭하면 메모장 날짜 텍스트 출력
+  	$('#datepicker').val($("#date2").text());
+  	
+  	$(".memo_padding").show(); // 메모장 보이게 하기
+  	$(".map_div_container").height('1530px');
+  	$(".advertisement").css("margin-top", "680px");
+  	
+  	// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
+  	document.querySelector('#memo_text_id').setAttribute("value",$(this).attr('id'));
+
+  	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
+  	$.ajax({
+  	    url: "/location_print",
+  	    type: "post",
+  	    dataType: "json", // 이 부분을 수정하지 마십시오
+  	    traditional: true,
+  	    data: {
+  	        "location_UUID": $('#location_uuid').val(),
+  	        "location_ID": $(this).attr('id')
+  	    },success: function (data2) {
+  	        
+  	        // data2 객체 내의 배열에서 첫 번째 요소 추출
+  	        var firstItem = data2.data2[0];
+
+  	        // 필요한 데이터 추출
+  	        var location_TITLE = firstItem.location_TITLE; // 메모명
+  	        var location_TIME = firstItem.location_TIME;
+  	        var location_NAME = firstItem.location_NAME; // 장소명
+  	        var location_LAT = firstItem.location_LAT;
+  	        var location_LNG = firstItem.location_LNG;
+  	        var location_MEMO = firstItem.location_MEMO;
+  	        var location_REVIEW = firstItem.location_REVIEW;
+  	        
+	  	    $.ajax({
+		  	      url: '/handleMapData',
+		  	      type: 'post',
+		  	      data: {
+		  	        latitude: location_LAT,
+		  	        longitude: location_LNG
+		  	      },
+		  	      success: function(response) {
+		  	        console.log('여기는 서치 데이터가 성공적으로 전송되었습니다.');
+		  	        console.log('서버 응답:', response);
+		  	      if (map_div_home && markerLayer) {
+		  	        if (marker1_home) {
+		  	            markerLayer.removeMarker(marker1_home);
+		  	        }
+		  	        addMarker(map_div_home, markerLayer, response.latitude, response.longitude);
+		  	    } else {
+		  	        console.error('Map or markerLayer is not initialized');
+		  	    }
+
+		  	      var { map, markerLayer } = initMap(response.latitude, response.longitude);
+		  	      addMarker(map, markerLayer, response.latitude, response.longitude);
+		  	      },
+		  	      error: function(error) {
+		  	        console.error('데이터 전송 중 오류가 발생했습니다:', error);
+		  	      }
+		  	    });
+
+  	        // HTML 요소에 데이터 출력
+  	        $('#memo_text').val(location_TITLE);
+  	        $('#memo_time').val(location_TIME);
+  	        $('#memo_place').val(location_NAME);
+  	        $('#memo_place_lat').val(location_LAT);
+  	        $('#memo_place_lng').val(location_LNG);
+  	        $('#memo_content').val(location_MEMO);
+  	        $('#review_content').val(location_REVIEW);
+  	        // 다른 필드에 대한 데이터도 출력하십시오.
+  	    },
+  	    error: function (xhr, status, error) {
+  	        console.error("GET 요청 오류: " + error);
+  	    }
+  	});
+  });
+  });
+  
+  
+  
+  $(document).ready(function() {
+
+	  function initMap(latitude, longitude) {
+		    var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		    if (!map_div_home) {
+		        map_div_home = new Tmapv2.Map("map_div_home", {
+		            center: lonlat,
+		            width: "500px",
+		            height: "740px",
+		            zoom: 14
+		        });
+		        markerLayer = new Tmapv2.Layer.Markers(); // 마커 레이어 초기화
+		        map_div_home.addLayer(markerLayer); // 맵에 마커 레이어 추가
+		    } else {
+		        map_div_home.setCenter(lonlat); // 기존 맵의 중심 좌표 변경
+		    }
+		    return { map: map_div_home, markerLayer: markerLayer };
+		}
+
+	  function addMarker(map, markerLayer, latitude, longitude) {
+		    if (marker1_home) {
+		        // Move the existing marker to the new position
+		        var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		        marker1_home.setPosition(lonlat); // Use the setPosition method to update the marker's position
+		        map_div_home.setCenter(lonlat); // Center the map on the new marker position
+		    } else {
+		        var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		        var size = new Tmapv2.Size(24, 38);
+		        var offset = new Tmapv2.Point(-(size.w / 2), -size.h);
+		        var icon = new Tmapv2.MarkerImage("http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png", new Tmapv2.Size(24, 38), new Tmapv2.Point(-(24 / 2), -38));
+
+		        var marker = new Tmapv2.Marker(lonlat, { icon: icon });
+		        markerLayer.addMarker(marker);
+		        marker1_home = marker; // Update the global marker variable
+		    }
+		    return marker1_home;
+		}
+//셋째 날 일정 클릭
+  $(document).on('click', ".table-box3 [id^=title]", function () { 
+
+  	$(".card-title3").focus();
+  	
+  	// 일정표를 클릭하면 메모장 날짜 텍스트 출력
+  	$('#datepicker').val($("#date3").text());
+  	
+  	$(".memo_padding").show(); // 메모장 보이게 하기
+  	$(".map_div_container").height('1530px');
+  	$(".advertisement").css("margin-top", "680px");
+  	
+  	// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
+  	document.querySelector('#memo_text_id').setAttribute("value",$(this).attr('id'));
+
+  	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
+  	$.ajax({
+  	    url: "/location_print",
+  	    type: "post",
+  	    dataType: "json", // 이 부분을 수정하지 마십시오
+  	    traditional: true,
+  	    data: {
+  	        "location_UUID": $('#location_uuid').val(),
+  	        "location_ID": $(this).attr('id')
+  	    },success: function (data2) {
+  	        
+  	        // data2 객체 내의 배열에서 첫 번째 요소 추출
+  	        var firstItem = data2.data2[0];
+
+  	        // 필요한 데이터 추출
+  	        var location_TITLE = firstItem.location_TITLE; // 메모명
+  	        var location_TIME = firstItem.location_TIME;
+  	        var location_NAME = firstItem.location_NAME; // 장소명
+  	        var location_LAT = firstItem.location_LAT;
+  	        var location_LNG = firstItem.location_LNG;
+  	        var location_MEMO = firstItem.location_MEMO;
+  	        var location_REVIEW = firstItem.location_REVIEW;
+  	        
+  	      $.ajax({
+	  	      url: '/handleMapData',
+	  	      type: 'post',
+	  	      data: {
+	  	        latitude: location_LAT,
+	  	        longitude: location_LNG
+	  	      },
+	  	      success: function(response) {
+	  	        console.log('여기는 서치 데이터가 성공적으로 전송되었습니다.');
+	  	        console.log('서버 응답:', response);
+	  	      if (map_div_home && markerLayer) {
+	  	        if (marker1_home) {
+	  	            markerLayer.removeMarker(marker1_home);
+	  	        }
+	  	        addMarker(map_div_home, markerLayer, response.latitude, response.longitude);
+	  	    } else {
+	  	        console.error('Map or markerLayer is not initialized');
+	  	    }
+
+	  	      var { map, markerLayer } = initMap(response.latitude, response.longitude);
+	  	      addMarker(map, markerLayer, response.latitude, response.longitude);
+	  	      },
+	  	      error: function(error) {
+	  	        console.error('데이터 전송 중 오류가 발생했습니다:', error);
+	  	      }
+	  	    });
+
+  	        // HTML 요소에 데이터 출력
+  	        $('#memo_text').val(location_TITLE);
+  	        $('#memo_time').val(location_TIME);
+  	        $('#memo_place').val(location_NAME);
+  	        $('#memo_place_lat').val(location_LAT);
+  	        $('#memo_place_lng').val(location_LNG);
+  	        $('#memo_content').val(location_MEMO);
+  	        $('#review_content').val(location_REVIEW);
+  	        // 다른 필드에 대한 데이터도 출력하십시오.
+  	    },
+  	    error: function (xhr, status, error) {
+  	        console.error("GET 요청 오류: " + error);
+  	    }
+  	});
+  });
+  });
+
+
+  $(document).ready(function() {
+
+	  function initMap(latitude, longitude) {
+		    var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		    if (!map_div_home) {
+		        map_div_home = new Tmapv2.Map("map_div_home", {
+		            center: lonlat,
+		            width: "500px",
+		            height: "740px",
+		            zoom: 14
+		        });
+		        markerLayer = new Tmapv2.Layer.Markers(); // 마커 레이어 초기화
+		        map_div_home.addLayer(markerLayer); // 맵에 마커 레이어 추가
+		    } else {
+		        map_div_home.setCenter(lonlat); // 기존 맵의 중심 좌표 변경
+		    }
+		    return { map: map_div_home, markerLayer: markerLayer };
+		}
+
+	  function addMarker(map, markerLayer, latitude, longitude) {
+		    if (marker1_home) {
+		        // Move the existing marker to the new position
+		        var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		        marker1_home.setPosition(lonlat); // Use the setPosition method to update the marker's position
+		        map_div_home.setCenter(lonlat); // Center the map on the new marker position
+		    } else {
+		        var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		        var size = new Tmapv2.Size(24, 38);
+		        var offset = new Tmapv2.Point(-(size.w / 2), -size.h);
+		        var icon = new Tmapv2.MarkerImage("http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png", new Tmapv2.Size(24, 38), new Tmapv2.Point(-(24 / 2), -38));
+
+		        var marker = new Tmapv2.Marker(lonlat, { icon: icon });
+		        markerLayer.addMarker(marker);
+		        marker1_home = marker; // Update the global marker variable
+		    }
+		    return marker1_home;
+		}
+  // 넷째 날 일정 클릭
+  $(document).on('click', ".table-box4 [id^=title]", function () { 
+
+  	$(".card-title4").focus();
+  	
+  	// 일정표를 클릭하면 메모장 날짜 텍스트 출력
+  	$('#datepicker').val($("#date4").text());
+  	
+  	$(".memo_padding").show(); // 메모장 보이게 하기
+  	$(".map_div_container").height('1530px');
+  	$(".advertisement").css("margin-top", "680px");
+  	
+  	// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
+  	document.querySelector('#memo_text_id').setAttribute("value",$(this).attr('id'));
+
+  	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
+  	$.ajax({
+  	    url: "/location_print",
+  	    type: "post",
+  	    dataType: "json", // 이 부분을 수정하지 마십시오
+  	    traditional: true,
+  	    data: {
+  	        "location_UUID": $('#location_uuid').val(),
+  	        "location_ID": $(this).attr('id')
+  	    },success: function (data2) {
+  	        
+  	        // data2 객체 내의 배열에서 첫 번째 요소 추출
+  	        var firstItem = data2.data2[0];
+
+  	        // 필요한 데이터 추출
+  	        var location_TITLE = firstItem.location_TITLE; // 메모명
+  	        var location_TIME = firstItem.location_TIME;
+  	        var location_NAME = firstItem.location_NAME; // 장소명
+  	        var location_LAT = firstItem.location_LAT;
+  	        var location_LNG = firstItem.location_LNG;
+  	        var location_MEMO = firstItem.location_MEMO;
+  	        var location_REVIEW = firstItem.location_REVIEW;
+  	        
+  	      $.ajax({
+	  	      url: '/handleMapData',
+	  	      type: 'post',
+	  	      data: {
+	  	        latitude: location_LAT,
+	  	        longitude: location_LNG
+	  	      },
+	  	      success: function(response) {
+	  	        console.log('여기는 서치 데이터가 성공적으로 전송되었습니다.');
+	  	        console.log('서버 응답:', response);
+	  	      if (map_div_home && markerLayer) {
+	  	        if (marker1_home) {
+	  	            markerLayer.removeMarker(marker1_home);
+	  	        }
+	  	        addMarker(map_div_home, markerLayer, response.latitude, response.longitude);
+	  	    } else {
+	  	        console.error('Map or markerLayer is not initialized');
+	  	    }
+
+	  	      var { map, markerLayer } = initMap(response.latitude, response.longitude);
+	  	      addMarker(map, markerLayer, response.latitude, response.longitude);
+	  	      },
+	  	      error: function(error) {
+	  	        console.error('데이터 전송 중 오류가 발생했습니다:', error);
+	  	      }
+	  	    });
+
+  	        // HTML 요소에 데이터 출력
+  	        $('#memo_text').val(location_TITLE);
+  	        $('#memo_time').val(location_TIME);
+  	        $('#memo_place').val(location_NAME);
+  	        $('#memo_place_lat').val(location_LAT);
+  	        $('#memo_place_lng').val(location_LNG);
+  	        $('#memo_content').val(location_MEMO);
+  	        $('#review_content').val(location_REVIEW);
+  	        // 다른 필드에 대한 데이터도 출력하십시오.
+  	    },
+  	    error: function (xhr, status, error) {
+  	        console.error("GET 요청 오류: " + error);
+  	    }
+  	});
+  });
+  });
+
+
+  
+  $(document).ready(function() {
+
+	  function initMap(latitude, longitude) {
+		    var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		    if (!map_div_home) {
+		        map_div_home = new Tmapv2.Map("map_div_home", {
+		            center: lonlat,
+		            width: "500px",
+		            height: "740px",
+		            zoom: 14
+		        });
+		        markerLayer = new Tmapv2.Layer.Markers(); // 마커 레이어 초기화
+		        map_div_home.addLayer(markerLayer); // 맵에 마커 레이어 추가
+		    } else {
+		        map_div_home.setCenter(lonlat); // 기존 맵의 중심 좌표 변경
+		    }
+		    return { map: map_div_home, markerLayer: markerLayer };
+		}
+
+	  function addMarker(map, markerLayer, latitude, longitude) {
+		    if (marker1_home) {
+		        // Move the existing marker to the new position
+		        var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		        marker1_home.setPosition(lonlat); // Use the setPosition method to update the marker's position
+		        map_div_home.setCenter(lonlat); // Center the map on the new marker position
+		    } else {
+		        var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		        var size = new Tmapv2.Size(24, 38);
+		        var offset = new Tmapv2.Point(-(size.w / 2), -size.h);
+		        var icon = new Tmapv2.MarkerImage("http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png", new Tmapv2.Size(24, 38), new Tmapv2.Point(-(24 / 2), -38));
+
+		        var marker = new Tmapv2.Marker(lonlat, { icon: icon });
+		        markerLayer.addMarker(marker);
+		        marker1_home = marker; // Update the global marker variable
+		    }
+		    return marker1_home;
+		}
+  // 다섯째 날 일정 클릭
+  $(document).on('click', ".table-box5 [id^=title]", function () { 
+
+  	$(".card-title5").focus();
+  	
+  	// 일정표를 클릭하면 메모장 날짜 텍스트 출력
+  	$('#datepicker').val($("#date5").text());
+  	
+  	$(".memo_padding").show(); // 메모장 보이게 하기
+  	$(".map_div_container").height('1530px');
+  	$(".advertisement").css("margin-top", "680px");
+  	
+  	// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
+  	document.querySelector('#memo_text_id').setAttribute("value",$(this).attr('id'));
+
+  	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
+  	$.ajax({
+  	    url: "/location_print",
+  	    type: "post",
+  	    dataType: "json", // 이 부분을 수정하지 마십시오
+  	    traditional: true,
+  	    data: {
+  	        "location_UUID": $('#location_uuid').val(),
+  	        "location_ID": $(this).attr('id')
+  	    },success: function (data2) {
+  	        
+  	        // data2 객체 내의 배열에서 첫 번째 요소 추출
+  	        var firstItem = data2.data2[0];
+
+  	        // 필요한 데이터 추출
+  	        var location_TITLE = firstItem.location_TITLE; // 메모명
+  	        var location_TIME = firstItem.location_TIME;
+  	        var location_NAME = firstItem.location_NAME; // 장소명
+  	        var location_LAT = firstItem.location_LAT;
+  	        var location_LNG = firstItem.location_LNG;
+  	        var location_MEMO = firstItem.location_MEMO;
+  	        var location_REVIEW = firstItem.location_REVIEW;
+  	        
+  	      $.ajax({
+	  	      url: '/handleMapData',
+	  	      type: 'post',
+	  	      data: {
+	  	        latitude: location_LAT,
+	  	        longitude: location_LNG
+	  	      },
+	  	      success: function(response) {
+	  	        console.log('여기는 서치 데이터가 성공적으로 전송되었습니다.');
+	  	        console.log('서버 응답:', response);
+	  	      if (map_div_home && markerLayer) {
+	  	        if (marker1_home) {
+	  	            markerLayer.removeMarker(marker1_home);
+	  	        }
+	  	        addMarker(map_div_home, markerLayer, response.latitude, response.longitude);
+	  	    } else {
+	  	        console.error('Map or markerLayer is not initialized');
+	  	    }
+
+	  	      var { map, markerLayer } = initMap(response.latitude, response.longitude);
+	  	      addMarker(map, markerLayer, response.latitude, response.longitude);
+	  	      },
+	  	      error: function(error) {
+	  	        console.error('데이터 전송 중 오류가 발생했습니다:', error);
+	  	      }
+	  	    });
+
+  	        // HTML 요소에 데이터 출력
+  	        $('#memo_text').val(location_TITLE);
+  	        $('#memo_time').val(location_TIME);
+  	        $('#memo_place').val(location_NAME);
+  	        $('#memo_place_lat').val(location_LAT);
+  	        $('#memo_place_lng').val(location_LNG);
+  	        $('#memo_content').val(location_MEMO);
+  	        $('#review_content').val(location_REVIEW);
+  	        // 다른 필드에 대한 데이터도 출력하십시오.
+  	    },
+  	    error: function (xhr, status, error) {
+  	        console.error("GET 요청 오류: " + error);
+  	    }
+  	});
+  });
+  });
+
+  
+  $(document).ready(function() {
+
+	  function initMap(latitude, longitude) {
+		    var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		    if (!map_div_home) {
+		        map_div_home = new Tmapv2.Map("map_div_home", {
+		            center: lonlat,
+		            width: "500px",
+		            height: "740px",
+		            zoom: 14
+		        });
+		        markerLayer = new Tmapv2.Layer.Markers(); // 마커 레이어 초기화
+		        map_div_home.addLayer(markerLayer); // 맵에 마커 레이어 추가
+		    } else {
+		        map_div_home.setCenter(lonlat); // 기존 맵의 중심 좌표 변경
+		    }
+		    return { map: map_div_home, markerLayer: markerLayer };
+		}
+
+	  function addMarker(map, markerLayer, latitude, longitude) {
+		    if (marker1_home) {
+		        // Move the existing marker to the new position
+		        var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		        marker1_home.setPosition(lonlat); // Use the setPosition method to update the marker's position
+		        map_div_home.setCenter(lonlat); // Center the map on the new marker position
+		    } else {
+		        var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		        var size = new Tmapv2.Size(24, 38);
+		        var offset = new Tmapv2.Point(-(size.w / 2), -size.h);
+		        var icon = new Tmapv2.MarkerImage("http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png", new Tmapv2.Size(24, 38), new Tmapv2.Point(-(24 / 2), -38));
+
+		        var marker = new Tmapv2.Marker(lonlat, { icon: icon });
+		        markerLayer.addMarker(marker);
+		        marker1_home = marker; // Update the global marker variable
+		    }
+		    return marker1_home;
+		}
+  // 여섯째 날 일정 클릭
+  $(document).on('click', ".table-box6 [id^=title]", function () { 
+
+  	$(".card-title6").focus();
+  	
+  	// 일정표를 클릭하면 메모장 날짜 텍스트 출력
+  	$('#datepicker').val($("#date6").text());
+  	
+  	$(".memo_padding").show(); // 메모장 보이게 하기
+  	$(".map_div_container").height('1530px');
+  	$(".advertisement").css("margin-top", "680px");
+  	
+  	// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
+  	document.querySelector('#memo_text_id').setAttribute("value",$(this).attr('id'));
+
+  	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
+  	$.ajax({
+  	    url: "/location_print",
+  	    type: "post",
+  	    dataType: "json", // 이 부분을 수정하지 마십시오
+  	    traditional: true,
+  	    data: {
+  	        "location_UUID": $('#location_uuid').val(),
+  	        "location_ID": $(this).attr('id')
+  	    },success: function (data2) {
+  	        
+  	        // data2 객체 내의 배열에서 첫 번째 요소 추출
+  	        var firstItem = data2.data2[0];
+
+  	        // 필요한 데이터 추출
+  	        var location_TITLE = firstItem.location_TITLE; // 메모명
+  	        var location_TIME = firstItem.location_TIME;
+  	        var location_NAME = firstItem.location_NAME; // 장소명
+  	        var location_LAT = firstItem.location_LAT;
+  	        var location_LNG = firstItem.location_LNG;
+  	        var location_MEMO = firstItem.location_MEMO;
+  	        var location_REVIEW = firstItem.location_REVIEW;
+  	        
+  	      $.ajax({
+	  	      url: '/handleMapData',
+	  	      type: 'post',
+	  	      data: {
+	  	        latitude: location_LAT,
+	  	        longitude: location_LNG
+	  	      },
+	  	      success: function(response) {
+	  	        console.log('여기는 서치 데이터가 성공적으로 전송되었습니다.');
+	  	        console.log('서버 응답:', response);
+	  	      if (map_div_home && markerLayer) {
+	  	        if (marker1_home) {
+	  	            markerLayer.removeMarker(marker1_home);
+	  	        }
+	  	        addMarker(map_div_home, markerLayer, response.latitude, response.longitude);
+	  	    } else {
+	  	        console.error('Map or markerLayer is not initialized');
+	  	    }
+
+	  	      var { map, markerLayer } = initMap(response.latitude, response.longitude);
+	  	      addMarker(map, markerLayer, response.latitude, response.longitude);
+	  	      },
+	  	      error: function(error) {
+	  	        console.error('데이터 전송 중 오류가 발생했습니다:', error);
+	  	      }
+	  	    });
+
+  	        // HTML 요소에 데이터 출력
+  	        $('#memo_text').val(location_TITLE);
+  	        $('#memo_time').val(location_TIME);
+  	        $('#memo_place').val(location_NAME);
+  	        $('#memo_place_lat').val(location_LAT);
+  	        $('#memo_place_lng').val(location_LNG);
+  	        $('#memo_content').val(location_MEMO);
+  	        $('#review_content').val(location_REVIEW);
+  	        // 다른 필드에 대한 데이터도 출력하십시오.
+  	    },
+  	    error: function (xhr, status, error) {
+  	        console.error("GET 요청 오류: " + error);
+  	    }
+  	});
+  });
+  });
+
+
+  $(document).ready(function() {
+
+	  function initMap(latitude, longitude) {
+		    var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		    if (!map_div_home) {
+		        map_div_home = new Tmapv2.Map("map_div_home", {
+		            center: lonlat,
+		            width: "500px",
+		            height: "740px",
+		            zoom: 14
+		        });
+		        markerLayer = new Tmapv2.Layer.Markers(); // 마커 레이어 초기화
+		        map_div_home.addLayer(markerLayer); // 맵에 마커 레이어 추가
+		    } else {
+		        map_div_home.setCenter(lonlat); // 기존 맵의 중심 좌표 변경
+		    }
+		    return { map: map_div_home, markerLayer: markerLayer };
+		}
+
+	  function addMarker(map, markerLayer, latitude, longitude) {
+		    if (marker1_home) {
+		        // Move the existing marker to the new position
+		        var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		        marker1_home.setPosition(lonlat); // Use the setPosition method to update the marker's position
+		        map_div_home.setCenter(lonlat); // Center the map on the new marker position
+		    } else {
+		        var lonlat = new Tmapv2.LatLng(latitude, longitude);
+		        var size = new Tmapv2.Size(24, 38);
+		        var offset = new Tmapv2.Point(-(size.w / 2), -size.h);
+		        var icon = new Tmapv2.MarkerImage("http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png", new Tmapv2.Size(24, 38), new Tmapv2.Point(-(24 / 2), -38));
+
+		        var marker = new Tmapv2.Marker(lonlat, { icon: icon });
+		        markerLayer.addMarker(marker);
+		        marker1_home = marker; // Update the global marker variable
+		    }
+		    return marker1_home;
+		}
+  // 일곱번째 날 일정 클릭
+  $(document).on('click', ".table-box7 [id^=title]", function () { 
+
+  	$(".card-title7").focus();
+  	
+  	// 일정표를 클릭하면 메모장 날짜 텍스트 출력
+  	$('#datepicker').val($("#date7").text());
+  	
+  	$(".memo_padding").show(); // 메모장 보이게 하기
+  	$(".map_div_container").height('1530px');
+  	$(".advertisement").css("margin-top", "680px");
+  	
+  	// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
+  	document.querySelector('#memo_text_id').setAttribute("value",$(this).attr('id'));
+
+  	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
+  	$.ajax({
+  	    url: "/location_print",
+  	    type: "post",
+  	    dataType: "json", // 이 부분을 수정하지 마십시오
+  	    traditional: true,
+  	    data: {
+  	        "location_UUID": $('#location_uuid').val(),
+  	        "location_ID": $(this).attr('id')
+  	    },success: function (data2) {
+  	        
+  	        // data2 객체 내의 배열에서 첫 번째 요소 추출
+  	        var firstItem = data2.data2[0];
+
+  	        // 필요한 데이터 추출
+  	        var location_TITLE = firstItem.location_TITLE; // 메모명
+  	        var location_TIME = firstItem.location_TIME;
+  	        var location_NAME = firstItem.location_NAME; // 장소명
+  	        var location_LAT = firstItem.location_LAT;
+  	        var location_LNG = firstItem.location_LNG;
+  	        var location_MEMO = firstItem.location_MEMO;
+  	        var location_REVIEW = firstItem.location_REVIEW;
+  	        
+  	      $.ajax({
+	  	      url: '/handleMapData',
+	  	      type: 'post',
+	  	      data: {
+	  	        latitude: location_LAT,
+	  	        longitude: location_LNG
+	  	      },
+	  	      success: function(response) {
+	  	        console.log('여기는 서치 데이터가 성공적으로 전송되었습니다.');
+	  	        console.log('서버 응답:', response);
+	  	      if (map_div_home && markerLayer) {
+	  	        if (marker1_home) {
+	  	            markerLayer.removeMarker(marker1_home);
+	  	        }
+	  	        addMarker(map_div_home, markerLayer, response.latitude, response.longitude);
+	  	    } else {
+	  	        console.error('Map or markerLayer is not initialized');
+	  	    }
+
+	  	      var { map, markerLayer } = initMap(response.latitude, response.longitude);
+	  	      addMarker(map, markerLayer, response.latitude, response.longitude);
+	  	      },
+	  	      error: function(error) {
+	  	        console.error('데이터 전송 중 오류가 발생했습니다:', error);
+	  	      }
+	  	    });
+
+  	        // HTML 요소에 데이터 출력
+  	        $('#memo_text').val(location_TITLE);
+  	        $('#memo_time').val(location_TIME);
+  	        $('#memo_place').val(location_NAME);
+  	        $('#memo_place_lat').val(location_LAT);
+  	        $('#memo_place_lng').val(location_LNG);
+  	        $('#memo_content').val(location_MEMO);
+  	        $('#review_content').val(location_REVIEW);
+  	        // 다른 필드에 대한 데이터도 출력하십시오.
+  	    },
+  	    error: function (xhr, status, error) {
+  	        console.error("GET 요청 오류: " + error);
+  	    }
+  	});
+  });
+  });
 </script>
 </body>
 </html>
