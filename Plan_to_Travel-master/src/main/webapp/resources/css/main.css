@@ -1,11 +1,14 @@
 @charset "UTF-8";
 
 /* 리스트 css */
-
 .container-fluid-table {
-  margin-top: 80px;
-  margin-left: 30px;
-  margin-bottom: 10px;
+margin-left: auto;
+  margin-right: auto;
+  width: 90%; /* Adjust the width as needed */
+  position: relative;
+  top: 100px;
+  left: 68px;
+  z-index: 1;
 }
 
 /* 이동 타켓 */
@@ -67,6 +70,10 @@
   float: left;
 }
 
+[id*="box_title_"] {
+background-color: #96B6C5
+}
+
 .card {
   margin-bottom: 5px;
 }
@@ -78,17 +85,14 @@
 
 .date_container {
   width: 1510px;
-  margin-left: 10px;
 }
-
-
 
 .memo_padding {
   position: absolute;
-  width: 1050px;
+  width: 1060px;
   height: 500px;
   clear: left;
-  padding-left: 30px;
+  margin-top: -700px;
 }
 
 .memo_write {
@@ -99,44 +103,40 @@
 }
 
 
-.container_1 {
-  clear: left;
-  width: 1050px;
-  height: 20px;
-  margin-left: 30px;
-}
-
 /* 광고 */
 .advertisement {
-  clear: left;
+clear: left;
   width: 1580px;
   height: 330px;
   margin-left: 30px;
-  margin-top: 680px;
+  margin-top: 30px;
   margin-bottom: 50px;
-  border: 1px solid blue;
+  border: 1px solid green;
 }
 
 #travel_table_container {
-	border: 5px solid #8080ff;
-	width: 1060px;
-	white-space:nowrap;
-	margin-top: -15px;
+border: 5px solid #8080ff;
+  width: 1060px;
+  margin-top: 5px; 
+  float: left;
 }
 
-
+#travel_table_container, #map_div_container {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 20px;
+}
 
 /* 지도 sticky 범위 설정 가능 */
 #map_div_container {
-  width: 550px;
-  height: 1530px;
-  margin-top: -850px;
-  float: right;
-  margin-right: 15px;
+width: 550px;
+  height: 1430px;
+  margin-top: 25px;
 }
 
+/* 일정표의 일정 div */
 #travel_table {
-	height: 630px;
+	height: 620px;
 }
 
 
@@ -258,10 +258,6 @@
 	bottom:0px;
 }
 
-/* .offcanvas-end div:hover{
-	background-color: #dfeaff;
-} */
-
 .input-group-addon,
 .input-group-text {
   border-left: 0 none;
@@ -301,7 +297,8 @@
   /* 여행 날짜 = 일정 날짜 범위 선택 */
   #form_floating_div {
   width: 420px;
-  margin-top: 2px;
+  margin-top: 10px;
+  float: left;
   }
   
   #datepicker_start {
@@ -346,11 +343,13 @@
   
   #title_container {
   width: 570px;
-  margin-left: 490px;
+  margin-left: 78px;
   height: 70px;
-  margin-top: -10px;
+  margin-top: 10px;
+  float: left;
   }
   
   #modal {
   display: none;
   }
+
