@@ -142,11 +142,9 @@
       </div>
 
   <div class="container-fluid-table">
-
-
 <!-- 여행 일정 선택 -->
     
-    <div class="row g-2" id="form_floating_div" style="float: left;">
+    <div class="row g-2" id="form_floating_div">
   <div class="col-md">
     <div class="form-floating">
         <input type="text" class="form-control" id="datepicker_start" placeholder="시작 날짜">
@@ -160,30 +158,10 @@
     </div>
   </div>
   <div class="col-md" >
-
   <button id="btnShowDates" class="btn btn-outline-primary">확인</button>
   </div>
 
 </div>
-
-       <div class="modal" tabindex="-1" id="modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">SAVE</h5>
-        <button type="button" id="modal_close_btn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>저장하시겠습니까?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="modal_close_btn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="save_btn">Save</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 
 <div id="title_container">
@@ -196,7 +174,7 @@
 </div>
 <br/>
 
-    <div id = "travel_table_container">
+    <div id = "travel_table_container" style="height:674px;">
     <div class="row date_container" id="dateRangeOutput" style="margin-left: 0px;">
       <!-- 날짜 출력 -->
     </div>
@@ -205,11 +183,8 @@
 	  <!-- 일정 출력 -->
     </div>
     </div>
-
-  </div>
-
-
-<div id="tableContainer">
+    
+    <div id="tableContainer">
         <!-- 데이터를 채워 넣을 요소 -->
     </div>
 
@@ -220,6 +195,7 @@
 <button type="button" onclick="map_div_pedestrian_show();" class="btn btn-outline-secondary btn-sm">도보</button>
 <button type="button" onclick="map_car_show();" class="btn btn-outline-success btn-sm">자동차</button>
 <button type="button" class="btn btn-outline-danger btn-sm">대중교통</button>
+<button type="button" class="btn btn-outline-dark btn-sm" id="resetButton">지도 초기화</button>
 </div>
 
 <jsp:include page="/WEB-INF/views/map_search.jsp" />
@@ -258,21 +234,19 @@
           <input type="text" class="form-control" id="memo_place_lng" style="display: none;">
         </div>
 
-        <div class="card-body" style="height: 230px;">
+        <div class="card-body" style="height: 250px;">
           <textarea id="memo_content" name="content" rows="8" cols="132" placeholder="memo"></textarea>
         </div>
 
-        <div class="card-body" style="height: 230px;">
+        <div class="card-body" style="height: 250px;">
           <textarea id="review_content" name="content" rows="8" cols="132" placeholder="review"></textarea>
         </div>
 
       </div>
     </div>
   </div>
-
-  <div class="container_1"></div>
-
   <div class="advertisement">광고</div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
