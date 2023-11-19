@@ -7,6 +7,7 @@ import com.ptt.model.LocationVO;
 import com.ptt.model.ScheduleVO;
 
 public interface ScheduleDAO {
+	
 	public void insertSchedule(ScheduleVO vo);
 	
 	public void changeSchedule(ScheduleVO schedulevo);

@@ -41,7 +41,7 @@ public class ServeController {
 		return "Login";
 	}
 	
-    /* 로그인 */
+    //로그인 기능
     @RequestMapping(value="/login", method=RequestMethod.POST)
     public String loginPOST(HttpServletRequest request, UserVO user, RedirectAttributes rttr) throws Exception{
         
@@ -59,7 +59,7 @@ public class ServeController {
         session.setAttribute("user", lvo);             // 일치하는 아이디, 비밀번호 경우 (로그인 성공)
         
         // 아이디 값 -> 세션 저장
-        String uID_session = request.getParameter("uID");
+        String uID_session = request.getParameter("u_id");
         session.setAttribute("uID_session", uID_session);
         
         return "redirect:/Plan_to_travel";
@@ -74,16 +74,16 @@ public class ServeController {
 		
 	}
 	
-	// 아이디 중복 검사
+	//아이디 중복 검사
 	@RequestMapping(value = "/userIdChk", method = RequestMethod.POST)
 	@ResponseBody
-	public String userIdChkPOST(String uID) throws Exception{
+	public String userIdChkPOST(String u_id) throws Exception{
 		
 		log.info("userIdChk() 진입");
 		
-		int result = userservice.idCheck(uID);
+		int result = userservice.idCheck(u_id);
 		
-		System.out.println("결과값 uuid = " + result);
+		System.out.println("결과값  = " + result);
 		
 		if(result != 0) {
 			
@@ -157,10 +157,11 @@ public class ServeController {
 
 		
 		log.info("join Service 성공");
-		
-		return "redirect:/main";
+	
+		return "Login";
 		
 	}
+	
 	
 	//아이디 찾기 페이지 이동
 	@RequestMapping(value = "/findID", method = RequestMethod.GET)
@@ -169,6 +170,7 @@ public class ServeController {
 		log.info("아이디 찾기 페이지 진입");
 			
 	}
+	
 	
 	//비밀번호 찾기 페이지 이동
 	@RequestMapping(value = "/findPW", method = RequestMethod.GET)

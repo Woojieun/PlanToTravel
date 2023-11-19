@@ -16,73 +16,6 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 
-    <style>
-        /*     
-	여기 있는 스타일도 CSS로 옮기고 싶었는데
-	CSS로 옮기니까
-	배경 이미지 표현 안됨 + 아래 있는 스팬 속성에 display : none 속성 하나만 먹히고 하나는 안먹힘
- 	*/
-        body::before {
-            content: "";
-            background-image: url("/resources/img/join_bg.png");
-            background-size: cover;
-            opacity: 0.7;
-            /* opacity 투명도 조절 (0부터 1까지의 값을 사용), 0에 가까울 수록 투명도 높아짐 */
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            z-index: -1;
-        }
-
-        /* 중복아이디 존재하지 않는경우 */
-        .id_input_re_1 {
-            color: green;
-            display: none;
-        }
-
-        /* 중복아이디 존재하는 경우 */
-        .id_input_re_2 {
-            color: red;
-            display: none;
-        }
-
-        .final_id_ck {
-            display: none;
-        }
-
-        .final_pw_ck {
-            display: none;
-        }
-
-        .final_pwck_ck {
-            display: none;
-        }
-
-        .final_mail_ck {
-            display: none;
-        }
-
-        .final_addr_ck {
-            display: none;
-        }
-
-        /* 비밀번호 확인 일치 유효성검사 */
-        .pwck_input_re_1 {
-            color: green;
-            display: none;
-        }
-
-        .pwck_input_re_2 {
-            color: red;
-            display: none;
-        }
-
-        .emailcheckCode {
-            display: none;
-        }
-    </style>
 </head>
 
 <body>
@@ -94,19 +27,20 @@
                 <form id="join_form" method="post">
                     <div class="form-group mt-3 mail_check_wrap">
                         <label for="username">아이디</label> <input type="text" class="form-control mt-2 id_input"
-                            name="uID" id="username" placeholder="아이디를 입력하세요">
+                            name="u_id" id="username" placeholder="아이디를 입력하세요">
                     </div>
-                    <span class="id_input_re_1">사용 가능한 아이디입니다.</span> <span class="id_input_re_2">아이디가 이미 존재합니다.</span>
+                    <span class="id_input_re_1">사용 가능한 아이디입니다.</span>
+                    <span class="id_input_re_2">아이디가 이미 존재합니다.</span>
                     <span class="final_id_ck">아이디를 입력해주세요.</span>
 
                     <div class="form-group mt-3">
                         <label for="useremail">이메일</label> <input type="text" class="form-control mt-2 email_input"
-                            name="uEMAIL" id="useremail" placeholder="이메일을 입력하세요">
+                            name="u_email" id="useremail" placeholder="이메일을 입력하세요">
                     </div>
                     <span class="final_mail_ck">이메일을 입력해주세요.</span>
+                    
                     <div class="mt-2">
-                        <button type="button" class="btn btn-primary mail_check_button sendCode" id="sendCodeBtn">인증번호
-                            발급</button>
+                        <button type="button" class="btn btn-primary mail_check_button sendCode" id="sendCodeBtn">인증번호 발급</button>
                     </div>
 
                     <div class="form-group mt-3">
@@ -116,12 +50,13 @@
                             <button class="btn btn-primary checkCodeBtn" type="button">인증</button>
                         </div>
                     </div>
-                    <span class="emailcheckCode">인증번호를 입력해주세요.</span> <span id="mail_check_input_box_warn"></span>
+                    <span class="emailcheckCode">인증번호를 입력해주세요.</span>
+                    <span id="mail_check_input_box_warn"></span>
 
 
                     <div class="form-group mt-3">
                         <label for="password">비밀번호</label> <input type="text" class="form-control mt-2 pw_input"
-                            name="uPW" id="password" placeholder="비밀번호를 입력하세요">
+                            name="u_pw" id="password" placeholder="비밀번호를 입력하세요">
                     </div>
                     <span class="final_pw_ck">비밀번호를 입력해주세요.</span>
 
@@ -133,8 +68,9 @@
                             <button class="btn btn-primary pwcheck_button" type="button">확인</button>
                         </div>
                     </div>
-                    <span class="final_pwck_ck">재확인 비밀번호를 입력해주세요.</span> <span class="pwck_input_re_1">비밀번호가
-                        일치합니다.</span> <span class="pwck_input_re_2">비밀번호가 일치하지 않습니다.</span>
+                    <span class="final_pwck_ck">재확인 비밀번호를 입력해주세요.</span>
+                    <span class="pwck_input_re_1">비밀번호가 일치합니다.</span>
+                    <span class="pwck_input_re_2">비밀번호가 일치하지 않습니다.</span>
 
                     <button type="button" class="btn btn-primary mt-4 btn-block join_button"
                         style="width: 100%;">회원가입</button>
@@ -162,17 +98,17 @@
             console.log("keyup 테스트");
 
             // .id_input에 입력되는 값
-            var uID = $('.id_input').val();
+            var u_id = $('.id_input').val();
 
-            if (uID != "") {
+            if (u_id != "") {
 
                 $('.final_id_ck').css('display', 'none');
 
                 // '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
-                console.log(uID);
+                console.log(u_id);
 
                 var data = {
-                    uID: uID
+                	u_id: u_id
                 }
 
                 $.ajax({
@@ -182,25 +118,36 @@
                     data: data,
                     success: function (result) {
                         //console.log("성공 여부" + result);
+                        
+                        if(u_id =! ""){
+                            //result = 0이면 , success, 아이디 사용 가능
+                            if (result != 'fail') {
+                                $('.id_input_re_1').css("display", "inline-block");
+                                $('.id_input_re_2').css("display", "none");
+                                $('.final_id_ck').css("display", "none");
+                                // 아이디 중복이 없는 경우
+                                idckCheck = true;
+                            }
+                            //result = 0이 아니면 , fail, 중복 아이디 존재
+                            else {
+                                $('.id_input_re_2').css("display", "inline-block");
+                                $('.id_input_re_1').css("display", "none");
+                                $('.final_id_ck').css("display", "none");
+                                // 아이디 중복이 없는 경우
+                                idckCheck = true;
+                            }
+                        }
 
-                        //result = 0이면 , success, 아이디 사용 가능
-                        if (result != 'fail') {
-                            $('.id_input_re_1').css("display", "inline-block");
-                            $('.id_input_re_2').css("display", "none");
-                            // 아이디 중복이 없는 경우
-                            idckCheck = true;
-                        }
-                        //result = 0이 아니면 , fail, 중복 아이디 존재
-                        else {
-                            $('.id_input_re_2').css("display", "inline-block");
-                            $('.id_input_re_1').css("display", "none");
-                            // 아이디 중복이 없는 경우
-                            idckCheck = true;
-                        }
                     } // success 종료
 
                 }); // ajax 종료
 
+            }
+            
+            else{
+            	$('.final_id_ck').css('display', "inline-block");
+            	$('.id_input_re_1').css("display", "none");
+            	$('.id_input_re_2').css("display", "none");
             }
 
         }); // function 종료

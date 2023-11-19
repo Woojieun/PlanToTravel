@@ -53,12 +53,12 @@ public class USERMAPPERtest {
         UserVO user = new UserVO();    // MemberVO 변수 선언 및 초기화
         
         /* 올바른 아이디 비번 입력경우 */
-        user.setuID("아이디");
-        user.setuPW("비밀번호");
+        user.setU_id("아이디");
+        user.setU_pw("비밀번호");
         
         /* 올바른 않은 아이디 비번 입력경우 */
-        user.setuID("test1123");
-        user.setuPW("test1321321");
+        user.setU_id("test1123");
+        user.setU_pw("test1321321");
         
         usermapper.userLogin(user);
         System.out.println("결과 값 : " + usermapper.userLogin(user));

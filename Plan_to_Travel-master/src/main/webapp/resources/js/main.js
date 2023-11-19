@@ -39,7 +39,7 @@ $('#History').click(function() {
 		url : '/getHistory',
 		dataType: 'json',
 		success:function(data) {
-			console.log(data + ' 데이터');
+			console.log(JSON.stringify(data) + ' 데이터');
 			
 			// 'data' 값을 사용하여 텍스트를 추가
 			//$('#Offcanvas_History .offcanvas-body ul').html('<li>' + data + '</li>');
@@ -51,7 +51,7 @@ $('#History').click(function() {
             // 'data'의 결과를 반복하여 목록으로 표시
             data.forEach(function (result) {
                 var liElement = '<li class="nav-item">';
-                liElement += '<button class="nav-link active HistorySChe" type="button" aria-current="page" id="History" value="' + result.schedule_UUID + '">' + result.travel_TITLE + '</button>';
+                liElement += '<button class="nav-link active HistorySChe" type="button" aria-current="page" id="History" value="' + result.sche_id + '">' + result.sche_title + '</button>';
                 liElement += '<button type="button" id="History_cancel"><i class="bi bi-x"></i></button>';
                 liElement += '</li>';
                 ulElement.append(liElement);
@@ -67,6 +67,7 @@ $('#History').click(function() {
     console.log("History 클릭 js 함수 완료");
 });
 
+
 // 이벤트 위임을 사용하여 동적으로 생성된 버튼에 대한 클릭 이벤트 처리
 $(document).on('click', '.HistorySChe', function() {
     var buttonValue = $(this).val(); // 클릭한 버튼의 value를 가져옴
@@ -77,12 +78,63 @@ $(document).on('click', '.HistorySChe', function() {
         type: 'GET',
         url: '/historySche',  // 서버의 엔드포인트 URL
         data: { buttonValue: buttonValue }, // 필요한 데이터를 전달할 수 있습니다.
+        dataType: 'json', // 서버에서 받을 데이터의 형식을 명시합니다.
         success: function(data) {
             // 서버에서 받은 응답에 대한 처리를 여기에 추가
-            console.log('서버 응답: ' + data);
+            console.log(JSON.stringify(data) + ' 데이터');
             // 예를 들어, 스케줄을 화면에 표시하거나 다른 작업을 수행할 수 있습니다.
+            
+            // travel_table 요소 초기화
+            $('#travel_table').empty();
+
+            // 날짜 컨테이너 초기화
+            $('#dateRangeOutput').empty();
+
+			// 객체를 사용하여 날짜별로 일정 그룹화
+            var scheduleGroups = {};
+
+            // 받은 데이터를 기반으로 일정 표 생성
+            var tableBoxIndex = 1; // 초기값 설정
+
+            for (var i = 0; i < data.length; i++) {
+                var date = data[i].event_datetime.split(' ')[0];
+                var eventTitle = data[i].event_title;
+
+                // 만약 해당 날짜의 그룹이 없다면 새로운 그룹을 생성
+                if (!scheduleGroups[date]) {
+                    scheduleGroups[date] = [];
+                }
+
+                // 날짜별로 일정 그룹에 추가
+                scheduleGroups[date].push(eventTitle);
+            }
+
+            // 날짜 컨테이너와 일정을 travel_table에 추가
+            for (var date in scheduleGroups) {
+                // 날짜 컨테이너에 날짜 추가
+                $('#dateRangeOutput').append('<div class="date" style="width:150px;">' + date + '</div>');
+
+                // 해당 날짜의 일정 그룹을 travel_table에 추가
+                var scheduleHtml = '<div class="column table-box' + tableBoxIndex + '" name="table-box' + tableBoxIndex + '">';
+                for (var j = 0; j < scheduleGroups[date].length; j++) {
+                    var eventTitle = scheduleGroups[date][j];
+
+                    scheduleHtml += '<div class="card text-white bg-info card_package" id="box_title_' + (j + 1) + '_' + (i + 1) + '">';
+                    scheduleHtml += '<div class="card-title">';
+                    scheduleHtml += '<div class="title" id="title' + (j + 1) + '_' + (i + 1) + '" tabindex="-1">' + eventTitle + '</div>';
+                    scheduleHtml += '<div class="deleteBox">x</div>';
+                    scheduleHtml += '</div>';
+                    scheduleHtml += '</div>';
+                }
+                scheduleHtml += '<label class="createBox' + tableBoxIndex + '">[추가]</label></div>';
+
+                // 해당 날짜의 일정을 travel_table에 추가
+                $('#travel_table').append(scheduleHtml);
+
+                tableBoxIndex++;
+            }
         },
-        error: function() {
+        error: function () {
             // 요청이 실패하면 실행되는 코드
             console.error('GET 요청 실패');
         }
