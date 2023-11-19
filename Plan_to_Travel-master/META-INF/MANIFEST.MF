@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Plan_to_Travel-master
 Bundle-SymbolicName: Plan_to_Travel-master
 Bundle-Version: 1.0.0.qualifier
-Export-Package: com.lego.com,
+Export-Package: com.ptt.controller,
  com.ptt.controller,
  com.ptt.mapper,
  com.ptt.model,
