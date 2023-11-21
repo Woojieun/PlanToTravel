@@ -34,11 +34,11 @@ public class ServeController {
     private JavaMailSender mailSender;
 	
 	//로그인 페이지로 이동
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String loginPageGET() {
+	@RequestMapping(value = "/Login", method = RequestMethod.GET)
+	public void loginPageGET() {
 			
 		log.info("Login 페이지 진입");
-		return "Login";
+		//return "Login";
 	}
 	
     //로그인 기능
@@ -52,6 +52,7 @@ public class ServeController {
             
             int result = 0;
             rttr.addFlashAttribute("result", result);
+            System.out.println(result);
             return "redirect:/Login";
             
         }

@@ -55,5 +55,10 @@
             <taglib-location>/WEB-INF/my-functions.tld</taglib-location>
         </taglib>
     </jsp-config>
+    
+    <!-- 시작페이지 설정 -->
+    <welcome-file-list>
+        <welcome-file>/WEB-INF/views/Login.jsp</welcome-file>
+    </welcome-file-list>
 
 </web-app>
