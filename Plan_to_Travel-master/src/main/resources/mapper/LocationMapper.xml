@@ -4,96 +4,114 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
- 
+
 <mapper namespace="com.ptt.mapper.LocationMapper">
-    <insert id="insertMember">
-        insert into location values (#{location_UUID},#{uID},#{location_ID},#{location_TITLE},#{location_DATE},#{location_TIME}
-        ,#{location_NAME},#{location_LAT},#{location_LNG},#{location_MEMO},#{location_REVIEW})
-    </insert>
-    
-        <insert id="insertSchedule">
-        insert into schedule (schedule_UUID, uID, schedule_ID, travel_TITLE,
-        schedule_ID1, schedule_TITLE1, schedule_ID2, schedule_TITLE2,
-        schedule_ID3, schedule_TITLE3, schedule_ID4, schedule_TITLE4,
-        schedule_ID5, schedule_TITLE5, schedule_ID6, schedule_TITLE6,
-        schedule_ID7, schedule_TITLE7, schedule_ID8, schedule_TITLE8,
-        schedule_ID9, schedule_TITLE9, schedule_ID10, schedule_TITLE10,
-        schedule_ID11, schedule_TITLE11, schedule_ID12, schedule_TITLE12)
-    values (#{schedule_UUID}, #{uID}, #{schedule_ID}, #{travel_TITLE},
-        #{schedule_ID1}, #{schedule_TITLE1}, #{schedule_ID2}, #{schedule_TITLE2},
-        #{schedule_ID3}, #{schedule_TITLE3}, #{schedule_ID4}, #{schedule_TITLE4},
-        #{schedule_ID5}, #{schedule_TITLE5}, #{schedule_ID6}, #{schedule_TITLE6},
-        #{schedule_ID7}, #{schedule_TITLE7}, #{schedule_ID8}, #{schedule_TITLE8},
-        #{schedule_ID9}, #{schedule_TITLE9}, #{schedule_ID10}, #{schedule_TITLE10},
-        #{schedule_ID11}, #{schedule_TITLE11}, #{schedule_ID12}, #{schedule_TITLE12})
-    </insert>
-    
-      	<!-- uuid와 location_id 둘 다 있다면(count=1↑) 수정하기 && 둘 다 없거나, 둘 중에 하나라도 없다면(count=0) 데이터 삽입 -->
-  	<select id="idCheck" parameterType="map" resultType="int">
-  		select count(*) from location where 
-  		  		location_UUID = #{location_UUID} and location_ID = #{location_ID}
-  	</select>
-  	
-  	  	<select id="scheduleCheck" parameterType="map" resultType="int">
-  		select count(*) from schedule where 
-  				schedule_UUID = #{schedule_UUID} AND schedule_ID = #{schedule_ID}
-  	</select>
-  	
-  	      	<!-- uuid와 location_id 둘 다 있다면(count=1↑) 수정하기 && 둘 다 없거나, 둘 중에 하나라도 없다면(count=0) 데이터 삽입 -->
-  	<select id="idmodifyCheck" parameterType="map" resultType="int">
-  		select count(*) from location where location_ID = #{location_ID} and location_UUID = #{location_UUID}
-  	</select>
-  	
-  	  	<select id="schedulemodifyCheck" parameterType="map" resultType="int">
-  		select count(*) from schedule where schedule_UUID = #{schedule_UUID} and schedule_ID = #{schedule_ID}
-  	</select>
-  	
-  	<select id="Location_print" resultType="com.ptt.model.LocationVO">
-  	select * from location where location_UUID = #{location_UUID} and location_ID = #{location_ID}
-  	</select>
-  	
-  	  	<select id="Schedule_print" resultType="com.ptt.model.ScheduleVO">
-  	select * from schedule where schedule_UUID = #{schedule_UUID} and schedule_ID = #{schedule_ID}
-  	</select>
-  	
-  	<select id="Location_latlng" resultType="com.ptt.model.LocationVO">
-  	select * from location where location_UUID = #{schedule_UUID} and location_ID = #{schedule_ID}
-  	</select>
-  	
-  	<update id="change">
-  	update location set location_TITLE=#{location_TITLE}, location_DATE=#{location_DATE}, location_TIME=#{location_TIME}, location_NAME=#{location_NAME}, 
-  	location_LAT=#{location_LAT}, location_LNG=#{location_LNG}, location_MEMO=#{location_MEMO}, location_REVIEW=#{location_REVIEW} 
-  	where location_UUID = #{location_UUID} and location_ID = #{location_ID}
-  	</update>
-  	
-  	<update id="changeSchedule">
-update schedule
-set travel_TITLE = #{travel_TITLE},
-    schedule_ID1 = #{schedule_ID1},
-    schedule_TITLE1 = #{schedule_TITLE1},
-    schedule_ID2 = #{schedule_ID2},
-    schedule_TITLE2 = #{schedule_TITLE2},
-    schedule_ID3 = #{schedule_ID3},
-    schedule_TITLE3 = #{schedule_TITLE3},
-    schedule_ID4 = #{schedule_ID4},
-    schedule_TITLE4 = #{schedule_TITLE4},
-    schedule_ID5 = #{schedule_ID5},
-    schedule_TITLE5 = #{schedule_TITLE5},
-    schedule_ID6 = #{schedule_ID6},
-    schedule_TITLE6 = #{schedule_TITLE6},
-    schedule_ID7 = #{schedule_ID7},
-    schedule_TITLE7 = #{schedule_TITLE7},
-    schedule_ID8 = #{schedule_ID8},
-    schedule_TITLE8 = #{schedule_TITLE8},
-    schedule_ID9 = #{schedule_ID9},
-    schedule_TITLE9 = #{schedule_TITLE9},
-    schedule_ID10 = #{schedule_ID10},
-    schedule_TITLE10 = #{schedule_TITLE10},
-    schedule_ID11 = #{schedule_ID11},
-    schedule_TITLE11 = #{schedule_TITLE11},
-    schedule_ID12 = #{schedule_ID12},
-    schedule_TITLE12 = #{schedule_TITLE12}
-where schedule_UUID = #{schedule_UUID} and schedule_ID = #{schedule_ID}
-  	</update>
-    
+	<insert id="insertMember">
+		insert into location values
+		(#{location_UUID},#{uID},#{location_ID},#{location_TITLE},#{location_DATE},#{location_TIME}
+		,#{location_NAME},#{location_LAT},#{location_LNG},#{location_MEMO},#{location_REVIEW})
+	</insert>
+
+	<insert id="insertSchedule">
+		insert into schedule (schedule_UUID, uID, schedule_ID, travel_TITLE,
+		schedule_ID1, schedule_TITLE1, schedule_ID2, schedule_TITLE2,
+		schedule_ID3, schedule_TITLE3, schedule_ID4, schedule_TITLE4,
+		schedule_ID5, schedule_TITLE5, schedule_ID6, schedule_TITLE6,
+		schedule_ID7, schedule_TITLE7, schedule_ID8, schedule_TITLE8,
+		schedule_ID9, schedule_TITLE9, schedule_ID10, schedule_TITLE10,
+		schedule_ID11, schedule_TITLE11, schedule_ID12, schedule_TITLE12)
+		values (#{schedule_UUID}, #{uID}, #{schedule_ID}, #{travel_TITLE},
+		#{schedule_ID1}, #{schedule_TITLE1}, #{schedule_ID2},
+		#{schedule_TITLE2},
+		#{schedule_ID3}, #{schedule_TITLE3}, #{schedule_ID4}, #{schedule_TITLE4},
+		#{schedule_ID5}, #{schedule_TITLE5}, #{schedule_ID6},
+		#{schedule_TITLE6},
+		#{schedule_ID7}, #{schedule_TITLE7}, #{schedule_ID8}, #{schedule_TITLE8},
+		#{schedule_ID9}, #{schedule_TITLE9}, #{schedule_ID10},
+		#{schedule_TITLE10},
+		#{schedule_ID11}, #{schedule_TITLE11}, #{schedule_ID12}, #{schedule_TITLE12})
+	</insert>
+
+	<!-- uuid와 location_id 둘 다 있다면(count=1↑) 수정하기 && 둘 다 없거나, 둘 중에 하나라도 없다면(count=0) 
+		데이터 삽입 -->
+	<select id="idCheck" parameterType="map" resultType="int">
+		select count(*) from location where
+		location_UUID = #{location_UUID} and location_ID = #{location_ID}
+	</select>
+
+	<select id="scheduleCheck" parameterType="map" resultType="int">
+		select count(*) from schedule where
+		schedule_UUID = #{schedule_UUID} AND schedule_ID = #{schedule_ID}
+	</select>
+
+	<!-- uuid와 location_id 둘 다 있다면(count=1↑) 수정하기 && 둘 다 없거나, 둘 중에 하나라도 없다면(count=0) 
+		데이터 삽입 -->
+	<select id="idmodifyCheck" parameterType="map" resultType="int">
+		select count(*) from location where location_ID = #{location_ID} and
+		location_UUID = #{location_UUID}
+	</select>
+
+	<select id="schedulemodifyCheck" parameterType="map"
+		resultType="int">
+		select count(*) from schedule where schedule_UUID = #{schedule_UUID} and
+		schedule_ID = #{schedule_ID}
+	</select>
+
+	<select id="Location_print"
+		resultType="com.ptt.model.LocationVO">
+		select * from location where location_UUID = #{location_UUID} and
+		location_ID = #{location_ID}
+	</select>
+
+	<select id="Schedule_print"
+		resultType="com.ptt.model.ScheduleVO">
+		select * from schedule where schedule_UUID = #{schedule_UUID} and
+		schedule_ID = #{schedule_ID}
+	</select>
+
+	<select id="Location_latlng"
+		resultType="com.ptt.model.LocationVO">
+		select * from location where location_UUID = #{schedule_UUID} and
+		location_ID = #{schedule_ID}
+	</select>
+
+	<update id="change">
+		update location set location_TITLE=#{location_TITLE},
+		location_DATE=#{location_DATE}, location_TIME=#{location_TIME},
+		location_NAME=#{location_NAME},
+		location_LAT=#{location_LAT}, location_LNG=#{location_LNG}, location_MEMO=#{location_MEMO},
+		location_REVIEW=#{location_REVIEW}
+		where location_UUID = #{location_UUID} and location_ID = #{location_ID}
+	</update>
+
+	<update id="changeSchedule">
+		update schedule
+		set travel_TITLE = #{travel_TITLE},
+		schedule_ID1 = #{schedule_ID1},
+		schedule_TITLE1 = #{schedule_TITLE1},
+		schedule_ID2 = #{schedule_ID2},
+		schedule_TITLE2 = #{schedule_TITLE2},
+		schedule_ID3 = #{schedule_ID3},
+		schedule_TITLE3 = #{schedule_TITLE3},
+		schedule_ID4 = #{schedule_ID4},
+		schedule_TITLE4 = #{schedule_TITLE4},
+		schedule_ID5 = #{schedule_ID5},
+		schedule_TITLE5 = #{schedule_TITLE5},
+		schedule_ID6 = #{schedule_ID6},
+		schedule_TITLE6 = #{schedule_TITLE6},
+		schedule_ID7 = #{schedule_ID7},
+		schedule_TITLE7 = #{schedule_TITLE7},
+		schedule_ID8 = #{schedule_ID8},
+		schedule_TITLE8 = #{schedule_TITLE8},
+		schedule_ID9 = #{schedule_ID9},
+		schedule_TITLE9 = #{schedule_TITLE9},
+		schedule_ID10 = #{schedule_ID10},
+		schedule_TITLE10 = #{schedule_TITLE10},
+		schedule_ID11 = #{schedule_ID11},
+		schedule_TITLE11 = #{schedule_TITLE11},
+		schedule_ID12 = #{schedule_ID12},
+		schedule_TITLE12 = #{schedule_TITLE12}
+		where schedule_UUID = #{schedule_UUID} and schedule_ID = #{schedule_ID}
+	</update>
+
 </mapper>

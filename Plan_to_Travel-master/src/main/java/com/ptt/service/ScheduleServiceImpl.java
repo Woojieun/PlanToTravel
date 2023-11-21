@@ -19,7 +19,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Autowired
 	ScheduleMapper schedulemapper;
 	
-	
+	//스케줄 데이터 출력
 	public List<ScheduleVO> Schedule_print(Map<String, Object> response) throws Exception {
 
 		return locationMapper.Schedule_print(response);
@@ -35,6 +35,13 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<EventVO> getSchedule(String sche_id) {
         return schedulemapper.getSchedule(sche_id);
+    }
+    
+    //히스토리 삭제 (스케줄 삭제)
+    @Override
+    public void deleteSchedule(String sche_id) {
+        // 여기에서 ScheduleMapper를 이용하여 DB에서 해당 scheduleId에 해당하는 데이터를 삭제하는 로직을 작성
+        schedulemapper.deleteSchedule(sche_id);
     }
     
 }

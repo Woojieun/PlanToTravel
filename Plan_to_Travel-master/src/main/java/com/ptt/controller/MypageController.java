@@ -96,5 +96,18 @@ public class MypageController {
         // ResponseEntity를 사용하여 JSON 형식으로 응답
         return new ResponseEntity<>(scheINFO, HttpStatus.OK);
     }
+	
+	// 히스토리 삭제 (스케줄 삭제)
+	@RequestMapping(value="/hisDelete", method = RequestMethod.GET)
+	public ResponseEntity<String> deleteHistory(@RequestParam("sche_id") String sche_id) {
+	    try {
+	        scheduleservice.deleteSchedule(sche_id);
+	        return ResponseEntity.ok("스케줄을 성공적으로 삭제하였습니다.");
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("Failed to delete schedule: " + e.getMessage());
+	    }
+	}
+
 
 }
