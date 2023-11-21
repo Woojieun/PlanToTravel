@@ -127,11 +127,21 @@ $(document).on('click', '.HistorySChe', function() {
                     scheduleHtml += '</div>';
                 }
                 scheduleHtml += '<label class="createBox' + tableBoxIndex + '">[추가]</label></div>';
-
+                
                 // 해당 날짜의 일정을 travel_table에 추가
                 $('#travel_table').append(scheduleHtml);
 
                 tableBoxIndex++;
+                
+            // 닫혔는지 확인하고, 닫혀 있다면 다시 닫지 않도록 체크
+            if ($('#Offcanvas_History').hasClass('show')) {
+                $('#Offcanvas_History').offcanvas('hide');
+            	}
+            	
+            // 닫혔는지 확인하고, 닫혀 있다면 다시 닫지 않도록 체크
+            if ($('#offcanvasNavbar').hasClass('show')) {
+                $('#offcanvasNavbar').offcanvas('hide');
+            	}
             }
         },
         error: function () {
