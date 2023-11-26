@@ -23,5 +23,5 @@
     <select id="user_data" resultType="com.ptt.model.UserVO">
   	select * from user where u_id = #{uID_session}
   	</select>
-  	
+	
   </mapper>
