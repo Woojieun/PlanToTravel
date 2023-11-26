@@ -108,6 +108,18 @@ public class MypageController {
 	                .body("Failed to delete schedule: " + e.getMessage());
 	    }
 	}
+	
+    //로그아웃
+    @RequestMapping(value="/logout", method=RequestMethod.GET)
+    public String logoutMainGET(HttpServletRequest request) throws Exception{
 
+        
+        logger.info("logoutMainGET메서드 진입");
+        
+        HttpSession session = request.getSession();
+        session.invalidate();
+        
+        return "redirect:/Login";
+    }
 
 }

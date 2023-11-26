@@ -163,7 +163,6 @@ public class ServeController {
 		
 	}
 	
-	
 	//아이디 찾기 페이지 이동
 	@RequestMapping(value = "/findID", method = RequestMethod.GET)
 	public void fidGET() {
@@ -171,7 +170,6 @@ public class ServeController {
 		log.info("아이디 찾기 페이지 진입");
 			
 	}
-	
 	
 	//비밀번호 찾기 페이지 이동
 	@RequestMapping(value = "/findPW", method = RequestMethod.GET)

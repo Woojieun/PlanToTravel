@@ -14,4 +14,13 @@ public interface ScheduleDAO {
 	
 	// 출력
 	public List<ScheduleVO> Schedule_print(Map<String, Object> response) throws Exception;
+	
+	public void insertTest(ScheduleVO vo);
+
+	public int getMaxScheNum(String event_id);
+	
+	// 스케줄 수정
+	public List<ScheduleVO> schedule_change(Map<String, Object> response) throws Exception;
+	
+	public void schedule_delete(String sche_id);
 }

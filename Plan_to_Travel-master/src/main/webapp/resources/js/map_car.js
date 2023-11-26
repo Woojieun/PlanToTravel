@@ -89,6 +89,7 @@
              	addMarker("llStart",response[0],response[1],1);
              	// 도착 
              	addMarker("llEnd",response[lastIndex_lng],response[lastIndex_lat],2);
+             	
              	function addMarker(status, lon, lat, tag) {
              	//출도착경유구분
              	//이미지 파일 변경.

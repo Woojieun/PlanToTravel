@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>비밀번호 찾기</title>
+  <title>비밀번호 찾기<</title>
   <link rel="stylesheet" href="/resources/css/findPW.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -17,11 +17,11 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-5 mt-5">
-        <h1 class="text-center">비밀번호 찾기</h1>
+        <h1 class="text-center">비밀번호 찾기<</h1>
         <form>
           <div class="mb-2 mt-5">
-            <label for="id" class="form-label">아이디</label>
-            <input type="text" class="form-control" id="id" placeholder="아이디를 입력하세요">
+            <label for="id" class="form-label">아이디<</label>
+            <input type="text" class="form-control" id="id" placeholder="占쏙옙占싱듸옙 占쌉뤄옙占싹쇽옙占쏙옙">
           </div>
           <div class="mb-3">
             <button type="button" class="btn btn-primary" id="findIdBtn">아이디 확인</button>
@@ -75,6 +75,7 @@
       }
     });
   </script>
+  
 </body>
 
 </html>

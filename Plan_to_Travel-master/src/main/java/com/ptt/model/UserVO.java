@@ -2,7 +2,7 @@ package com.ptt.model;
 
 public class UserVO {
 	
-	//회원 아이디
+//회원 아이디
 	private String u_id;
 	
 	//회원 비밀번호

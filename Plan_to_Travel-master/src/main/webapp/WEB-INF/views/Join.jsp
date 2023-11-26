@@ -15,7 +15,6 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-
 </head>
 
 <body>
@@ -38,9 +37,10 @@
                             name="u_email" id="useremail" placeholder="이메일을 입력하세요">
                     </div>
                     <span class="final_mail_ck">이메일을 입력해주세요.</span>
-                    
+
                     <div class="mt-2">
-                        <button type="button" class="btn btn-primary mail_check_button sendCode" id="sendCodeBtn">인증번호 발급</button>
+                        <button type="button" class="btn btn-primary mail_check_button sendCode" id="sendCodeBtn">인증번호
+                            발급</button>
                     </div>
 
                     <div class="form-group mt-3">
@@ -50,8 +50,7 @@
                             <button class="btn btn-primary checkCodeBtn" type="button">인증</button>
                         </div>
                     </div>
-                    <span class="emailcheckCode">인증번호를 입력해주세요.</span>
-                    <span id="mail_check_input_box_warn"></span>
+                    <span class="emailcheckCode">인증번호를 입력해주세요.</span> <span id="mail_check_input_box_warn"></span>
 
 
                     <div class="form-group mt-3">
@@ -108,7 +107,7 @@
                 console.log(u_id);
 
                 var data = {
-                	u_id: u_id
+                    u_id: u_id
                 }
 
                 $.ajax({
@@ -118,8 +117,8 @@
                     data: data,
                     success: function (result) {
                         //console.log("성공 여부" + result);
-                        
-                        if(u_id =! ""){
+
+                        if (u_id = !"") {
                             //result = 0이면 , success, 아이디 사용 가능
                             if (result != 'fail') {
                                 $('.id_input_re_1').css("display", "inline-block");
@@ -142,12 +141,10 @@
 
                 }); // ajax 종료
 
-            }
-            
-            else{
-            	$('.final_id_ck').css('display', "inline-block");
-            	$('.id_input_re_1').css("display", "none");
-            	$('.id_input_re_2').css("display", "none");
+            } else {
+                $('.final_id_ck').css('display', "inline-block");
+                $('.id_input_re_1').css("display", "none");
+                $('.id_input_re_2').css("display", "none");
             }
 
         }); // function 종료
@@ -164,8 +161,8 @@
                 type: "GET",
                 url: "emailCheck?email=" + email,
                 success: function (data) {
-                	
-                	alert("입력하신 이메일로 인증 번호가 전송되었습니다.");
+
+                    alert("입력하신 이메일로 인증 번호가 전송되었습니다.");
                     console.log("data : " + data);
                     code = data;
                 }

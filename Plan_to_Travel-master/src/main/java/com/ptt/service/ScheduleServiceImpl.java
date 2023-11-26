@@ -1,8 +1,12 @@
 package com.ptt.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +47,14 @@ public class ScheduleServiceImpl implements ScheduleService {
         // 여기에서 ScheduleMapper를 이용하여 DB에서 해당 scheduleId에 해당하는 데이터를 삭제하는 로직을 작성
         schedulemapper.deleteSchedule(sche_id);
     }
-    
+	
+	@Override
+	public boolean sche_Chk(String sche_id) {
+        return locationMapper.sche_Chk(sche_id);
+	}
+
+	@Override
+	public List<ScheduleVO> schedule_change(Map<String, Object> response) throws Exception {
+		return locationMapper.schedule_change(response);
+	}
 }
