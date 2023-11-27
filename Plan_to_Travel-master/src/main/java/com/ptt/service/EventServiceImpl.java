@@ -1,18 +1,14 @@
 package com.ptt.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.ptt.dao.EventDAO;
 import com.ptt.mapper.LocationMapper;
 import com.ptt.model.EventVO;
-import com.ptt.model.ScheduleVO;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -35,8 +31,14 @@ public class EventServiceImpl implements EventService {
 
 
     @Override
-    public List<EventVO> event_print(EventVO vo) {
-    	return locationMapper.event_print(vo);
+    public List<EventVO> event_print(String event_id) throws Exception {
+        return eventDAO.event_print(event_id);
+    }
+    
+    
+    @Override
+    public List<EventVO> latlng_print(Map<String, Object> params) throws Exception {
+        return eventDAO.latlng_print(params);
     }
     
 	@Override

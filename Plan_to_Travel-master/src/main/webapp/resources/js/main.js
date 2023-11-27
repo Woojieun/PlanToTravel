@@ -52,7 +52,7 @@ $(document).ready(function () {
 				// 'data' 값을 사용하여 텍스트를 추가
 				//$('#Offcanvas_History .offcanvas-body ul').html('<li>' + data + '</li>');
 
-				// 'data' 값을 사용하여 텍스트를 엘리먼트에 추가
+				//'data' 값을 사용하여 텍스트를 엘리먼트에 추가
 				var ulElement = $('#Offcanvas_History .offcanvas-body ul');
 				ulElement.empty(); // 기존 내용 삭제
 
@@ -114,6 +114,8 @@ $(document).on('click', '.HistorySChe', function () {
             var tableBoxIndex = 1; // 초기값 설정
 
             for (var i = 0; i < data.length; i++) {
+            	var eventId = data[i].event_id; // 추가된 부분
+            	console.log('eventId: ' + eventId); // 확인용 로그
                 var date = data[i].event_datetime.split(' ')[0];
                 var eventTitle = data[i].event_title;
 
@@ -123,7 +125,7 @@ $(document).on('click', '.HistorySChe', function () {
                 }
 
                 // 날짜별로 일정 그룹에 추가
-                scheduleGroups[date].push(eventTitle);
+                scheduleGroups[date].push({ eventTitle: eventTitle, eventId: eventId });
             }
 
             // 날짜 컨테이너와 일정을 travel_table에 추가
@@ -134,11 +136,13 @@ $(document).on('click', '.HistorySChe', function () {
                 // 해당 날짜의 일정 그룹을 travel_table에 추가
                 var scheduleHtml = '<div class="column table-box' + tableBoxIndex + '" name="table-box' + tableBoxIndex + '">';
                 for (var j = 0; j < scheduleGroups[date].length; j++) {
-                    var eventTitle = scheduleGroups[date][j];
+                    var eventTitle = scheduleGroups[date][j].eventTitle;
+                    var eventId = scheduleGroups[date][j].eventId; // 추가된 부분
+                    console.log('eventId: ' + eventId); // 확인용 로그
 
-                    scheduleHtml += '<div class="card text-white bg-info card_package" id="box_title_' + (j + 1) + '_' + (i + 1) + '">';
-                    scheduleHtml += '<div class="card-title">';
-                    scheduleHtml += '<div class="title" id="title' + (j + 1) + '_' + (i + 1) + '" tabindex="-1">' + eventTitle + '</div>';
+                    scheduleHtml += '<div class="card text-white bg-info card_package" value="' + eventId + '" id="box_title_' + (j + 1) + '_' + (j + 1) + '">';
+                    scheduleHtml += '<div class="card-title' + (j + 1) + ' uuid" id="' + eventId + '">';
+                    scheduleHtml += '<div class="title" id="title' + (j + 1) + '_' + (j + 1) + '" tabindex="-1">' + eventTitle + '</div>';
                     scheduleHtml += '<div class="deleteBox">x</div>';
                     scheduleHtml += '</div>';
                     scheduleHtml += '</div>';
@@ -579,516 +583,300 @@ $(document).on('click', ".createBox7", function () {
 });
 
 
-// 일정에 하나씩 saveSortableOrder()를 넣은 이유는 클릭한 div에 있는 데이터들만 저장하기 위함임
+//일정에 하나씩 saveSortableOrder()를 넣은 이유는 클릭한 div에 있는 데이터들만 저장하기 위함임
+
+function event_print() {
+	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
+	console.log("card_uuid:", card_uuid);
+	
+	$.ajax({
+	    url: "/event_print",
+	    type: "post",
+	    dataType: "json",
+	    data: {
+	        "event_id": card_uuid
+	    },
+	    success: function (data2) {
+	        //console.log("Server response:", data2);
+	        console.log(JSON.stringify(data2) + ' 데이터');
+
+	        	var firstItem = data2.data2[0];
+	            var location_TITLE = firstItem.event_title;
+	            var location_TIME = firstItem.event_datetime;
+	            var location_NAME = firstItem.event_place;
+	            var location_LAT = firstItem.event_lat;
+	            var location_LNG = firstItem.event_lng;
+	            var location_MEMO = firstItem.event_memo;
+	            var location_REVIEW = firstItem.event_review;
+
+	            var dateTime = new Date(location_TIME);
+	            var time = dateTime.toISOString().split('T')[1].split('.')[0];
+
+	            $('#memo_text').val(location_TITLE);
+	            $('#memo_time').val(time);
+	            $('#memo_place').val(location_NAME);
+	            $('#memo_place_lat').val(location_LAT);
+	            $('#memo_place_lng').val(location_LNG);
+	            $('#memo_content').val(location_MEMO);
+	            $('#review_content').val(location_REVIEW);
+	    },
+	    error: function (xhr, status, error) {
+	        console.error("POST 요청 오류:", xhr);
+	        console.error("상태:", status);
+	        console.error("에러:", error);
+	    }
+	});
+	}
 
 // 첫째 날 일정 클릭
-$(document).ready(function () {
-	$(document).on('click', ".table-box1 [id^=title]", function () {
+$(document).ready(function() {
+$(document).on('click', ".table-box1 [id^=title]", function () { 
 
-		$(".card-title1").focus();
-
-		// 일정표를 클릭하면 메모장 날짜 텍스트 출력
-		$('#datepicker').val($("#date1").text());
-
-		$("[class^=table-box1]").each(function () {
-			var elementId = $(this).attr("id");
-		});
-
-		// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
-		document.querySelector('#memo_text_id').setAttribute("value", $(this).attr('id'));
-
-		items = $(".table-box1 [id^=title]");
-
-		saveSortableOrder();
-
-		// 메모장에 쓴 제목 일정표에 삽입
-		$("#memo_text_id").text(memo_text);
-
-		// 클릭한 테이블의 클래스 저장
-		$("#table-box_text").val("table-box1");
-
-		fullId = $('.table-box1 [id^=uuid]').attr('id');
-		remove_id = fullId;
-
-		card_uuid = $(this).parent().attr('id');
-
-		console.log("card_uuid " + card_uuid);
-
-		// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
-		$.ajax({
-			url: "/event_print",
-			type: "post",
-			data: {
-				"event_id": card_uuid
-			},
-			success: function (result) {
-				console.log("Server response:", result);
-
-				// Check if result is an array
-				if (Array.isArray(result)) {
-					// Assuming each item in the array is an event
-					result.forEach(function (event) {
-						var location_TITLE = event.event_title;
-						var location_TIME = event.event_datetime;
-						var location_NAME = event.event_place;
-						var location_LAT = event.event_lat;
-						var location_LNG = event.event_lng;
-						var location_MEMO = event.event_memo;
-						var location_REVIEW = event.event_review;
-
-						var dateTime = new Date(location_TIME);
-						var time = dateTime.toISOString().split('T')[1].split('.')[0];
-
-						$('#memo_text').val(location_TITLE);
-						$('#memo_time').val(time);
-						$('#memo_place').val(location_NAME);
-						$('#memo_place_lat').val(location_LAT);
-						$('#memo_place_lng').val(location_LNG);
-						$('#memo_content').val(location_MEMO);
-						$('#review_content').val(location_REVIEW);
-					});
-				} else {
-					console.error("Unexpected response format:", result);
-				}
-			},
-			dataType: "json",
-			error: function (xhr, status, error) {
-				console.error("POST 요청 오류:", xhr);
-				console.error("상태:", status);
-				console.error("에러:", error);
-			}
-		});
-	});
-});
-
-// 둘째 날 일정 클릭
-$(document).on('click', ".table-box2 [id^=title]", function () {
-
-	$(".card-title2").focus();
-
+	$(".card-title1").focus();
+	
 	// 일정표를 클릭하면 메모장 날짜 텍스트 출력
-	$('#datepicker').val($("#date2").text());
-
-	$(".memo_padding").show(); // 메모장 보이게 하기
-	$(".map_div_container").height('1530px');
-	$(".advertisement").css("margin-top", "680px");
-
+	$('#datepicker').val($("#date1").text());
+	
+	$("[class^=table-box1]").each(function() {
+	    var elementId = $(this).attr("id");
+	});
+	
 	// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
-	document.querySelector('#memo_text_id').setAttribute("value", $(this).attr('id'));
+	document.querySelector('#memo_text_id').setAttribute("value",$(this).attr('id'));
 
-	items = $(".table-box2 [id^=title]");
-
+	items = $(".table-box1 [id^=title]");
+	
 	saveSortableOrder();
-
-	// 인덱스 출력
-	$("#clickedCardIndex_text").val(clickedCardIndex2);
-
+	
 	// 메모장에 쓴 제목 일정표에 삽입
 	$("#memo_text_id").text(memo_text);
 
 	// 클릭한 테이블의 클래스 저장
-	$("#table-box_text").val("table-box2");
+	$("#table-box_text").val("table-box1");
 
+	fullId = $('.table-box1 [id^=uuid]').attr('id');
+	remove_id = fullId;
+
+	card_uuid = $(this).parent().attr('id');
+	
+	console.log("card_uuid " + card_uuid);
+	
+	event_print();
+});
+});
+
+// 둘째 날 일정 클릭
+$(document).on('click', ".table-box2 [id^=title]", function () { 
+
+	$(".card-title2").focus();
+	
+	// 일정표를 클릭하면 메모장 날짜 텍스트 출력
+	$('#datepicker').val($("#date2").text());
+	
+	$(".memo_padding").show(); // 메모장 보이게 하기
+	$(".map_div_container").height('1530px');
+	$(".advertisement").css("margin-top", "680px");
+	
+	// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
+	document.querySelector('#memo_text_id').setAttribute("value",$(this).attr('id'));
+	
+	items = $(".table-box2 [id^=title]");
+	
+	saveSortableOrder();
+	
+	// 인덱스 출력
+	$("#clickedCardIndex_text").val(clickedCardIndex2);
+	
+	// 메모장에 쓴 제목 일정표에 삽입
+	$("#memo_text_id").text(memo_text);
+	
+	// 클릭한 테이블의 클래스 저장
+	$("#table-box_text").val("table-box2");
+	
 	fullId = $('.table-box2 [id^=uuid]').attr('id');
 	remove_id = fullId;
 
 	card_uuid = $(this).parent().attr('id');
 
-	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
-	$.ajax({
-		url: "/event_print",
-		type: "post",
-		dataType: "json", // 이 부분을 수정하지 마십시오
-		traditional: true,
-		data: {
-			"event_id": card_uuid
-		},
-		success: function (result) {
-
-			// data2 객체 내의 배열에서 첫 번째 요소 추출
-			var firstItem = result.evnet_map[0];
-
-			// 필요한 데이터 추출
-			var location_TITLE = firstItem.event_title; // 메모명
-			var location_TIME = firstItem.event_datetime;
-			var location_NAME = firstItem.event_place; // 장소명
-			var location_LAT = firstItem.event_lat;
-			var location_LNG = firstItem.event_lng;
-			var location_MEMO = firstItem.event_memo;
-			var location_REVIEW = firstItem.event_review;
-
-			// HTML 요소에 데이터 출력
-			$('#memo_text').val(location_TITLE);
-			$('#memo_time').val(location_TIME);
-			$('#memo_place').val(location_NAME);
-			$('#memo_place_lat').val(location_LAT);
-			$('#memo_place_lng').val(location_LNG);
-			$('#memo_content').val(location_MEMO);
-			$('#review_content').val(location_REVIEW);
-			// 다른 필드에 대한 데이터도 출력하십시오.
-		},
-		error: function (xhr, status, error) {
-			console.error("GET 요청 오류: " + error);
-		}
-	});
+	event_print();
 });
 
 
 
 // 셋째 날 일정 클릭
-$(document).on('click', ".table-box3 [id^=title]", function () {
+$(document).on('click', ".table-box3 [id^=title]", function () { 
 
 	$(".card-title3").focus();
-
+	
 	// 일정표를 클릭하면 메모장 날짜 텍스트 출력
 	$('#datepicker').val($("#date3").text());
-
+	
 	$(".memo_padding").show(); // 메모장 보이게 하기
 	$(".map_div_container").height('1530px');
 	$(".advertisement").css("margin-top", "680px");
-
+	
 	// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
-	document.querySelector('#memo_text_id').setAttribute("value", $(this).attr('id'));
+	document.querySelector('#memo_text_id').setAttribute("value",$(this).attr('id'));
+	
+items = $(".table-box3 [id^=title]");
 
-	items = $(".table-box3 [id^=title]");
-
-	saveSortableOrder();
-
+saveSortableOrder();
+	
 	// 인덱스 출력
 	$("#clickedCardIndex_text").val(clickedCardIndex3);
-
+	
 	// 메모장에 쓴 제목 일정표에 삽입
 	$("#memo_text_id").text(memo_text);
-
+	
 	// 클릭한 테이블의 클래스 저장
 	$("#table-box_text").val("table-box3");
-
+	
 	fullId = $('.table-box3 [id^=uuid]').attr('id');
 	remove_id = fullId;
-
+	
 	card_uuid = $(this).parent().attr('id');
 
-	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
-	$.ajax({
-		url: "/event_print",
-		type: "post",
-		dataType: "json", // 이 부분을 수정하지 마십시오
-		traditional: true,
-		data: {
-			"event_id": card_uuid
-		},
-		success: function (result) {
-
-			// data2 객체 내의 배열에서 첫 번째 요소 추출
-			var firstItem = result.evnet_map[0];
-
-			// 필요한 데이터 추출
-			var location_TITLE = firstItem.event_title; // 메모명
-			var location_TIME = firstItem.event_datetime;
-			var location_NAME = firstItem.event_place; // 장소명
-			var location_LAT = firstItem.event_lat;
-			var location_LNG = firstItem.event_lng;
-			var location_MEMO = firstItem.event_memo;
-			var location_REVIEW = firstItem.event_review;
-
-			// HTML 요소에 데이터 출력
-			$('#memo_text').val(location_TITLE);
-			$('#memo_time').val(location_TIME);
-			$('#memo_place').val(location_NAME);
-			$('#memo_place_lat').val(location_LAT);
-			$('#memo_place_lng').val(location_LNG);
-			$('#memo_content').val(location_MEMO);
-			$('#review_content').val(location_REVIEW);
-			// 다른 필드에 대한 데이터도 출력하십시오.
-		},
-		error: function (xhr, status, error) {
-			console.error("GET 요청 오류: " + error);
-		}
-	});
+	event_print();
 });
 
 
 // 넷째 날 일정 클릭
-$(document).on('click', ".table-box4 [id^=title]", function () {
+$(document).on('click', ".table-box4 [id^=title]", function () { 
 
 	$(".card-title4").focus();
-
+	
 	// 일정표를 클릭하면 메모장 날짜 텍스트 출력
 	$('#datepicker').val($("#date4").text());
-
+	
 	$(".memo_padding").show(); // 메모장 보이게 하기
 	$(".map_div_container").height('1530px');
 	$(".advertisement").css("margin-top", "680px");
-
+	
 	// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
-	document.querySelector('#memo_text_id').setAttribute("value", $(this).attr('id'));
+	document.querySelector('#memo_text_id').setAttribute("value",$(this).attr('id'));
+	
+items = $(".table-box4 [id^=title]");
 
-	items = $(".table-box4 [id^=title]");
-
-	saveSortableOrder();
-
+saveSortableOrder();
+	
 	// 메모장에 쓴 제목 일정표에 삽입
 	$("#memo_text_id").text(memo_text);
-
+	
 	// 클릭한 테이블의 클래스 저장
 	$("#table-box_text").val("table-box4");
-
+	
 	fullId = $('.table-box4 [id^=uuid]').attr('id');
 	remove_id = fullId;
-
+	
 	card_uuid = $(this).parent().attr('id');
 
-	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
-	$.ajax({
-		url: "/event_print",
-		type: "post",
-		dataType: "json", // 이 부분을 수정하지 마십시오
-		traditional: true,
-		data: {
-			"event_id": card_uuid
-		},
-		success: function (result) {
-
-			// data2 객체 내의 배열에서 첫 번째 요소 추출
-			var firstItem = result.evnet_map[0];
-
-			// 필요한 데이터 추출
-			var location_TITLE = firstItem.event_title; // 메모명
-			var location_TIME = firstItem.event_datetime;
-			var location_NAME = firstItem.event_place; // 장소명
-			var location_LAT = firstItem.event_lat;
-			var location_LNG = firstItem.event_lng;
-			var location_MEMO = firstItem.event_memo;
-			var location_REVIEW = firstItem.event_review;
-
-			// HTML 요소에 데이터 출력
-			$('#memo_text').val(location_TITLE);
-			$('#memo_time').val(location_TIME);
-			$('#memo_place').val(location_NAME);
-			$('#memo_place_lat').val(location_LAT);
-			$('#memo_place_lng').val(location_LNG);
-			$('#memo_content').val(location_MEMO);
-			$('#review_content').val(location_REVIEW);
-			// 다른 필드에 대한 데이터도 출력하십시오.
-		},
-		error: function (xhr, status, error) {
-			console.error("GET 요청 오류: " + error);
-		}
-	});
+	event_print();
 });
 
 
 
 // 다섯째 날 일정 클릭
-$(document).on('click', ".table-box5 [id^=title]", function () {
+$(document).on('click', ".table-box5 [id^=title]", function () { 
 
 	$(".card-title5").focus();
-
+	
 	// 일정표를 클릭하면 메모장 날짜 텍스트 출력
 	$('#datepicker').val($("#date5").text());
-
+	
 	$(".memo_padding").show(); // 메모장 보이게 하기
 	$(".map_div_container").height('1530px');
 	$(".advertisement").css("margin-top", "680px");
-
+	
 	// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
-	document.querySelector('#memo_text_id').setAttribute("value", $(this).attr('id'));
+	document.querySelector('#memo_text_id').setAttribute("value",$(this).attr('id'));
+	
+items = $(".table-box5 [id^=title]");
 
-	items = $(".table-box5 [id^=title]");
 
-
-	saveSortableOrder();
-
+saveSortableOrder();
+	
 	// 메모장에 쓴 제목 일정표에 삽입
 	$("#memo_text_id").text(memo_text);
-
+	
 	// 클릭한 테이블의 클래스 저장
 	$("#table-box_text").val("table-box5");
-
+	
 	fullId = $('.table-box5 [id^=uuid]').attr('id');
 	remove_id = fullId;
-
+	
 	card_uuid = $(this).parent().attr('id');
 
-	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
-	$.ajax({
-		url: "/event_print",
-		type: "post",
-		dataType: "json", // 이 부분을 수정하지 마십시오
-		traditional: true,
-		data: {
-			"event_id": card_uuid
-		},
-		success: function (result) {
-
-			// data2 객체 내의 배열에서 첫 번째 요소 추출
-			var firstItem = result.evnet_map[0];
-
-			// 필요한 데이터 추출
-			var location_TITLE = firstItem.event_title; // 메모명
-			var location_TIME = firstItem.event_datetime;
-			var location_NAME = firstItem.event_place; // 장소명
-			var location_LAT = firstItem.event_lat;
-			var location_LNG = firstItem.event_lng;
-			var location_MEMO = firstItem.event_memo;
-			var location_REVIEW = firstItem.event_review;
-
-			// HTML 요소에 데이터 출력
-			$('#memo_text').val(location_TITLE);
-			$('#memo_time').val(location_TIME);
-			$('#memo_place').val(location_NAME);
-			$('#memo_place_lat').val(location_LAT);
-			$('#memo_place_lng').val(location_LNG);
-			$('#memo_content').val(location_MEMO);
-			$('#review_content').val(location_REVIEW);
-			// 다른 필드에 대한 데이터도 출력하십시오.
-		},
-		error: function (xhr, status, error) {
-			console.error("GET 요청 오류: " + error);
-		}
-	});
+	event_print();
 });
 
 
 // 여섯째 날 일정 클릭
-$(document).on('click', ".table-box6 [id^=title]", function () {
+$(document).on('click', ".table-box6 [id^=title]", function () { 
 
 	$(".card-title6").focus();
-
+	
 	// 일정표를 클릭하면 메모장 날짜 텍스트 출력
 	$('#datepicker').val($("#date6").text());
-
+	
 	$(".memo_padding").show(); // 메모장 보이게 하기
 	$(".map_div_container").height('1530px');
 	$(".advertisement").css("margin-top", "680px");
-
+	
 	// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
-	document.querySelector('#memo_text_id').setAttribute("value", $(this).attr('id'));
+	document.querySelector('#memo_text_id').setAttribute("value",$(this).attr('id'));
+	
+items = $(".table-box6 [id^=title]");
 
-	items = $(".table-box6 [id^=title]");
-
-	saveSortableOrder();
-
+saveSortableOrder();
+	
 	// 메모장에 쓴 제목 일정표에 삽입
 	$("#memo_text_id").text(memo_text);
-
+	
 	// 클릭한 테이블의 클래스 저장
 	$("#table-box_text").val("table-box6");
-
+	
 	fullId = $('.table-box6 [id^=uuid]').attr('id');
 	remove_id = fullId;
-
+	
 	card_uuid = $(this).parent().attr('id');
 
-	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
-	$.ajax({
-		url: "/event_print",
-		type: "post",
-		dataType: "json", // 이 부분을 수정하지 마십시오
-		traditional: true,
-		data: {
-			"event_id": card_uuid
-		},
-		success: function (result) {
-
-			// data2 객체 내의 배열에서 첫 번째 요소 추출
-			var firstItem = result.evnet_map[0];
-
-			// 필요한 데이터 추출
-			var location_TITLE = firstItem.event_title; // 메모명
-			var location_TIME = firstItem.event_datetime;
-			var location_NAME = firstItem.event_place; // 장소명
-			var location_LAT = firstItem.event_lat;
-			var location_LNG = firstItem.event_lng;
-			var location_MEMO = firstItem.event_memo;
-			var location_REVIEW = firstItem.event_review;
-
-			// HTML 요소에 데이터 출력
-			$('#memo_text').val(location_TITLE);
-			$('#memo_time').val(location_TIME);
-			$('#memo_place').val(location_NAME);
-			$('#memo_place_lat').val(location_LAT);
-			$('#memo_place_lng').val(location_LNG);
-			$('#memo_content').val(location_MEMO);
-			$('#review_content').val(location_REVIEW);
-			// 다른 필드에 대한 데이터도 출력하십시오.
-		},
-		error: function (xhr, status, error) {
-			console.error("GET 요청 오류: " + error);
-		}
-	});
+	event_print();
 });
 
 
 // 일곱번째 날 일정 클릭
-$(document).on('click', ".table-box7 [id^=title]", function () {
+$(document).on('click', ".table-box7 [id^=title]", function () { 
 
 	$(".card-title7").focus();
-
+	
 	// 일정표를 클릭하면 메모장 날짜 텍스트 출력
 	$('#datepicker').val($("#date7").text());
-
+	
 	$(".memo_padding").show(); // 메모장 보이게 하기
 	$(".map_div_container").height('1530px');
 	$(".advertisement").css("margin-top", "680px");
-
+	
 	// 일정표와 메모장의 연결을 위함, 메모장의 제목 텍스트의 아이디 값에 클릭한 일정의 아이디 값 연결함.
-	document.querySelector('#memo_text_id').setAttribute("value", $(this).attr('id'));
+	document.querySelector('#memo_text_id').setAttribute("value",$(this).attr('id'));
+	
+items = $(".table-box7 [id^=title]");
 
-	items = $(".table-box7 [id^=title]");
-
-	saveSortableOrder();
-
+saveSortableOrder();
+	
 	// 메모장에 쓴 제목 일정표에 삽입
 	$("#memo_text_id").text(memo_text);
-
+	
 	// 클릭한 테이블의 클래스 저장
 	$("#table-box_text").val("table-box7");
-
+	
 	fullId = $('.table-box7 [id^=uuid]').attr('id');
 	remove_id = fullId;
-
+	
 	card_uuid = $(this).parent().attr('id');
-
+	
 	console.log("card_uuid : " + card_uuid);
 
-	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
-	$.ajax({
-		url: "/event_print",
-		type: "post",
-		dataType: "json", // 이 부분을 수정하지 마십시오
-		traditional: true,
-		data: {
-			"event_id": card_uuid
-		},
-		success: function (result) {
-
-			// data2 객체 내의 배열에서 첫 번째 요소 추출
-			var firstItem = result.evnet[0];
-
-			// 필요한 데이터 추출
-			var location_TITLE = firstItem.event_title; // 메모명
-			var location_TIME = firstItem.event_datetime;
-			var location_NAME = firstItem.event_place; // 장소명
-			var location_LAT = firstItem.event_lat;
-			var location_LNG = firstItem.event_lng;
-			var location_MEMO = firstItem.event_memo;
-			var location_REVIEW = firstItem.event_review;
-
-			// HTML 요소에 데이터 출력
-			$('#memo_text').val(location_TITLE);
-			$('#memo_time').val(location_TIME);
-			$('#memo_place').val(location_NAME);
-			$('#memo_place_lat').val(location_LAT);
-			$('#memo_place_lng').val(location_LNG);
-			$('#memo_content').val(location_MEMO);
-			$('#review_content').val(location_REVIEW);
-			// 다른 필드에 대한 데이터도 출력하십시오.
-		},
-		error: function (xhr, status, error) {
-			console.error("GET 요청 오류: " + error);
-		}
-	});
+	event_print();
 });
 
 

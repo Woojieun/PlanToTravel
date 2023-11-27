@@ -57,7 +57,7 @@ public class MypageController {
             historyMap.put("sche_title", item.getSche_title());
             historyMap.put("sche_id", item.getSche_id());
             historyList.add(historyMap);
-            System.out.println("History List : " + historyList);
+            //System.out.println("History List : " + historyList);
         }
         
         return historyList;
@@ -67,12 +67,12 @@ public class MypageController {
 	@RequestMapping(value = "/historySche", method = RequestMethod.GET)
 	public ResponseEntity<List<Map<String, String>>> historyScheGET(@RequestParam("buttonValue") String buttonValue, Model model) throws Exception {
 		
-	    logger.info("히스토리의 스케줄 불러오기");
-	    logger.info("클릭한 history의 value: " + buttonValue);
+	    //logger.info("히스토리의 스케줄 불러오기");
+	    //logger.info("클릭한 history의 value: " + buttonValue);
 	    
         // 클릭한 history의 value를 사용하여 스케줄 정보를 가져옴
         List<EventVO> scheduleList = scheduleservice.getSchedule(buttonValue);
-        System.out.println("스케줄 리스트 :" + scheduleList);
+        //System.out.println("스케줄 리스트 :" + scheduleList);
 
         // 모델에 결과를 추가하여 뷰로 전달
         //model.addAttribute("scheduleList", scheduleList);
@@ -90,7 +90,7 @@ public class MypageController {
             eventMap.put("event_title", event.getEvent_title());
             eventMap.put("event_datetime", String.valueOf(event.getEvent_datetime()));
             scheINFO.add(eventMap);
-            System.out.println("스케줄 정보 :" + scheINFO);
+            //System.out.println("스케줄 정보 :" + scheINFO);
         }
 
         // ResponseEntity를 사용하여 JSON 형식으로 응답

@@ -4,24 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.ptt.mapper.LocationMapper;
 import com.ptt.model.LocationVO;
-import com.ptt.model.ScheduleVO;
 
 @Service
 public class LocationServiceImpl implements LocationService {
 	@Autowired
 	LocationMapper locationMapper;
 	
-	@Inject // 의존관계를 자동으로 연결(JAVA에서 제공) ==@autowired (Spring에서 제공)
-    private SqlSession sqlSession;
+	//@Inject // 의존관계를 자동으로 연결(JAVA에서 제공) ==@autowired (Spring에서 제공)
+    //private SqlSession sqlSession;
 	
 	@Override
 	public boolean idCheck(String location_UUID, String location_ID) throws Exception {

@@ -1,6 +1,5 @@
 package com.ptt.mapper;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +34,7 @@ public interface LocationMapper {
 	// 아이디 중복 검사
 	public boolean sche_Chk(String sche_id);
 
-	public List<EventVO> event_print(EventVO vo);
+	public List<EventVO> event_print(String event_id);
 			
 	// 아이디 중복 검사
 	public List<ScheduleVO> schedule_change(Map<String, Object> params);

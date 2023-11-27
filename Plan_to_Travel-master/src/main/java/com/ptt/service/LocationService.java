@@ -1,16 +1,9 @@
 package com.ptt.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Service;
-
-import com.ptt.dao.LocationDAO;
 import com.ptt.model.LocationVO;
-import com.ptt.model.ScheduleVO;
 
 
 public interface LocationService {

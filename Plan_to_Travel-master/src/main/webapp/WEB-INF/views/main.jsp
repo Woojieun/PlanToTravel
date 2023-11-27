@@ -103,7 +103,7 @@
     <div class="offcanvas-header">
       <button type="button" class="btn btn-outline-primary" data-bs-dismiss="offcanvas" type="button"><i
           class="bi bi-arrow-left"></i></button> <!-- 뒤로가기 -->
-      <button type="button" class="btn btn-outline-primary" title="스케줄 추가하기"><i class="bi bi-plus-lg"></i></button>
+      <button type="button" class="btn btn-outline-primary" title="스케줄 추가하기" id="new_schedule"><i class="bi bi-plus-lg"></i></button>
       <!-- 스케줄 History 추가 -->
     </div>
     <div class="offcanvas-body">
