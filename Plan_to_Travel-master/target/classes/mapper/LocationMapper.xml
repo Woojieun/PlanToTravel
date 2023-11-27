@@ -89,7 +89,7 @@
     SELECT COUNT(*) FROM event WHERE sche_id = #{sche_id} AND event_datetime LIKE CONCAT('%', #{event_date}, '%')
 </select>
 
-<select id="event_print" parameterType="map" resultType="String">
+<select id="event_print" parameterType="map" resultType="com.ptt.model.EventVO">
     SELECT * FROM event WHERE event_id = #{event_id};
 </select>
   	
