@@ -9,7 +9,9 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 
 import com.ptt.model.LocationVO;
+import com.ptt.model.UserVO;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository // DAO라고 명시
@@ -21,6 +23,9 @@ public class LocationDAOImp implements LocationDAO {
    
     private static final String namespace = "com.ptt.mapper.LocationMapper";
                                             //memberMapper.xml의 namespace값
+    
+    @Autowired
+	private LocationDAO mapper;
    
     @Override
     public void insertMember(LocationVO vo) {

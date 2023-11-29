@@ -52,13 +52,13 @@ $(document).ready(function () {
 				// 'data' 값을 사용하여 텍스트를 추가
 				//$('#Offcanvas_History .offcanvas-body ul').html('<li>' + data + '</li>');
 
-				//'data' 값을 사용하여 텍스트를 엘리먼트에 추가
+				// 'data' 값을 사용하여 텍스트를 엘리먼트에 추가
 				var ulElement = $('#Offcanvas_History .offcanvas-body ul');
 				ulElement.empty(); // 기존 내용 삭제
 
 				// 'data'의 결과를 반복하여 목록으로 표시
 				data.forEach(function (result) {
-					var liElement = '<li class="nav-item">';
+					var liElement = '<li class="nav-item mb-2">';
 					liElement += '<button class="nav-link active HistorySChe" type="button" aria-current="page" id="History" value="' + result.sche_id + '">' + result.sche_title + '</button>';
 					liElement += '<button type="button" id="History_delete"><i class="bi bi-x"></i></button>';
 					liElement += '</li>';
@@ -98,7 +98,7 @@ $(document).on('click', '.HistorySChe', function () {
         dataType: 'json', // 서버에서 받을 데이터의 형식을 명시합니다.
         success: function (data) {
             // 서버에서 받은 응답에 대한 처리를 여기에 추가
-            console.log(JSON.stringify(data) + ' 데이터');
+            //console.log(JSON.stringify(data) + ' 데이터');
             // 예를 들어, 스케줄을 화면에 표시하거나 다른 작업을 수행할 수 있습니다.
 
             // travel_table 요소 초기화
@@ -114,8 +114,6 @@ $(document).on('click', '.HistorySChe', function () {
             var tableBoxIndex = 1; // 초기값 설정
 
             for (var i = 0; i < data.length; i++) {
-            	var eventId = data[i].event_id; // 추가된 부분
-            	console.log('eventId: ' + eventId); // 확인용 로그
                 var date = data[i].event_datetime.split(' ')[0];
                 var eventTitle = data[i].event_title;
 
@@ -125,7 +123,7 @@ $(document).on('click', '.HistorySChe', function () {
                 }
 
                 // 날짜별로 일정 그룹에 추가
-                scheduleGroups[date].push({ eventTitle: eventTitle, eventId: eventId });
+                scheduleGroups[date].push(eventTitle);
             }
 
             // 날짜 컨테이너와 일정을 travel_table에 추가
@@ -136,13 +134,11 @@ $(document).on('click', '.HistorySChe', function () {
                 // 해당 날짜의 일정 그룹을 travel_table에 추가
                 var scheduleHtml = '<div class="column table-box' + tableBoxIndex + '" name="table-box' + tableBoxIndex + '">';
                 for (var j = 0; j < scheduleGroups[date].length; j++) {
-                    var eventTitle = scheduleGroups[date][j].eventTitle;
-                    var eventId = scheduleGroups[date][j].eventId; // 추가된 부분
-                    console.log('eventId: ' + eventId); // 확인용 로그
+                    var eventTitle = scheduleGroups[date][j];
 
-                    scheduleHtml += '<div class="card text-white bg-info card_package" value="' + eventId + '" id="box_title_' + (j + 1) + '_' + (j + 1) + '">';
-                    scheduleHtml += '<div class="card-title' + (j + 1) + ' uuid" id="' + eventId + '">';
-                    scheduleHtml += '<div class="title" id="title' + (j + 1) + '_' + (j + 1) + '" tabindex="-1">' + eventTitle + '</div>';
+                    scheduleHtml += '<div class="card text-white bg-info card_package" id="box_title_' + (j + 1) + '_' + (i + 1) + '">';
+                    scheduleHtml += '<div class="card-title">';
+                    scheduleHtml += '<div class="title" id="title' + (j + 1) + '_' + (i + 1) + '" tabindex="-1">' + eventTitle + '</div>';
                     scheduleHtml += '<div class="deleteBox">x</div>';
                     scheduleHtml += '</div>';
                     scheduleHtml += '</div>';
@@ -587,8 +583,6 @@ $(document).on('click', ".createBox7", function () {
 
 function event_print() {
 	// DB에 정상적으로 삽입되었다면, DB에 location_UUID와 location_ID를 확인된다면 출력!
-	console.log("card_uuid:", card_uuid);
-	
 	$.ajax({
 	    url: "/event_print",
 	    type: "post",
@@ -597,8 +591,7 @@ function event_print() {
 	        "event_id": card_uuid
 	    },
 	    success: function (data2) {
-	        //console.log("Server response:", data2);
-	        console.log(JSON.stringify(data2) + ' 데이터');
+	        console.log("Server response:", data2);
 
 	        	var firstItem = data2.data2[0];
 	            var location_TITLE = firstItem.event_title;
@@ -610,6 +603,7 @@ function event_print() {
 	            var location_REVIEW = firstItem.event_review;
 
 	            var dateTime = new Date(location_TIME);
+	            console.log("dateTime" + dateTime);
 	            var time = dateTime.toISOString().split('T')[1].split('.')[0];
 
 	            $('#memo_text').val(location_TITLE);

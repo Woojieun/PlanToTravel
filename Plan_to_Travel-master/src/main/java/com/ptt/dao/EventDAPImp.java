@@ -7,9 +7,12 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ptt.model.EventVO;
+import com.ptt.model.LocationVO;
+import com.ptt.model.ScheduleVO;
 
 @Repository
 public class EventDAPImp implements EventDAO {
@@ -19,6 +22,9 @@ public class EventDAPImp implements EventDAO {
    
     private static final String namespace = "com.ptt.mapper.LocationMapper";
                                             //memberMapper.xml의 namespace값
+    
+    @Autowired
+	private LocationDAO mapper;
    
     @Override
     public void insert_event(EventVO vo) {
@@ -59,7 +65,6 @@ public class EventDAPImp implements EventDAO {
     
     @Override
     public List<EventVO> event_print(String event_id) throws Exception {
-        // Assuming you are using MyBatis or a similar framework
         return sqlSession.selectList(namespace + ".event_print", event_id);
     }
     

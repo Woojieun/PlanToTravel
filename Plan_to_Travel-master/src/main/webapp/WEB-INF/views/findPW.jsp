@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <!doctype html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>비밀번호 찾기</title>
+  <title>��й�ȣ ã��<</title>
   <link rel="stylesheet" href="/resources/css/findPW.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -17,31 +17,31 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-5 mt-5">
-        <h1 class="text-center">비밀번호 찾기</h1>
+        <h1 class="text-center">��й�ȣ ã��<</h1>
         <form>
           <div class="mb-2 mt-5">
-            <label for="id" class="form-label">아이디</label>
-            <input type="text" class="form-control" id="id" placeholder="占쏙옙占싱듸옙 占쌉뤄옙占싹쇽옙占쏙옙">
+            <label for="id" class="form-label">���̵�<</label>
+            <input type="text" class="form-control" id="id" placeholder="���̵� �Է��ϼ���">
           </div>
           <div class="mb-3">
-            <button type="button" class="btn btn-primary" id="findIdBtn">아이디 확인</button>
+            <button type="button" class="btn btn-primary" id="findIdBtn">���̵� Ȯ��</button>
           </div>
           <div class="mb-2">
-            <label for="email" class="form-label">이메일</label>
-            <input type="email" class="form-control" id="email" placeholder="이메일을 입력하세요">
+            <label for="email" class="form-label">�̸���</label>
+            <input type="email" class="form-control" id="email" placeholder="�̸����� �Է��ϼ���">
           </div>
           <div class="mb-3">
-            <button type="button" class="btn btn-primary" id="sendEmailBtn">이메일 보내기</button>
+            <button type="button" class="btn btn-primary" id="sendEmailBtn">�̸��� ������</button>
           </div>
           <div class="mb-2">
-            <label for="verificationCode" class="form-label">인증 코드</label>
-            <input type="text" class="form-control" id="verificationCode" placeholder="인증 코드를 입력하세요">
+            <label for="verificationCode" class="form-label">���� �ڵ�</label>
+            <input type="text" class="form-control" id="verificationCode" placeholder="���� �ڵ带 �Է��ϼ���">
           </div>
           <div class="mb-3">
-            <button type="button" class="btn btn-primary" id="verifyBtn">인증 확인</button>
+            <button type="button" class="btn btn-primary" id="verifyBtn">���� Ȯ��</button>
           </div>
           <div class="mb-3 mt-5 text-center">
-            <label for="foundId" class="form-label">찾은 비밀번호</label>
+            <label for="foundId" class="form-label">ã�� ��й�ȣ</label>
             <input type="text" class="form-control" id="foundId" readonly>
           </div>
         </form>
@@ -55,23 +55,23 @@
   </script>
 
   <script>
-    // 이메일 보내기 버튼 클릭 시 동작
+    // �̸��� ������ ��ư Ŭ�� �� ����
     document.getElementById('sendEmailBtn').addEventListener('click', function () {
-      // 여기에 이메일 보내는 로직 작성
-      // 이메일 전송 후 인증 코드를 이메일로 보내는 것을 가정
+      // ���⿡ �̸��� ������ ���� �ۼ�
+      // �̸��� ���� �� ���� �ڵ带 �̸��Ϸ� ������ ���� ����
     });
 
-    // 인증 확인 버튼 클릭 시 동작
+    // ���� Ȯ�� ��ư Ŭ�� �� ����
     document.getElementById('verifyBtn').addEventListener('click', function () {
-      // 여기에 인증 확인 로직 작성
-      // 사용자가 입력한 인증 코드를 확인하여 아이디를 찾는 것을 가정
+      // ���⿡ ���� Ȯ�� ���� �ۼ�
+      // ����ڰ� �Է��� ���� �ڵ带 Ȯ���Ͽ� ���̵� ã�� ���� ����
       var verificationCode = document.getElementById('verificationCode').value;
       if (verificationCode == '123456') {
-        var foundId = 'testuser'; // 아이디를 찾았다고 가정
+        var foundId = 'testuser'; // ���̵� ã�Ҵٰ� ����
         document.getElementById('foundId').value = foundId;
       } else {
         document.getElementById('foundId').value = '';
-        alert('인증 코드가 일치하지 않습니다.');
+        alert('���� �ڵ尡 ��ġ���� �ʽ��ϴ�.');
       }
     });
   </script>

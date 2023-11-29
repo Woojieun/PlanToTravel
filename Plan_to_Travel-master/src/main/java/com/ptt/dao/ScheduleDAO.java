@@ -3,6 +3,7 @@ package com.ptt.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.ptt.model.LocationVO;
 import com.ptt.model.ScheduleVO;
 
 public interface ScheduleDAO {

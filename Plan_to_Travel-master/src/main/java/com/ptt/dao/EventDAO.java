@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ptt.model.EventVO;
+import com.ptt.model.ScheduleVO;
 
 public interface EventDAO {
 	public void insert_event(EventVO vo);

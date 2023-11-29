@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <!doctype html>
 <html>
 
@@ -20,21 +20,21 @@
         <h1 class="text-center mt-4">아이디 찾기</h1>
         <form>
           <div class="mb-3 mt-5">
-            <label for="email" class="form-label">이메일</label>
-            <input type="email" class="form-control" id="email" placeholder="이메일을 입력하세요">
+            <label for="email" class="form-label">이메일<</label>
+            <input type="email" class="form-control" id="email" placeholder="占싱몌옙占쏙옙占쏙옙 占쌉뤄옙占싹쇽옙占쏙옙">
           </div>
           <div class="mb-3">
             <button type="button" class="btn btn-primary" id="sendEmailBtn">이메일 보내기</button>
           </div>
           <div class="mb-3">
-            <label for="verificationCode" class="form-label">인증 코드</label>
+            <label for="verificationCode" class="form-label">인증 코드<</label>
             <input type="text" class="form-control" id="verificationCode" placeholder="인증 코드를 입력하세요">
           </div>
           <div class="mb-3">
             <button type="button" class="btn btn-primary" id="verifyBtn">인증 확인</button>
           </div>
           <div class="mb-3 mt-5 text-center">
-            <label for="foundId" class="form-label">찾은 아이디</label>
+            <label for="foundId" class="form-label">찾은 아이디<</label>
             <input type="text" class="form-control" id="foundId" readonly>
           </div>
         </form>
@@ -68,7 +68,6 @@
       }
     });
   </script>
-  
 </body>
 
 </html>

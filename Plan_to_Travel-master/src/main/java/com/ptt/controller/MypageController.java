@@ -47,7 +47,7 @@ public class MypageController {
 
         // HistoryService를 호출하여 스케줄을 가져옵니다.
         List<ScheduleVO> userHistory = scheduleservice.selectHistory(history);
-        System.out.println(userHistory);
+        //System.out.println(userHistory);
 
         // 결과를 가공하여 반환할 리스트 생성
         List<Map<String, String>> historyList = new ArrayList<>();
@@ -67,8 +67,8 @@ public class MypageController {
 	@RequestMapping(value = "/historySche", method = RequestMethod.GET)
 	public ResponseEntity<List<Map<String, String>>> historyScheGET(@RequestParam("buttonValue") String buttonValue, Model model) throws Exception {
 		
-	    //logger.info("히스토리의 스케줄 불러오기");
-	    //logger.info("클릭한 history의 value: " + buttonValue);
+	    logger.info("히스토리의 스케줄 불러오기");
+	    logger.info("클릭한 history의 value: " + buttonValue);
 	    
         // 클릭한 history의 value를 사용하여 스케줄 정보를 가져옴
         List<EventVO> scheduleList = scheduleservice.getSchedule(buttonValue);
