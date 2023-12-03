@@ -6,8 +6,8 @@
   
   	<!-- 즐겨찾기 저장 -->
   	<insert id="addFavorite" parameterType="com.ptt.model.FavoriteVO">
-        INSERT INTO favorite (u_id, fav_name, fav_lat, fav_lng, fav_address, fav_info)
-        VALUES (#{u_id}, #{fav_name}, #{fav_lat}, #{fav_lng}, #{fav_address}, #{fav_info})
+        INSERT INTO favorite (u_id, fav_name, fav_lat, fav_lng, fav_address1, fav_address2, fav_info)
+        VALUES (#{u_id}, #{fav_name}, #{fav_lat}, #{fav_lng}, #{fav_address1}, #{fav_address2}, #{fav_info})
     </insert>
     
     <!-- History 목록 불러오기 기능 -->
@@ -27,4 +27,10 @@
     DELETE FROM favorite
     WHERE u_id = #{u_id}
 	</delete>
+	
+	<!-- 즐겨찾기 하나 클릭 -->
+	<select id="getFavInfo" resultType="com.ptt.model.FavoriteVO">
+    SELECT fav_address1, fav_address2, fav_lat, fav_lng FROM favorite WHERE fav_id = #{fav_id}
+	</select>
+
   </mapper>
