@@ -448,7 +448,24 @@
 
     <div class="container_1"></div>
 
-    <div class="advertisement">광고</div>
+    <div class="advertisement">
+       <a target="_blank" href="https://www.yanolja.com/?utm_source=google_sa&utm_medium=cpc&utm_campaign=20738115572&utm_content=160897187931&utm_term=kwd-327025203539&gclid=Cj0KCQiA67CrBhC1ARIsACKAa8T-Gf5jEw9sPPmwiBPbyMGLLY4dpTo0SGA2shq0e5DjMhOSRGMsu4gaAnczEALw_wcB">
+        <img src="/resources/img/YANOLJA.png" alt="Advertisement Image">
+       </a>
+       <a target="_blank" href="https://www.yeogi.com/">
+        <img src="/resources/img/YOGI.jpg" alt="Advertisement Image">
+       </a>
+       <a target="_blank" href="https://www.agoda.com/ko-kr/?cid=1891442&tag=320d7811-de04-e4ef-a451-826f977f00d7&gclid=Cj0KCQiA67CrBhC1ARIsACKAa8RDt75CJ3iqv2c9vJN8otoUyDnq3hUZyEaoHcjnchR7kqduFLLTgkcaAm0IEALw_wcB&ds=BQF0XMS%2F19wnvT3C">
+        <img src="/resources/img/agoda.png" alt="Advertisement Image">
+       </a>
+       <a target="_blank" href="https://mtravel.interpark.com/home">
+        <img src="/resources/img/interpark.jpg" alt="Advertisement Image">
+       </a>
+       <a target="_blank" href="https://www.tripadvisor.co.kr/Restaurants-g294197-Seoul.html">
+        <img src="/resources/img/tripadvi.jpg" alt="Advertisement Image">
+       </a>
+    	
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">

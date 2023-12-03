@@ -162,6 +162,7 @@ lat
         });
         // tData.getAddressFromGeoJson(lat, lon, optionObj, params);
     });
+    
     map.addListener("click", function onClick(evt) {
         var mapLatLng = evt.latLng;
         //기존 마커 삭제
@@ -260,6 +261,8 @@ lat
         };
         tData.getAddressFromGeoJson(lat, lon, optionObj, params);
     });
+    
+    
     // (장소API) 통합 검색 함수
     function searchPois() {
         var searchKeyword = $("#searchAddress").val();
@@ -317,6 +320,7 @@ lat
                         label: '<span style="display:none;">\${k}_\${id}</span>',
                         map:map
                     });
+                    
                     
                     // 마커 클릭 이벤트 추가
                     marker3.addListener("click", function(evt) {
