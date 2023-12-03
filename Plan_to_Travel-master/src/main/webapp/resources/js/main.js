@@ -117,7 +117,43 @@ $(document).ready(function () {
     $('#favdeleteSuccessModal').on('hidden.bs.modal', function () {
         location.reload();
     });
+    
+    // 삭제 성공 모달 닫힐 때 페이지 새로고침
+    $('#favdeleteSuccessModal').on('hidden.bs.modal', function () {
+        location.reload();
+    });
 
+    //즐겨찾기 전체 삭제 버튼 클릭
+    $('#deleteAll').click(function () {
+        console.log("전체 삭제 버튼 클릭!");
+        
+        $('#deleteAllModal').modal('show');
+    });
+    
+    //즐겨찾기 전체 삭제 확인 버튼 클릭
+    $('#deleteAllBtn').click(function () {
+    // Close the modal
+    $('#deleteAllModal').modal('hide');
+
+    // Send AJAX request to delete all favorites
+    $.ajax({
+        type: "POST",
+        url: "/deleteAll",
+        success: function (response) {            
+        	if (response === "Favorites deleted successfully") {
+                // Show the success modal
+        	$('#favdeleteSuccessModal').modal('show');
+            }
+
+        },
+        error: function (error) {
+
+        }
+    });
+});
+    
+    
+    
 
     //히스토리 클릭
     $('#History').click(function () {

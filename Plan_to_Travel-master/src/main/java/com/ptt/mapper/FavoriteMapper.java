@@ -15,4 +15,7 @@ public interface FavoriteMapper {
 	//즐겨찾기 삭제
 	public void deleteFav (String fav_id);
 	
+	//즐겨찾기 전체 삭제
+	public void deleteAllFav(String u_id);
+	
 }

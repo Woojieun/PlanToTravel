@@ -79,7 +79,7 @@
         <div class="offcanvas-header">
             <button type="button" class="btn btn-outline-primary" data-bs-dismiss="offcanvas" type="button"><i
                     class="bi bi-arrow-left"></i></button> <!-- 뒤로가기 -->
-            <button type="button" class="btn btn-outline-primary"><i class="bi bi-trash-fill"></i>삭제</button>
+            <button type="button" class="btn btn-outline-primary" id="deleteAll"><i class="bi bi-trash-fill"></i>삭제</button>
             <!-- 즐겨찾기 삭제 -->
         </div>
         <div class="offcanvas-body">
@@ -99,6 +99,27 @@
             </ul>
         </div>
     </div>
+    
+    <!-- 전체 삭제 모달 -->
+<div class="modal fade" id="deleteAllModal" tabindex="-1" role="dialog" aria-labelledby="deleteAllModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteAllModalLabel">즐겨찾기 삭제</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                저장된 즐겨찾기를 모두 삭제하시겠습니까?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary" id="deleteAllBtn">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
     
     <!-- 삭제 성공 모달 -->
     <div class="modal fade" id="favdeleteSuccessModal" tabindex="-1" aria-labelledby="deleteSuccessModalLabel"

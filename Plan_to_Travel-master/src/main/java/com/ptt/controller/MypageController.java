@@ -190,7 +190,7 @@ public class MypageController {
         return favoriteList;
     }
     
-	// 히스토리 삭제 (스케줄 삭제)
+	//즐겨찾기 삭제
 	@RequestMapping(value="/favDelete", method = RequestMethod.GET)
 	public ResponseEntity<String> deleteFav(@RequestParam("fav_id") String fav_id) {
 	    try {
@@ -201,4 +201,22 @@ public class MypageController {
 	                .body("Failed to delete favorite: " + e.getMessage());
 	    }
 	}
+	
+	//즐겨찾기 전체 삭제
+	@RequestMapping(value="/deleteAll")
+    @ResponseBody
+    public ResponseEntity<String> deleteAllFavorites(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String u_id = (String) session.getAttribute("uID_session");
+
+        // Check if the userId is not null to avoid potential issues
+        if (u_id != null) {
+            // Call the service to delete all favorites for the user
+            favoriteService.deleteAllFav(u_id);
+            return new ResponseEntity<>("Favorites deleted successfully", HttpStatus.OK);
+        }
+
+        // Return an error response if needed
+        return new ResponseEntity<>("Unable to delete favorites", HttpStatus.BAD_REQUEST);
+    }
 }

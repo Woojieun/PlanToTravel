@@ -26,10 +26,16 @@ public class FavoriteServicelmp implements FavoriteService {
         return favoriteMapper.selectFavorite(favorite);
     }
 	
-    //히스토리 삭제 (스케줄 삭제)
+    //즐겨찾기 삭제
     @Override
     public void deleteFav(String fav_id) {
         // 여기에서 ScheduleMapper를 이용하여 DB에서 해당 scheduleId에 해당하는 데이터를 삭제하는 로직을 작성
     	favoriteMapper.deleteFav(fav_id);
+    }
+    
+    //즐겨찾기 전체 삭제
+    @Override
+    public void deleteAllFav(String u_id) {
+        favoriteMapper.deleteAllFav(u_id);
     }
 }

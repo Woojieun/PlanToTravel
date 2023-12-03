@@ -15,11 +15,16 @@
 		select fav_name, fav_id from favorite where u_id = #{u_id}
 	</select>
 	
-	<!-- 히스토리 삭제 / 스케줄 삭제 -->
+	<!-- 즐겨찾기 삭제 -->
 	<delete id="deleteFav" parameterType="String">
 	DELETE
 	FROM favorite
 	WHERE fav_id = #{fav_id}
 	</delete>
   	
+  	<!-- 즐겨찾기 전체 삭제 -->
+  	<delete id="deleteAllFav">
+    DELETE FROM favorite
+    WHERE u_id = #{u_id}
+	</delete>
   </mapper>
