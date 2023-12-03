@@ -18,7 +18,7 @@ public interface ScheduleMapper {
 	//히스토리 목록에서 클릭 시 스케줄 가져오기
 	public List<EventVO> getSchedule (String sche_id);
 	
-	//히스터리 삭제 (스케줄 삭제)
+	//히스토리 삭제 (스케줄 삭제)
 	public void deleteSchedule (String sche_id);
 	
 }

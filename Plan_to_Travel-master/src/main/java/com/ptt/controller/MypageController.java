@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
 
 import com.ptt.model.EventVO;
+import com.ptt.model.FavoriteVO;
 import com.ptt.model.ScheduleVO;
+import com.ptt.service.FavoriteService;
 import com.ptt.service.ScheduleService;
 
 
@@ -32,6 +34,9 @@ public class MypageController {
 	
 	@Autowired
 	private ScheduleService scheduleservice;
+	
+    @Autowired
+    private FavoriteService favoriteService;
 	
 	@RequestMapping(value="/getHistory", method = RequestMethod.GET)
     @ResponseBody
@@ -122,4 +127,78 @@ public class MypageController {
         return "redirect:/Login";
     }
 
+    //즐겨찾기 저장
+    @RequestMapping(value="/favoriteAdd", method=RequestMethod.POST)
+    @ResponseBody
+    public String addFavoriteGET(
+    		
+    		HttpServletRequest request,
+            @RequestParam("fav_name") String fav_name,
+            @RequestParam("fav_lat") String fav_lat,
+            @RequestParam("fav_lng") String fav_lng,
+            @RequestParam("fav_address") String fav_address,
+            @RequestParam("fav_info") String fav_info) throws Exception {
+
+        logger.info("addFavoriteGET 메서드 진입");
+        
+        // 사용자 아이디를 세션에서 가져옵니다.
+        HttpSession session = request.getSession();
+        String u_id = (String) session.getAttribute("uID_session");
+        System.out.println(u_id);
+        
+        FavoriteVO favoriteVO = new FavoriteVO();
+        favoriteVO.setU_id(u_id);
+        favoriteVO.setFav_name(fav_name);
+        favoriteVO.setFav_lat(fav_lat);
+        favoriteVO.setFav_lng(fav_lng);
+        favoriteVO.setFav_address(fav_address);
+        favoriteVO.setFav_info(fav_info);
+
+        favoriteService.addFavorite(favoriteVO);
+        
+        
+        return "Success";
+    }
+    
+    @RequestMapping(value="/getFavorite", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Map<String, String>> getFavorite(HttpServletRequest request, Model model) throws Exception {
+        // 사용자 아이디를 세션에서 가져옵니다.
+        HttpSession session = request.getSession();
+        String userId = (String) session.getAttribute("uID_session");
+        System.out.println(userId);
+        
+        // HistoryService를 사용하여 스케줄 데이터를 가져옵니다.
+        FavoriteVO favorite = new FavoriteVO();
+        favorite.setU_id(userId);
+
+        // HistoryService를 호출하여 스케줄을 가져옵니다.
+        List<FavoriteVO> userFavorite = favoriteService.selectFavorite(favorite);
+        //System.out.println(userHistory);
+
+        // 결과를 가공하여 반환할 리스트 생성
+        List<Map<String, String>> favoriteList = new ArrayList<>();
+        for (FavoriteVO item : userFavorite) {
+            Map<String, String> favoriteMap = new HashMap<>();
+            //아래줄에 ( ) 부분 공백 들어가면 js에 data 값이 undefined로 나옴
+            favoriteMap.put("fav_name", item.getFav_name());
+            favoriteMap.put("fav_id", item.getFav_id());
+            favoriteList.add(favoriteMap);
+            //System.out.println("History List : " + historyList);
+        }
+        
+        return favoriteList;
+    }
+    
+	// 히스토리 삭제 (스케줄 삭제)
+	@RequestMapping(value="/favDelete", method = RequestMethod.GET)
+	public ResponseEntity<String> deleteFav(@RequestParam("fav_id") String fav_id) {
+	    try {
+	    	favoriteService.deleteFav(fav_id);
+	        return ResponseEntity.ok("즐겨찾기를 성공적으로 삭제하였습니다.");
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("Failed to delete favorite: " + e.getMessage());
+	    }
+	}
 }
