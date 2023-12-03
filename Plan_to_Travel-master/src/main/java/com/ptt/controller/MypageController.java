@@ -136,7 +136,8 @@ public class MypageController {
             @RequestParam("fav_name") String fav_name,
             @RequestParam("fav_lat") String fav_lat,
             @RequestParam("fav_lng") String fav_lng,
-            @RequestParam("fav_address") String fav_address,
+            @RequestParam("fav_address1") String fav_address1,
+            @RequestParam("fav_address2") String fav_address2,
             @RequestParam("fav_info") String fav_info) throws Exception {
 
         logger.info("addFavoriteGET 메서드 진입");
@@ -151,7 +152,8 @@ public class MypageController {
         favoriteVO.setFav_name(fav_name);
         favoriteVO.setFav_lat(fav_lat);
         favoriteVO.setFav_lng(fav_lng);
-        favoriteVO.setFav_address(fav_address);
+        favoriteVO.setFav_address1(fav_address1);
+        favoriteVO.setFav_address2(fav_address2);
         favoriteVO.setFav_info(fav_info);
 
         favoriteService.addFavorite(favoriteVO);
@@ -218,5 +220,23 @@ public class MypageController {
 
         // Return an error response if needed
         return new ResponseEntity<>("Unable to delete favorites", HttpStatus.BAD_REQUEST);
+    }
+	
+	//클릭한 즐겨찾기 정보 가져오기
+	@RequestMapping(value = "/favPlace", method = RequestMethod.GET)
+    public ResponseEntity<FavoriteVO> favPlaceGET(@RequestParam("buttonValue") String buttonValue) {
+        try {
+            // Fetch favorite data using fav_id
+            FavoriteVO favoriteData = favoriteService.getFavInfo(buttonValue);
+            
+            // Check if data is found
+            if (favoriteData != null) {
+                return new ResponseEntity<>(favoriteData, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

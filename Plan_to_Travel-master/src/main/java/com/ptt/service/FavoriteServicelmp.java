@@ -38,4 +38,10 @@ public class FavoriteServicelmp implements FavoriteService {
     public void deleteAllFav(String u_id) {
         favoriteMapper.deleteAllFav(u_id);
     }
+    
+    //즐겨찾기 하나 클릭
+    @Override
+    public FavoriteVO getFavInfo(String fav_id) {
+        return favoriteMapper.getFavInfo(fav_id);
+    }
 }

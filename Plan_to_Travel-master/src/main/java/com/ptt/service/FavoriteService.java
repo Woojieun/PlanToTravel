@@ -17,4 +17,7 @@ public interface FavoriteService {
 	
 	//즐겨찾기 전체 삭제
 	public void deleteAllFav(String u_id);
+	
+	//즐겨찾기 하나 클릭
+	public FavoriteVO getFavInfo(String fav_id);
 }

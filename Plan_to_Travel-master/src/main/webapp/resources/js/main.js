@@ -151,8 +151,75 @@ $(document).ready(function () {
         }
     });
 });
-    
-    
+
+
+// 즐겨찾기 목록에 저장된 장소 클릭
+$(document).on('click', '.FavPlace', function () {
+	var map;
+    var buttonValue = $(this).val(); // 클릭한 버튼의 value를 가져옴
+    console.log('버튼 클릭: ' + buttonValue);
+
+    // 클릭한 버튼의 텍스트를 사용하여 GET 요청을 보냅니다.
+    $.ajax({
+        type: 'GET',
+        url: '/favPlace', // 서버의 엔드포인트 URL
+        data: {
+            buttonValue: buttonValue
+        }, // 필요한 데이터를 전달할 수 있습니다.
+        dataType: 'json', // 서버에서 받을 데이터의 형식을 명시합니다.
+        success: function (data) {
+            // 서버에서 받은 응답에 대한 처리를 여기에 추가
+            console.log(JSON.stringify(data) + ' 데이터');
+            // 예를 들어, 스케줄을 화면에 표시하거나 다른 작업을 수행할 수 있습니다.
+            console.log(data.fav_address1);
+            console.log(data.fav_address2);
+            console.log(data.fav_lat);
+            console.log(data.fav_lng);
+            
+           // 생성한 HTML 구조를 동적으로 추가
+            var resultStr_home = `
+              <div class="_result_panel_bg_home">
+                  <div class="_result_panel_area">
+                      <div class="__reverse_geocoding_result" style="flex-grow: 1;">
+                          <p class="_result_text_line" id="fav_address1">새주소 : ${data.fav_address1}</p>
+                          <p class="_result_text_line_memo_print" style="display: none;">${data.fav_address1}</p>
+                          <p class="_result_text_line" id="fav_address2">지번주소 : ${data.fav_address2}</p>
+                          <p class="_result_text_line" id="_result_text_line_memo_address2" style="display: none;">${data.fav_address2}</p>
+                          <p class="_result_text_line" id="fav_latlng">좌표 (WSG84) : ${data.fav_lat}, ${data.fav_lng}</p>
+                          <p class="_result_text_line" id="_result_text_line_memo_lat" style="display: none;">${data.fav_lat}</p>
+                          <p class="_result_text_line" id="_result_text_line_memo_lng" style="display: none;">${data.fav_lng}</p>
+                          <p class="_result_text_line"></p>
+                      </div>
+                      <div>
+                          <div class="_search_item_button_panel">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              `;
+
+            // resultStr_home을 apiResult_home 요소에 삽입
+            $("#apiResult_home").html(resultStr_home);
+
+
+
+            // 닫혔는지 확인하고, 닫혀 있다면 다시 닫지 않도록 체크
+            if ($('#Offcanvas_Favorites').hasClass('show')) {
+                $('#Offcanvas_Favorites').offcanvas('hide');
+            }
+
+            // 닫혔는지 확인하고, 닫혀 있다면 다시 닫지 않도록 체크
+            if ($('#offcanvasNavbar').hasClass('show')) {
+                $('#offcanvasNavbar').offcanvas('hide');
+            }
+        },
+        error: function () {
+            // 요청이 실패하면 실행되는 코드
+            console.error('GET 요청 실패');
+        }
+    });
+});
+
     
 
     //히스토리 클릭
@@ -361,12 +428,6 @@ $('#deleteSuccessModal').on('hidden.bs.modal', function () {
 document.getElementById('favorite_add').addEventListener('click', function () {
 
     var memoPlace = $("._result_text_line_memo_print").text();
-    var memoLat = $("#_result_text_line_memo_lat").text();
-    var memoLng = $("#_result_text_line_memo_lng").text();
-
-    console.log(memoPlace);
-    console.log(memoLat);
-    console.log(memoLng);
 
     // 모달 열기 전에 값 설정
     $('#placeName').val(memoPlace);
@@ -382,16 +443,11 @@ document.getElementById('saveBtn').addEventListener('click', function () {
     //var u_id = '<%= session.getAttribute("uID_session") %>';
     var fav_name = $('#placeName').val();
     var fav_info = $('#placeInfo').val();
-    var fav_address = $("._result_text_line_memo_print").text();
+    var fav_address1 = $("._result_text_line_memo_print").text();
+    var fav_address2 = $("#_result_text_line_memo_address2").text();
     var fav_lat = $("#_result_text_line_memo_lat").text();
     var fav_lng = $("#_result_text_line_memo_lng").text();
 
-    //console.log(u_id);
-    console.log(fav_name);
-    console.log(fav_info);
-    console.log(fav_address);
-    console.log(fav_lat);
-    console.log(fav_lng);
 
     // Ajax를 사용하여 컨트롤러에 데이터 전송
     $.ajax({
@@ -401,7 +457,8 @@ document.getElementById('saveBtn').addEventListener('click', function () {
             fav_name: fav_name,
             fav_lat: fav_lat,
             fav_lng: fav_lng,
-            fav_address: fav_address,
+            fav_address1: fav_address1,
+            fav_address2: fav_address2,
             fav_info: fav_info
         },
         success: function (response) {

@@ -156,10 +156,11 @@
               <div class="_result_panel_bg_home">
                   <div class="_result_panel_area">
                       <div class="__reverse_geocoding_result" style="flex-grow: 1;">
-                          <p class="_result_text_line">새주소 : \${newRoadAddr_home}</p>
+                          <p class="_result_text_line" id="fav_address1">새주소 : \${newRoadAddr_home}</p>
                           <p class="_result_text_line_memo_print" style="display: none;">\${newRoadAddr_home}</p>
-                          <p class="_result_text_line">지번주소 : \${jibunAddr_home}</p>
-                          <p class="_result_text_line">좌표 (WSG84) : \${lat_home}, \${lon_home}</p>
+                          <p class="_result_text_line" id="fav_address2">지번주소 : \${jibunAddr_home}</p>
+                          <p class="_result_text_line" id="_result_text_line_memo_address2" style="display: none;">\${jibunAddr_home}</p>
+                          <p class="_result_text_line" id="fav_latlng">좌표 (WSG84) : \${lat_home}, \${lon_home}</p>
                           <p class="_result_text_line" id="_result_text_line_memo_lat" style="display: none;">\${lat_home}</p>
                           <p class="_result_text_line" id="_result_text_line_memo_lng" style="display: none;">\${lon_home}</p>
                           <p class="_result_text_line"></p>

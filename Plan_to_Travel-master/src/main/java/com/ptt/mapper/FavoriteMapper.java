@@ -3,6 +3,7 @@ package com.ptt.mapper;
 import java.util.List;
 
 import com.ptt.model.FavoriteVO;
+import com.ptt.model.ScheduleVO;
 
 public interface FavoriteMapper {
 
@@ -17,5 +18,8 @@ public interface FavoriteMapper {
 	
 	//즐겨찾기 전체 삭제
 	public void deleteAllFav(String u_id);
+	
+	//즐겨찾기 목록에서 하나 클릭
+	public FavoriteVO getFavInfo(String fav_id);
 	
 }
