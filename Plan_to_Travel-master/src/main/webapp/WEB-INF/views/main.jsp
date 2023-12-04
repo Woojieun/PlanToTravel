@@ -43,38 +43,44 @@
 <!--MAIN HOME UI-->
 
 <body>
-    <nav class="navbar bg-light fixed-top border-bottom border-dark">
-        <div class="container-fluid">
-            <img src="resources/img/logo.png" alt="Logo" width="120" height="50">
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
-                aria-labelledby="offcanvasNavbarLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">${user.u_id}님</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        <li class="nav-item">
-                            <button class="nav-link active" type="button" aria-current="page"
-                                id="Favorites">즐겨찾기</button>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" type="button" aria-current="page" id="History">스케줄 History</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" type="button" aria-current="page" id="Journal">여행 일지</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
+	<nav class="navbar bg-light fixed-top border-bottom border-dark">
+		<div class="container-fluid">
+			<img src="resources/img/logo.png" alt="Logo" width="120" height="50">
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+				aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="offcanvas offcanvas-end" tabindex="-1"
+				id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+				<div class="offcanvas-header">
+					<h5 class="offcanvas-title" id="offcanvasNavbarLabel">${user.u_id}님</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+						aria-label="Close"></button>
+				</div>
+				<div class="offcanvas-body">
+					<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+						<li class="nav-item">
+							<button class="nav-link active" type="button" aria-current="page"
+								id="Favorites">즐겨찾기</button>
+						</li>
+						<li class="nav-item"><a class="nav-link active" type="button"
+							aria-current="page" id="History">스케줄 History</a></li>
+						<li class="nav-item"><a class="nav-link active" type="button"
+							aria-current="page" id="Journal">여행 일지</a></li>
 
-    <!-- 즐겨찾기 -->
+					</ul>
+				</div>
+
+				<ul class="navbar-nav mt-auto">
+					<li class="nav-item ms-3"><a class="nav-link active" type="button"
+						id="logout" href="/logout">로그아웃</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- 즐겨찾기 -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="Offcanvas_Favorites" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
             <button type="button" class="btn btn-outline-primary" data-bs-dismiss="offcanvas" type="button"><i
