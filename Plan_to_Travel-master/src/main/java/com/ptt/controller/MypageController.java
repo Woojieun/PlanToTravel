@@ -72,8 +72,8 @@ public class MypageController {
 	@RequestMapping(value = "/historySche", method = RequestMethod.GET)
 	public ResponseEntity<List<Map<String, String>>> historyScheGET(@RequestParam("buttonValue") String buttonValue, Model model) throws Exception {
 		
-	    logger.info("히스토리의 스케줄 불러오기");
-	    logger.info("클릭한 history의 value: " + buttonValue);
+	    //logger.info("히스토리의 스케줄 불러오기");
+	    //logger.info("클릭한 history의 value: " + buttonValue);
 	    
         // 클릭한 history의 value를 사용하여 스케줄 정보를 가져옴
         List<EventVO> scheduleList = scheduleservice.getSchedule(buttonValue);
@@ -126,8 +126,8 @@ public class MypageController {
         
         return "redirect:/Login";
     }
-
-    //즐겨찾기 저장
+    
+  //즐겨찾기 저장
     @RequestMapping(value="/favoriteAdd", method=RequestMethod.POST)
     @ResponseBody
     public String addFavoriteGET(

@@ -29,13 +29,13 @@
                     </div>
                     <div class="form-group mt-4">
                         <label for="password">비밀번호</label>
-                        <input class="form-control mt-2 pw_input" name="u_pw" placeholder="비밀번호를 입력하세요">
+                        <input type="password" class="form-control mt-2 pw_input" name="u_pw" placeholder="비밀번호를 입력하세요">
                     </div>
                     <c:if test="${result == 0 }">
                         <div class="login_warn">사용자 ID 또는 비밀번호를 잘못 입력하셨습니다.</div>
                     </c:if>
 
-                    <div class="row mt-4">
+                    <!-- <div class="row mt-4">
                         <div class="col text-left">
                             <a class="link-offset-2 link-underline-opacity-0 text-decoration-none" href="/findID"
                                 id="id_link_search">아이디
@@ -46,7 +46,7 @@
                                 id="pw_link_search">비밀번호
                                 찾기</a>
                         </div>
-                    </div>
+                    </div> -->
 
                     <button type="submit" class="btn btn-primary mt-2 btn-block login_button"
                         style="width: 100%;">로그인</button>
