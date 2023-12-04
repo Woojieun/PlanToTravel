@@ -84,18 +84,7 @@
         </div>
         <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item">
-                    <button class="nav-link active" type="button" aria-current="page" id="Favorites">경민대학교</button>
-                    <button type="button" id="Favorites_cancel"><i class="bi bi-x"></i></button> <!-- 즐겨찾기 삭제 -->
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link active" type="button" aria-current="page" id="Favorites">어린이대공원 후문</button>
-                    <button type="button" id="Favorites_cancel"><i class="bi bi-x"></i></button> <!-- 즐겨찾기 삭제 -->
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link active" type="button" aria-current="page" id="Favorites">부산역</button>
-                    <button type="button" id="Favorites_cancel"><i class="bi bi-x"></i></button> <!-- 즐겨찾기 삭제 -->
-                </li>
+
             </ul>
         </div>
     </div>
