@@ -78,10 +78,7 @@ function map_car_show(){
 	$('#map_div_car').show();
   	$('#map_div_home').hide();
   	$('#map_div_ped').hide();
-  	
-  	$('#place_add').hide();
-  	$('#place_add_car').show();
-  	$('#place_add_ped').hide();
+  	$('.place_add').hide();
   	};
 
   	map_car = new Tmapv2.Map("map_div_car", { // 지도가 생성될 div
@@ -124,7 +121,7 @@ function map_car_show(){
             icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png",
             iconHTML: `
             <div class='_t_marker' style="position:relative;" >
-                <img src="http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png" style="width:48px;height:48px;position:absolute;"/>
+                <img src="/lib/img/_icon/marker_blue.svg" style="width:48px;height:48px;position:absolute;"/>
                 <div style="position:absolute; width:48px;height:42px; display:flex; align-items:center; justify-content: center; color:#FAFBFF; font-family: 'SUIT';font-style: normal;font-weight: 700;font-size: 15px;line-height: 19px;">
                 P</div>
             </div>
@@ -315,11 +312,8 @@ lat
                     <div class="_result_panel_area">
                         <div class="__reverse_geocoding_result" style="flex-grow: 1;">
                             <p class="_result_text_line">새주소 : \${newRoadAddr}</p>
-                            <p class="_result_text_line_memo_print_car" style="display: none;">\${newRoadAddr}</p>
                             <p class="_result_text_line">지번주소 : \${jibunAddr}</p>
                             <p class="_result_text_line">좌표 (WSG84) : \${lat}, \${lon}</p>
-                            <p class="_result_text_line" id="_result_text_line_memo_lat_car">\${lat}</p>
-                            <p class="_result_text_line" id="_result_text_line_memo_lng_car">\${lon}</p>
                             <p class="_result_text_line"></p>
                         </div>
                         <div>
@@ -429,7 +423,7 @@ lat
                         const thisId = labelInfo_car.split("_")[1];
                         marker3_car.setIconHTML(`
                             <div class='_t_marker' style="position:relative;" >
-                            <img src="http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png" style="width:48px;height:48px;position:absolute;"/>
+                            <img src="/lib/img/_icon/marker_blue.svg" style="width:48px;height:48px;position:absolute;"/>
                             <div style="position:absolute; width:48px;height:42px; display:flex; align-items:center; justify-content: center; color:#FAFBFF; font-family: 'SUIT';font-style: normal;font-weight: 700;font-size: 15px;line-height: 19px;">
                             \${Number(thisK)+1}</div>
                             </div>
@@ -503,7 +497,7 @@ lat
         }
         markerPoi[thisK].setIconHTML(`
             <div class='_t_marker' style="position:relative;" >
-            <img src="http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png" style="width:48px;height:48px;position:absolute;"/>
+            <img src="/lib/img/_icon/marker_blue.svg" style="width:48px;height:48px;position:absolute;"/>
             <div style="position:absolute; width:48px;height:42px; display:flex; align-items:center; justify-content: center; color:#FAFBFF; font-family: 'SUIT';font-style: normal;font-weight: 700;font-size: 15px;line-height: 19px;">
             \${Number(thisK)+1}</div>
             </div>
@@ -1252,7 +1246,7 @@ lat
                 icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_" + idx + ".png",
                 iconHTML: `
                 <div class='_t_marker' style="position:relative;" >
-                    <img src="http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png" style="width:48px;height:48px;position:absolute;"/>
+                    <img src="/lib/img/_icon/marker_blue.svg" style="width:48px;height:48px;position:absolute;"/>
                     <div style="position:absolute; width:48px;height:42px; display:flex; align-items:center; justify-content: center; color:#FAFBFF; font-family: 'SUIT';font-style: normal;font-weight: 700;font-size: 15px;line-height: 19px;">
                     \${idx+1}</div>
                 </div>
@@ -1615,6 +1609,7 @@ error: function (xhr, status, error) {
 }
 });
 });
+	
 
 </script>
 

@@ -7,7 +7,6 @@ import com.ptt.model.EventVO;
 import com.ptt.model.ScheduleVO;
 
 public interface ScheduleService {
-	
 	// 스케줄 데이터 출력
 	public List<ScheduleVO> Schedule_print(Map<String, Object> response) throws Exception;
 		
@@ -24,5 +23,4 @@ public interface ScheduleService {
 	
 	//히스토리 삭제 (스케줄 삭제)
 	public void deleteSchedule(String sche_id) throws Exception;
-	
 }

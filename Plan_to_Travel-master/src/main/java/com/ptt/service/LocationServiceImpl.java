@@ -8,14 +8,15 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.ptt.mapper.LocationMapper;
 import com.ptt.model.LocationVO;
+import com.ptt.model.ScheduleVO;
 
 @Service
 public class LocationServiceImpl implements LocationService {
-	
 	@Autowired
 	LocationMapper locationMapper;
 	

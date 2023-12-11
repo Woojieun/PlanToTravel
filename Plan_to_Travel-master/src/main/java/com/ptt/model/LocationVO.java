@@ -1,5 +1,7 @@
 package com.ptt.model;
 
+import java.sql.Date;
+
 public class LocationVO {
 private String location_UUID;
 private String uID;

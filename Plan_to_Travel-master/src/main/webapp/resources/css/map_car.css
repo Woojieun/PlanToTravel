@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-
+/* 자동차  */
 #map_div_car {
   margin-left: 30px;
   float: left;
@@ -11,7 +11,9 @@
   margin-left: 130px;
   width: 500px;
   position: absolute;
+  /* 위에 올라가는 목적지 검색창 */
   z-index: 1;
+  /* 위에 올라가는 목적지 검색창 */
 }
 
 ._map_overlay_row {
@@ -25,7 +27,9 @@
   margin-top: -43px;
   overflow: auto;
   position: absolute;
+  /* 위에 올라가는 스크롤 */
   z-index: 1;
+  /* 위에 올라가는 스크롤 */
   background-color: white;
   top: 632px;
   border: 1px solid black;

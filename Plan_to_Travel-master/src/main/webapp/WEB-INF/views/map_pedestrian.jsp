@@ -15,7 +15,9 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link href="resources/css/map_pedestrian.css" rel="stylesheet" />
 <script type="text/javascript"
-	src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=3XaNTujjCH32qNOA2WdPX5eIwhNH8Adc9CUp7WIQ autoload=false"></script>
+	src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=3XaNTujjCH32qNOA2WdPX5eIwhNH8Adc9CUp7WIQ
+
+ autoload=false"></script>
 <!--  autoload=false -->
 
 <link rel="stylesheet"

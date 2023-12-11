@@ -38,14 +38,14 @@ body::before {
     color: red;
 }
 
-.login-container {
+.signup-container {
     background-color: #fff;
     border-radius: 5px;
     padding: 30px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.login-title {
+.signup-title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
@@ -68,22 +68,22 @@ body::before {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-.login-link-container {
+.signup-link-container {
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
 }
 
-.login-link-container a {
+.signup-link-container a {
     color: #007bff;
     text-decoration: none;
 }
 
-.login-link-container a:hover {
+.signup-link-container a:hover {
     text-decoration: underline;
 }
 
-.login-button {
+.signup-button {
     background-color: #007bff;
     border: none;
     color: #fff;
@@ -95,6 +95,69 @@ body::before {
     cursor: pointer;
 }
 
-.login-button:hover {
+.signup-button:hover {
     background-color: #0069d9;
+}
+
+.input-group .dropdown-toggle {
+    height: 100%;
+}
+
+.sendCode {
+    width: 100%;
+}
+
+.correct {
+    color: green;
+}
+
+.incorrect {
+    color: red;
+}
+
+/* 중복아이디 존재하지 않는경우 */
+.id_input_re_1 {
+    color: green;
+    display: none;
+}
+
+/* 중복아이디 존재하는 경우 */
+.id_input_re_2 {
+    color: red;
+    display: none;
+}
+
+.final_id_ck {
+    display: none;
+}
+
+.final_pw_ck {
+    display: none;
+}
+
+.final_pwck_ck {
+    display: none;
+}
+
+.final_mail_ck {
+    display: none;
+}
+
+.final_addr_ck {
+    display: none;
+}
+
+/* 비밀번호 확인 일치 유효성검사 */
+.pwck_input_re_1 {
+    color: green;
+    display: none;
+}
+
+.pwck_input_re_2 {
+    color: red;
+    display: none;
+}
+
+.emailcheckCode {
+    display: none;
 }

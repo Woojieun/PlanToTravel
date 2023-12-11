@@ -184,6 +184,11 @@
   outline: none;
 }
 
+
+[id^=box_title] {
+background-color: #0dcaf0;
+}
+
 #memo_date {
   float: left;
 }

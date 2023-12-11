@@ -1,24 +1,35 @@
 package com.ptt.controller;
 
-
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.inject.Inject;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ptt.dao.EventDAO;
 import com.ptt.dao.LocationDAO;
 import com.ptt.dao.ScheduleDAO;
@@ -48,6 +59,9 @@ public class HomeController {
 
 	@Autowired
 	private EventDAO eventdao;
+
+	@Autowired
+	private LocationService locationservice;
 
 	@Autowired
 	private ScheduleService scheduleservice;
@@ -191,7 +205,6 @@ public class HomeController {
 	    log.info("event_change POST() 진입");
 
 		try {
-			
 			vo.setEvent_id(event_id);
 			vo.setEvent_title(event_title);
 			vo.setEvent_datetime(event_datetime);
@@ -229,7 +242,7 @@ public class HomeController {
 	    log.info("REevent_change POST() 진입");
 	    String[] items = itemList.split(",");
 
-	    try {
+		try {
 			String[] event_id_items = event_uuid_arr.split(",");
 			
 			vo.setEvent_id(event_id);
@@ -255,7 +268,7 @@ public class HomeController {
 			int event_num = eventdao.event_count(card_uuid);
 			EventVO del_vo = new EventVO();
 			
-			//  쁽 옱  씪 젙 몴 뿉  엳 뒗  씪 젙 媛  닔蹂대떎 DB 뿉  엳 뒗  씪 젙 媛  닔媛   뜑 留롫떎硫  DB 뿉  엳 뒗  뜲 씠 꽣  궘 젣
+			// 현재 일정표에 있는 일정 갯수보다 DB에 있는 일정 갯수가 더 많다면 DB에 있는 데이터 삭제
 			if(event_num > elementCount && cancle_event_arr != null) {
 				String[] cancle_event_items = cancle_event_arr.split(",");
 				for (int num = 1; num <= items.length; num++) {
@@ -270,9 +283,9 @@ public class HomeController {
 					eventdao.REnum_change(num_vo);
 				}
 				
-			//  쁽 옱  씪 젙 몴 뿉  엳 뒗  씪 젙 媛  닔蹂대떎 DB 뿉  엳 뒗  씪 젙 媛  닔媛   뜑  쟻 떎硫  DB 뿉  엳 뒗  뜲 씠 꽣 異붽 
+			// 현재 일정표에 있는 일정 갯수보다 DB에 있는 일정 갯수가 더 적다면 DB에 있는 데이터 추가
 			} else {
-				// event_id_items瑜   븯 굹 뵫  꽔 뼱 꽌  뾾 뒗 id留  DB 뿉  궫 엯  씠 썑 event_num  옱 젙 젹
+				// event_id_items를 하나씩 넣어서 없는 id만 DB에 삽입 이후 event_num 재정렬
 				for (int num = 1; num <= items.length; num++) {
 
 					del_vo.setEvent_id(event_id_items[num-1]);
@@ -285,6 +298,8 @@ public class HomeController {
 				vo.setEvent_id(event_id);
 				vo.setEvent_title(event_title);
 				vo.setEvent_datetime(event_datetime);
+				
+				System.out.println("event_datetime : " + event_datetime);
 				vo.setEvent_place(event_place);
 				vo.setEvent_lat(event_lat);
 				vo.setEvent_lng(event_lng);
@@ -540,6 +555,8 @@ public class HomeController {
 		// 경도 위도 데이터
 		response.put("latitude", latitude);
 		response.put("longitude", longitude);
+		
+		System.out.println("latitude longitude : " + latitude + " : " + longitude);
 		return response;
 	}
 

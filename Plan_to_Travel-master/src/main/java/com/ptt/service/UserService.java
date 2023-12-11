@@ -1,5 +1,9 @@
 package com.ptt.service;
 
+import java.util.List;
+import java.util.Map;
+
+import com.ptt.model.LocationVO;
 import com.ptt.model.UserVO;
 
 public interface UserService {

@@ -1,5 +1,9 @@
 package com.ptt.mapper;
 
+import java.util.List;
+import java.util.Map;
+
+import com.ptt.model.LocationVO;
 import com.ptt.model.UserVO;
 
 public interface UserMapper {
@@ -17,5 +21,4 @@ public interface UserMapper {
     
     //사용자 데이터
 	public UserVO user_data(String uID_session);
-	
 }
